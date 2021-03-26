@@ -23,16 +23,16 @@ public class MyView  extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         Log.d(TAG, "onTouch: = "  + event);
-        if(event.getAction() == MotionEvent.ACTION_MOVE)
+        //if(event.getAction() == MotionEvent.ACTION_MOVE)
         return true;
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        int l = 0 + getLeftPaddingOffset();
-        int t = 0 + getTopPaddingOffset();
-        int w = getWidth() - getRightPaddingOffset();
-        int h = getHeight()- getBottomPaddingOffset();
+        int l = 0 + getPaddingLeft();
+        int t = 0 + getPaddingTop();
+        int w = getWidth() - getPaddingRight();
+        int h = getHeight()- getPaddingBottom();
         rect.set(l, t, w, h);
         Log.d(TAG, "drawing " + rect);
         canvas.drawRect(rect, paint);
