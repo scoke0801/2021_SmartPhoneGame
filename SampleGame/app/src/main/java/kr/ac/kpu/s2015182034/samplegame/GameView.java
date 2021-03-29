@@ -40,8 +40,9 @@ public class GameView extends View {
 
     private void doGameFrame() {
         // update();   // 계산
-        x += 1;
-        y += 2;
+        // 100, 200이라는 값이 기기마다 같은 값이 아님에 주의
+        x += 100 * frameTime;
+        y += 200 * frameTime;
         // draw();     // 그리기
         // invalidate()함수는 여러번 중첩 호출되어도 한번에 그림으로써 중첩 호출을 해결
         invalidate();
@@ -50,9 +51,11 @@ public class GameView extends View {
                 new Choreographer.FrameCallback() {
                     @Override
                     public void doFrame(long time) {
+                        if(lastFrame == 0) {
+                            lastFrame = time;
+                        }
                         // time의 단위가 나노 초임... fraem 계산은 밀리 초..
                         frameTime = (float)(time - lastFrame) / 1_000_000_000;
-
                         doGameFrame();
                         lastFrame = time;
                     }
