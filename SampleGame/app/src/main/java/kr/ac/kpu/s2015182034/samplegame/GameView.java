@@ -11,6 +11,8 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
+import java.util.logging.Handler;
+
 public class GameView extends View {
     // final 변수는 생성자에서 그 값이 결정되어야 한다.
     private static final String TAG = GameView.class.getSimpleName();
@@ -19,6 +21,7 @@ public class GameView extends View {
 
     private float x;
     private float y;
+    // Handler handler = new Handler();
 
     // 생성자 종류, 필요에 맞게 정의 필요
     public GameView(Context context, @Nullable AttributeSet attrs) {
@@ -34,11 +37,24 @@ public class GameView extends View {
 
     private void doGameFrame() {
         // update();   // 계산
-        x += 0.01;
-        y += 0.01;
+        x += 1;
+        y += 2;
         // draw();     // 그리기
         // invalidate()함수는 여러번 중첩 호출되어도 한번에 그림으로써 중첩 호출을 해결
         invalidate();
+
+        // handler.postDelayed(new Runnable() {
+        //    @Override
+        //    public void run() {
+        //        doGameFrame();
+        //    }
+        //}, 15);
+        postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                doGameFrame();
+            }
+        } , 15);
     }
     private void InitResources() {
         Resources res = getResources();
