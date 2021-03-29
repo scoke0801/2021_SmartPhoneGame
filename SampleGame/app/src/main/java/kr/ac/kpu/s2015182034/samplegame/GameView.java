@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Choreographer;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -21,7 +22,9 @@ public class GameView extends View {
 
     private float x;
     private float y;
-    // Handler handler = new Handler();
+
+    private float frameTime;
+    private long lastFrame;
 
     // 생성자 종류, 필요에 맞게 정의 필요
     public GameView(Context context, @Nullable AttributeSet attrs) {
@@ -43,18 +46,17 @@ public class GameView extends View {
         // invalidate()함수는 여러번 중첩 호출되어도 한번에 그림으로써 중첩 호출을 해결
         invalidate();
 
-        // handler.postDelayed(new Runnable() {
-        //    @Override
-        //    public void run() {
-        //        doGameFrame();
-        //    }
-        //}, 15);
-        postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                doGameFrame();
-            }
-        } , 15);
+        Choreographer.getInstance().postFrameCallback(
+                new Choreographer.FrameCallback() {
+                    @Override
+                    public void doFrame(long time) {
+                        // time의 단위가 나노 초임... fraem 계산은 밀리 초..
+                        frameTime = (float)(time - lastFrame) / 1_000_000_000;
+
+                        doGameFrame();
+                        lastFrame = time;
+                    }
+                });
     }
     private void InitResources() {
         Resources res = getResources();
@@ -67,6 +69,6 @@ public class GameView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawBitmap(bitmap,x, y, null);
-        Log.d(TAG,  "Drawing at : " + x + " y : " + y);
+        Log.d(TAG,  "Drawing at : " + x + " y : " + y + " ft = " + frameTime);
     }
 }
