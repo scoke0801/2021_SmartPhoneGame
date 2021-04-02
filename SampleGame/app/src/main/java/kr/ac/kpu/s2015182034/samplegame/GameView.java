@@ -18,17 +18,22 @@ public class GameView extends View {
     // final 변수는 생성자에서 그 값이 결정되어야 한다.
     private static final String TAG = GameView.class.getSimpleName();
 
-    private Bitmap bitmap;
+    private Ball b1;
+    private Ball b2;
 
-    private float x, x2;
-    private float y, y2;
-
-    private float frameTime;
+    // public : 외부에서 모르고도 접근할 수 있도록
+    // static: 외부에서 해당 view 객체를 모르고도 접근할 수 있도록
+    public static float frameTime;
     private long lastFrame;
+
+    public static GameView view;
 
     // 생성자 종류, 필요에 맞게 정의 필요
     public GameView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+
+        GameView.view = this;
+
         InitResources();
 
         startUpdating();
@@ -40,11 +45,9 @@ public class GameView extends View {
 
     private void doGameFrame() {
         // update();   // 계산
-        x += 100 * frameTime;
-        y += 200 * frameTime;
+        b1.update();
+        b2.update();
 
-        x2 += -50 * frameTime;
-        y2 += 150 * frameTime;
         // draw();     // 그리기
         // invalidate()함수는 여러번 중첩 호출되어도 한번에 그림으로써 중첩 호출을 해결
         invalidate();
@@ -64,20 +67,14 @@ public class GameView extends View {
                 });
     }
     private void InitResources() {
-        Resources res = getResources();
-        bitmap = BitmapFactory.decodeResource(res, R.mipmap.soccer_ball_240);
-
-        x = 100;
-        y = 100;
-
-        x2 = 850;
-        y2 = 100;
+        b1 = new Ball(100, 100, 100, 200);
+        b2 = new Ball(850, 100, -50, 150);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        canvas.drawBitmap(bitmap,x, y, null);
-        canvas.drawBitmap(bitmap,x2, y2, null);
-        Log.d(TAG,  "Drawing at : " + x + " y : " + y + " ft = " + frameTime);
+        b1.draw(canvas);
+        b2.draw(canvas);
+        //Log.d(TAG,  "Drawing at : " + x + " y : " + y + " ft = " + frameTime);
     }
 }
