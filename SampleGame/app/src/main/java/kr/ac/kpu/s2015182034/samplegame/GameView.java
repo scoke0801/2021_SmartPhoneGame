@@ -17,8 +17,8 @@ public class GameView extends View {
     private static final String TAG = GameView.class.getSimpleName();
     private static final int BALL_COUNT = 10;
 
-    ArrayList<Ball> balls = new ArrayList<>();
     Player player;
+    ArrayList<GameObject> objects = new ArrayList<>();
 
     // public : 외부에서 모르고도 접근할 수 있도록
     // static: 외부에서 해당 view 객체를 모르고도 접근할 수 있도록
@@ -44,10 +44,10 @@ public class GameView extends View {
 
     private void doGameFrame() {
         // update();   // 계산
-        for(Ball ball : balls) {
-            ball.update();
+        for(GameObject object : objects) {
+            object.update();
         }
-        // draw();     // 그리기
+        //draw();     // 그리기
         // invalidate()함수는 여러번 중첩 호출되어도 한번에 그림으로써 중첩 호출을 해결
         invalidate();
 
@@ -75,21 +75,18 @@ public class GameView extends View {
             float dx = rand.nextFloat() * 1000 - 500;
             float dy = rand.nextFloat() * 1000 - 500;
             Ball ball = new Ball(x,y, dx, dy);
-            balls.add(ball);
+            objects.add(ball);
         }
 
         player = new Player(450, 750, 0,0);
+        objects.add(player);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        //for(int i = 0; i < BALL_COUNT; ++i){
-        //    balls.get(i).draw((canvas));
-        //}
-        for(Ball b : balls){
-            b.draw(canvas);
+        for(GameObject object : objects) {
+            object.draw(canvas);
         }
-        player.draw(canvas);
         //Log.d(TAG,  "Drawing at : " + x + " y : " + y + " ft = " + frameTime);
     }
 
@@ -103,7 +100,6 @@ public class GameView extends View {
                 return true;
             case MotionEvent.ACTION_UP:
                 return true;
-
             default:
                 break;
         }

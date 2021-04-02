@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 
-public class Ball {
+public class Ball implements GameObject {
     private float x, y;   // 위치
     private float dx, dy; // 속도
 
@@ -34,15 +34,19 @@ public class Ball {
         int w = GameView.view.getWidth();
         int h = GameView.view.getHeight();
 
-        if(x < 0 || x + sx > w){
+        float left = x - sx / 2;
+        float top = y - sy / 2;
+        if(left < 0 || left + sx > w){
             dx *= -1;
         }
-        if(y < 0 || y + sy > h){
+        if(top < 0 || top + sy > h){
             dy *= -1;
         }
     }
 
     public void draw(Canvas canvas) {
-        canvas.drawBitmap(bitmap, this.x, this.y, null);
+        float left = x - sx / 2;
+        float top = y - sy / 2;
+        canvas.drawBitmap(bitmap, left, top, null);
     }
 }

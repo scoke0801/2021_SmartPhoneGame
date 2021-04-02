@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 
-public class Player {
+public class Player implements GameObject{
     private float x, y;   // 위치
     private float dx, dy; // 속도
 
