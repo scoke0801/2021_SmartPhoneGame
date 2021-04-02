@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.Choreographer;
+import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -14,9 +15,10 @@ import java.util.Random;
 public class GameView extends View {
     // final 변수는 생성자에서 그 값이 결정되어야 한다.
     private static final String TAG = GameView.class.getSimpleName();
-    private static final int BALL_COUNT = 100;
+    private static final int BALL_COUNT = 10;
 
     ArrayList<Ball> balls = new ArrayList<>();
+    Player player;
 
     // public : 외부에서 모르고도 접근할 수 있도록
     // static: 외부에서 해당 view 객체를 모르고도 접근할 수 있도록
@@ -75,6 +77,8 @@ public class GameView extends View {
             Ball ball = new Ball(x,y, dx, dy);
             balls.add(ball);
         }
+
+        player = new Player(450, 750, 0,0);
     }
 
     @Override
@@ -85,6 +89,22 @@ public class GameView extends View {
         for(Ball b : balls){
             b.draw(canvas);
         }
+        player.draw(canvas);
         //Log.d(TAG,  "Drawing at : " + x + " y : " + y + " ft = " + frameTime);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        int action = event.getAction();
+        switch(action){
+            case MotionEvent.ACTION_DOWN:
+                player.moveTo(event.getX(), event.getY());
+                break;
+            case MotionEvent.ACTION_UP:
+                break;
+            default:
+                break;
+        }
+        return false;
     }
 }
