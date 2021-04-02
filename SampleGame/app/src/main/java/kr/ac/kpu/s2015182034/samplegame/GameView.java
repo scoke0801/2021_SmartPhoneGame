@@ -20,8 +20,8 @@ public class GameView extends View {
 
     private Bitmap bitmap;
 
-    private float x;
-    private float y;
+    private float x, x2;
+    private float y, y2;
 
     private float frameTime;
     private long lastFrame;
@@ -40,9 +40,11 @@ public class GameView extends View {
 
     private void doGameFrame() {
         // update();   // 계산
-        // 100, 200이라는 값이 기기마다 같은 값이 아님에 주의
         x += 100 * frameTime;
         y += 200 * frameTime;
+
+        x2 += -50 * frameTime;
+        y2 += 150 * frameTime;
         // draw();     // 그리기
         // invalidate()함수는 여러번 중첩 호출되어도 한번에 그림으로써 중첩 호출을 해결
         invalidate();
@@ -67,11 +69,15 @@ public class GameView extends View {
 
         x = 100;
         y = 100;
+
+        x2 = 850;
+        y2 = 100;
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawBitmap(bitmap,x, y, null);
+        canvas.drawBitmap(bitmap,x2, y2, null);
         Log.d(TAG,  "Drawing at : " + x + " y : " + y + " ft = " + frameTime);
     }
 }
