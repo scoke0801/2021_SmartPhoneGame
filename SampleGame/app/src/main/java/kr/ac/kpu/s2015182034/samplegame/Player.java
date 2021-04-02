@@ -36,6 +36,8 @@ public class Player {
     }
 
     public void draw(Canvas canvas) {
-        canvas.drawBitmap(bitmap, this.x, this.y, null);
+        float left = x - sx / 2;
+        float top = y - sy / 2;
+        canvas.drawBitmap(bitmap, left, top, null);
     }
 }

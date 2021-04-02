@@ -98,10 +98,12 @@ public class GameView extends View {
         int action = event.getAction();
         switch(action){
             case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_MOVE:
                 player.moveTo(event.getX(), event.getY());
-                break;
+                return true;
             case MotionEvent.ACTION_UP:
-                break;
+                return true;
+
             default:
                 break;
         }
