@@ -40,6 +40,9 @@ public class Player implements GameObject {
     }
 
     public void moveTo(float x, float y){
+        Bullet bullet = new Bullet(this.x, this.y, x, y);
+        MainGame.get().add(bullet);
+
         this.tx = x;
         this.ty = y;
 
@@ -48,9 +51,9 @@ public class Player implements GameObject {
 
         this.angle = (float)Math.atan2(delta_y, delta_x);
 
-        float move_dist = speed * MainGame.get().frameTime;
-        this.dx = (float)(move_dist * Math.cos(angle));
-        this.dy = (float)(move_dist * Math.sin(angle));
+        //float move_dist = speed * MainGame.get().frameTime;
+        //this.dx = (float)(move_dist * Math.cos(angle));
+        //this.dy = (float)(move_dist * Math.sin(angle));
     }
     public void update() {
         x += dx;
@@ -69,6 +72,14 @@ public class Player implements GameObject {
     public void draw(Canvas canvas) {
         float left = x - sx / 2;
         float top = y - sy / 2;
+        float degree = (float)(this.angle * 180.0f / Math.PI);
+
+        canvas.save();
+
+        canvas.rotate(degree, x, y);
         canvas.drawBitmap(bitmap, left, top, null);
+        canvas.rotate(-degree, x, y);
+
+        canvas.restore();
     }
 }
