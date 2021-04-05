@@ -1,9 +1,13 @@
-package kr.ac.kpu.s2015182034.samplegame;
+package kr.ac.kpu.s2015182034.samplegame.game;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+
+import kr.ac.kpu.s2015182034.samplegame.framework.GameObject;
+import kr.ac.kpu.s2015182034.samplegame.R;
+import kr.ac.kpu.s2015182034.samplegame.ui.view.GameView;
 
 public class Ball implements GameObject {
     private float x, y;   // 위치
@@ -28,8 +32,9 @@ public class Ball implements GameObject {
     }
 
     public void update() {
-        this.x += this.dx * GameView.frameTime;
-        this.y += this.dy * GameView.frameTime;
+        float frameTime = MainGame.get().frameTime;
+        this.x += this.dx * frameTime;
+        this.y += this.dy * frameTime;
 
         int w = GameView.view.getWidth();
         int h = GameView.view.getHeight();

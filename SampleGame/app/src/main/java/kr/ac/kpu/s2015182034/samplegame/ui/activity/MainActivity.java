@@ -1,6 +1,7 @@
-package kr.ac.kpu.s2015182034.samplegame;
+package kr.ac.kpu.s2015182034.samplegame.ui.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import kr.ac.kpu.s2015182034.samplegame.R;
 
 import android.os.Bundle;
 

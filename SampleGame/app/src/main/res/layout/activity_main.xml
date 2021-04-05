@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".ui.activity.MainActivity">
 
-    <kr.ac.kpu.s2015182034.samplegame.GameView
+    <kr.ac.kpu.s2015182034.samplegame.ui.view.GameView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </kr.ac.kpu.s2015182034.samplegame.GameView>
+    </kr.ac.kpu.s2015182034.samplegame.ui.view.GameView>
 
 </LinearLayout>
