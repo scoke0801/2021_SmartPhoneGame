@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import kr.ac.kpu.s2015182034.samplegame.framework.GameObject;
+import kr.ac.kpu.s2015182034.samplegame.ui.view.GameView;
 
 public class MainGame {
     // singleton 패턴
@@ -20,10 +21,16 @@ public class MainGame {
     public float frameTime;
     private final int BALL_COUNT = 10;
 
+    private boolean initialized = false;
     Player player;
     ArrayList<GameObject> objects = new ArrayList<>();
 
     public void InitResources() {
+        if(this.initialized){
+            return;
+        }
+        int w = GameView.view.getWidth();
+        int h = GameView.view.getHeight();
         Random rand = new Random();
         for(int i = 0; i < BALL_COUNT; ++i){
             //float x = rand.nextInt(getWidth());
@@ -36,17 +43,23 @@ public class MainGame {
             objects.add(ball);
         }
 
-        player = new Player(450, 750, 0,0);
+        player = new Player(w/ 2, h/2, 0,0);
         objects.add(player);
+
+        this.initialized = true;
     }
 
     public void update() {
+        if(this.initialized == false) return;
+
         for(GameObject o : objects){
             o.update();
         }
     }
 
     public void draw(Canvas canvas) {
+        if(this.initialized == false) return;
+
         for(GameObject object : objects) {
             object.draw(canvas);
         }

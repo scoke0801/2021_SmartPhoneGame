@@ -19,6 +19,8 @@ public class Player implements GameObject {
 
     private float speed;
 
+    private float angle = 0;
+
     private Bitmap bitmap;
 
     public Player(float x, float y, float dx, float dy) {
@@ -40,26 +42,28 @@ public class Player implements GameObject {
     public void moveTo(float x, float y){
         this.tx = x;
         this.ty = y;
+
+        float delta_x = tx - this.x;
+        float delta_y = ty - this.y;
+
+        this.angle = (float)Math.atan2(delta_y, delta_x);
+
+        float move_dist = speed * MainGame.get().frameTime;
+        this.dx = (float)(move_dist * Math.cos(angle));
+        this.dy = (float)(move_dist * Math.sin(angle));
     }
     public void update() {
-        float delta_x = tx - x;
-        float delta_y = ty - y;
-        float distance = (float)Math.sqrt(delta_x * delta_x + delta_y * delta_y);
-        float move_dist = speed * MainGame.get().frameTime;
+        x += dx;
+        y += dy;
 
-        if (distance < move_dist){
-            // 목표 위치와의 거리 차 비교
-            this.x = tx;
-            this.y = ty;
-            return;
+        if((dx > 0 && this.x > tx)||(dx < 0 && this.x < tx)) {
+            x = tx;
+            dx = 0;
         }
-
-        float angle = (float)Math.atan2(delta_y, delta_x);
-        float mx = (float)(move_dist * Math.cos(angle));
-        float my = (float)(move_dist * Math.sin(angle));
-
-        this.x += mx;
-        this.y += my;
+        if((dy > 0 && this.y > ty)||(dy < 0 && this.y < ty)) {
+            y = ty;
+            dy = 0;
+        }
     }
 
     public void draw(Canvas canvas) {

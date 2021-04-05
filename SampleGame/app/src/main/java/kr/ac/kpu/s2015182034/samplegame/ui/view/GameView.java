@@ -28,7 +28,7 @@ public class GameView extends View {
         GameView.view = this;
 
         MainGame game = MainGame.get();
-        game.InitResources();
+        //game.InitResources();
 
         startUpdating();
     }
@@ -55,6 +55,12 @@ public class GameView extends View {
                     }
                 });
     }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        MainGame.get().InitResources();
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         MainGame.get().draw(canvas);
