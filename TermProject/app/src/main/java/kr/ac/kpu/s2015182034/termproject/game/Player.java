@@ -57,18 +57,42 @@ public class Player implements GameObject {
     }
 
     public void moveTo(float x, float y){
-        //if(isOnMove) return;
+        if(isOnMove) return;
+        // top, bottom, left, right
+        float frameTime = MainGame.get().frameTime;
+        int idx = CalculateNextPositionIndex(x, y);
+        if(idx == 0){
+            this.ty = this.y - this.sy;
+            this.dy = frameTime * -speed;
+        }
+        else if(idx == 1){
+            this.ty = this.y + this.sy;
+            this.dy = frameTime * speed;
+        }
+        else if(idx == 2){
+            this.tx = this.x - this.sx;
+            this.dx = frameTime * -speed;
+        }
+        else if (idx == 3){
+            this.tx = this.x + this.sx;
+            this.dx = frameTime * speed;
+        }
+        isOnMove = true;
+        //this.x = x;
+        //this.y = y;
 
-        this.x = x;
-        this.y = y;
-
-        this.tx = x;
-        this.ty = y;
+        //this.tx = x;
+        //this.ty = y;
     }
     public void update() {
-        spriteIdx += 3 * MainGame.get().frameTime;
-        if(spriteIdx > 3) spriteIdx = 0;
-
+        if (isOnMove){
+            float frameTime = MainGame.get().frameTime;
+        spriteIdx += 3 * frameTime;
+        if (spriteIdx > 3) spriteIdx = 0;
+        }
+        else{
+            spriteIdx = 0;
+        }
         x += dx;
         y += dy;
 
@@ -87,15 +111,15 @@ public class Player implements GameObject {
     public void draw(Canvas canvas) {
         float left = x - sx / 2;
         float top = y - sy / 2;
-        float degree = (float)(this.angle * 180.0f / Math.PI) ;
+        //float degree = (float)(this.angle * 180.0f / Math.PI) ;
 
-        canvas.save();
-        canvas.rotate(degree, x, y);
+        //canvas.save();
+        //canvas.rotate(degree, x, y);
 
         canvas.drawBitmap(bitmaps.get((int)spriteIdx), left, top, null);
         //canvas.drawBitmap(bitmap, left, top, null);
 
-        canvas.restore();
+        //canvas.restore();
     }
     private int CalculateNextPositionIndex(float x, float y){
         float dists[] = {   // top, bottom, left, right
