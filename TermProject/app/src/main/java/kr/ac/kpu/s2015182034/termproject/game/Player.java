@@ -64,31 +64,33 @@ public class Player implements GameObject {
         if(idx == 0){
             this.ty = this.y - this.sy;
             this.dy = frameTime * -speed;
+            this.angle = 0.0f;
         }
         else if(idx == 1){
             this.ty = this.y + this.sy;
             this.dy = frameTime * speed;
+            this.angle = 180.0f;
         }
         else if(idx == 2){
             this.tx = this.x - this.sx;
             this.dx = frameTime * -speed;
+            this.angle = -90.0f;
         }
         else if (idx == 3){
             this.tx = this.x + this.sx;
             this.dx = frameTime * speed;
+            this.angle = 90.0f;
         }
         isOnMove = true;
-        //this.x = x;
-        //this.y = y;
-
-        //this.tx = x;
-        //this.ty = y;
     }
+
     public void update() {
         if (isOnMove){
             float frameTime = MainGame.get().frameTime;
-        spriteIdx += 3 * frameTime;
-        if (spriteIdx > 3) spriteIdx = 0;
+            spriteIdx += 3 * frameTime;
+            if (spriteIdx > 3) {
+                spriteIdx = 0;
+            }
         }
         else{
             spriteIdx = 0;
@@ -113,13 +115,13 @@ public class Player implements GameObject {
         float top = y - sy / 2;
         //float degree = (float)(this.angle * 180.0f / Math.PI) ;
 
-        //canvas.save();
-        //canvas.rotate(degree, x, y);
+        canvas.save();
+        canvas.rotate(this.angle, x, y);
 
         canvas.drawBitmap(bitmaps.get((int)spriteIdx), left, top, null);
         //canvas.drawBitmap(bitmap, left, top, null);
 
-        //canvas.restore();
+        canvas.restore();
     }
     private int CalculateNextPositionIndex(float x, float y){
         float dists[] = {   // top, bottom, left, right
