@@ -66,7 +66,7 @@ public class Player implements GameObject {
         this.ty = y;
     }
     public void update() {
-        spriteIdx += 1 * MainGame.get().frameTime;
+        spriteIdx += 3 * MainGame.get().frameTime;
         if(spriteIdx > 3) spriteIdx = 0;
 
         x += dx;
@@ -91,8 +91,9 @@ public class Player implements GameObject {
 
         canvas.save();
         canvas.rotate(degree, x, y);
-        //canvas.drawBitmap(bitmaps[spriteIdx], left, top, null);
-        canvas.drawBitmap(bitmap, left, top, null);
+
+        canvas.drawBitmap(bitmaps.get((int)spriteIdx), left, top, null);
+        //canvas.drawBitmap(bitmap, left, top, null);
 
         canvas.restore();
     }
