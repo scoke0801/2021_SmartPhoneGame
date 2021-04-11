@@ -28,7 +28,6 @@ public class GameView extends View {
         GameView.view = this;
 
         MainGame game = MainGame.get();
-        //game.InitResources();
 
         startUpdating();
     }
