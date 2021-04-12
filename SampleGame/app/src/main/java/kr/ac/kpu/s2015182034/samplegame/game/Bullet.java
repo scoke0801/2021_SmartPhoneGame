@@ -41,7 +41,8 @@ public class Bullet implements GameObject {
 
         if(bitmap == null) {
             Resources res = GameView.view.getResources();
-            bitmap = new AnimationGameBitmap(R.mipmap.laser_light, FRAME_RATE, 10);
+            //bitmap = new AnimationGameBitmap(R.mipmap.laser_light, FRAME_RATE, 10);
+            bitmap = new AnimationGameBitmap(R.mipmap.bullet_hadoken, FRAME_RATE, 6);
         }
     }
 

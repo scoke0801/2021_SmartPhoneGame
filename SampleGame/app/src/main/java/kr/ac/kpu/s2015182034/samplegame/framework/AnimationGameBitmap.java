@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
@@ -62,6 +63,11 @@ public class AnimationGameBitmap extends GameBitmap {
         RectF dst = new RectF(x - hw,y - hh, x + hw, y + hh);
 
         canvas.drawBitmap(bitmap, src, dst, null);
+
+        // testing
+        //Paint paint = new Paint();
+        //paint.setColor(0xFFFF0000);
+        //canvas.drawRect(dst, paint);
     }
 
     public int getWidth(){
