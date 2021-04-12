@@ -46,7 +46,6 @@ public class Ball implements GameObject {
         if(y < 0 || y > h - frameHeight){
             dy *= -1;
         }
-        bitmap.update();
     }
 
     public void draw(Canvas canvas) {
