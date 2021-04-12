@@ -58,7 +58,7 @@ public class Player implements GameObject {
 
     public void moveTo(float x, float y){
         if(isOnMove) return;
-        // top, bottom, left, right
+
         float frameTime = MainGame.get().frameTime;
         int idx = CalculateNextPositionIndex(x, y);
         if(idx == 0){
@@ -113,13 +113,10 @@ public class Player implements GameObject {
     public void draw(Canvas canvas) {
         float left = x - sx / 2;
         float top = y - sy / 2;
-        //float degree = (float)(this.angle * 180.0f / Math.PI) ;
-
         canvas.save();
         canvas.rotate(this.angle, x, y);
 
         canvas.drawBitmap(bitmaps.get((int)spriteIdx), left, top, null);
-        //canvas.drawBitmap(bitmap, left, top, null);
 
         canvas.restore();
     }
