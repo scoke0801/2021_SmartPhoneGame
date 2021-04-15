@@ -4,10 +4,13 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Rect;
+import android.graphics.RectF;
 
 import java.util.ArrayList;
 
 import kr.ac.kpu.s2015182034.termproject.R;
+import kr.ac.kpu.s2015182034.termproject.animation.AnimationBitmap;
 import kr.ac.kpu.s2015182034.termproject.framework.CalculateFunctions;
 import kr.ac.kpu.s2015182034.termproject.framework.GameObject;
 import kr.ac.kpu.s2015182034.termproject.framework.MainGame;
@@ -21,8 +24,9 @@ public class Player implements GameObject {
 
     private float tx, ty; //target 위치
 
-    private Bitmap bitmap;
-    private ArrayList<Bitmap> bitmaps = new ArrayList<>();
+    private static AnimationBitmap bitmap;
+
+    private static float FRAME_RATE = 8.5f; // 1초당 8.5장의 속도로 애니메이션을 수행하도록
 
     private float angle = 0;
     private static float speed = (float)100.0;
@@ -40,19 +44,9 @@ public class Player implements GameObject {
         this.isOnMove = false;
         if(bitmap == null) {
             Resources res = GameView.view.getResources();
-            bitmap = BitmapFactory.decodeResource(res, R.mipmap.frog_1);
-
-            sx = bitmap.getWidth();
-            sy = bitmap.getHeight();
-            //bitmap.setHeight(sy * 2);
-            //bitmap.setWidth(sx * 2);
-            //sx *= 2;
-            //sy *= 2;
-
-            bitmaps.add(BitmapFactory.decodeResource(res, R.mipmap.frog_1));
-            bitmaps.add(BitmapFactory.decodeResource(res, R.mipmap.frog_2));
-            bitmaps.add(BitmapFactory.decodeResource(res, R.mipmap.frog_3));
-            bitmaps.add(BitmapFactory.decodeResource(res, R.mipmap.frog_4));
+            bitmap = new AnimationBitmap(R.mipmap.frog, FRAME_RATE, 4);
+            this.sx = bitmap.getWidth();
+            this.sy = bitmap.getHeight();
         }
     }
 
@@ -111,12 +105,10 @@ public class Player implements GameObject {
     }
 
     public void draw(Canvas canvas) {
-        float left = x - sx / 2;
-        float top = y - sy / 2;
         canvas.save();
         canvas.rotate(this.angle, x, y);
 
-        canvas.drawBitmap(bitmaps.get((int)spriteIdx), left, top, null);
+        bitmap.draw(canvas, x, y);
 
         canvas.restore();
     }
