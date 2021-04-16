@@ -75,7 +75,7 @@ public class MainGame {
         int action = event.getAction();
         switch(action){
             case MotionEvent.ACTION_DOWN:
-            case MotionEvent.ACTION_MOVE:
+            //case MotionEvent.ACTION_MOVE:
                 player.moveTo(event.getX(), event.getY());
                 return true;
             case MotionEvent.ACTION_UP:
