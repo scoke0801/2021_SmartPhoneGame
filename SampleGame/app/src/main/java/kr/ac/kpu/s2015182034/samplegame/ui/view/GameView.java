@@ -8,6 +8,8 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.Nullable;
+
+import kr.ac.kpu.s2015182034.samplegame.framework.Sound;
 import kr.ac.kpu.s2015182034.samplegame.game.MainGame;
 
 public class GameView extends View {
@@ -26,6 +28,8 @@ public class GameView extends View {
         super(context, attrs);
 
         GameView.view = this;
+
+        Sound.init(context);
 
         MainGame game = MainGame.get();
         //game.InitResources();
@@ -58,7 +62,7 @@ public class GameView extends View {
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        MainGame.get().InitResources();
+        MainGame.get().initResources();
     }
 
     @Override

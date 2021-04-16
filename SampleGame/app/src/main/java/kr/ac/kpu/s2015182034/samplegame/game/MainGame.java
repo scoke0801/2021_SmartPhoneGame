@@ -10,84 +10,71 @@ import kr.ac.kpu.s2015182034.samplegame.framework.GameObject;
 import kr.ac.kpu.s2015182034.samplegame.ui.view.GameView;
 
 public class MainGame {
-    // singleton 패턴
+    private static final int BALL_COUNT = 10;
+    private static final String TAG = MainGame.class.getSimpleName();
+    // singleton
     private static MainGame instance;
-    public static MainGame get(){
-        if(instance == null){
+    public static MainGame get() {
+        if (instance == null) {
             instance = new MainGame();
         }
         return instance;
-    } 
+    }
     public float frameTime;
-    private final int BALL_COUNT = 10;
+    private boolean initialized;
 
-    private boolean initialized = false;
     Player player;
     ArrayList<GameObject> objects = new ArrayList<>();
 
-    public boolean InitResources() {
-        if(this.initialized){
+    public boolean initResources() {
+        if (initialized) {
             return false;
         }
-
         int w = GameView.view.getWidth();
         int h = GameView.view.getHeight();
+        player = new Player(w/2, h/2, 0, 0);
         Random rand = new Random();
-        for(int i = 0; i < BALL_COUNT; ++i){
-            //float x = rand.nextInt(getWidth());
-            //float y = rand.nextInt(getHeight());
+        for (int i = 0; i < BALL_COUNT; i++) {
             float x = rand.nextInt(1000);
             float y = rand.nextInt(1000);
             float dx = rand.nextFloat() * 1000 - 500;
             float dy = rand.nextFloat() * 1000 - 500;
-            Ball ball = new Ball(x,y, dx, dy);
-            objects.add(ball);
+            Ball b = new Ball(x, y, dx, dy);
+            objects.add(b);
         }
-
-        player = new Player(w/ 2, h/2, 0,0);
         objects.add(player);
 
-        this.initialized = true;
+        initialized = true;
         return true;
     }
 
     public void update() {
-        if(this.initialized == false) {
-            return;
-        }
-
-        for(GameObject o : objects){
+        //if (!initialized) return;
+        for (GameObject o : objects) {
             o.update();
         }
     }
 
     public void draw(Canvas canvas) {
-        if(this.initialized == false) {
-            return;
-        }
-
-        for(GameObject object : objects) {
-            object.draw(canvas);
+        //if (!initialized) return;
+        for (GameObject o: objects) {
+            o.draw(canvas);
         }
     }
 
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
-        switch(action){
-            case MotionEvent.ACTION_DOWN:
-            //case MotionEvent.ACTION_MOVE:
-                player.moveTo(event.getX(), event.getY());
-                return true;
-            case MotionEvent.ACTION_UP:
-                return true;
-            default:
-                break;
+        if (action == MotionEvent.ACTION_DOWN) {
+            //if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_MOVE) {
+            player.moveTo(event.getX(), event.getY());
+            return true;
         }
         return false;
     }
 
-    public void add(GameObject gameObject){
+    public void add(GameObject gameObject) {
         objects.add(gameObject);
+//        Log.d(TAG, "<A> object count = " + objects.size());
     }
 
     public void remove(GameObject gameObject) {
@@ -95,6 +82,7 @@ public class MainGame {
             @Override
             public void run() {
                 objects.remove(gameObject);
+//                Log.d(TAG, "<R> object count = " + objects.size());
             }
         });
     }

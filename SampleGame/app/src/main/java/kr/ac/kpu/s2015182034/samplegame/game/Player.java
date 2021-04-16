@@ -8,10 +8,10 @@ import android.media.MediaPlayer;
 
 import kr.ac.kpu.s2015182034.samplegame.R;
 import kr.ac.kpu.s2015182034.samplegame.framework.GameObject;
+import kr.ac.kpu.s2015182034.samplegame.framework.Sound;
 import kr.ac.kpu.s2015182034.samplegame.ui.view.GameView;
 
 public class Player implements GameObject {
-    private final MediaPlayer mediaPlayer;
 
     private float x, y;   // 위치
     private float dx, dy; // 속도
@@ -40,14 +40,10 @@ public class Player implements GameObject {
             sx = bitmap.getWidth();
             sy = bitmap.getHeight();
         }
-
-        // 어트리뷰트에는 일단 콘텍스트에는 넘겨주도록...
-        mediaPlayer = MediaPlayer.create(GameView.view.getContext(), R.raw.hadouken);
     }
 
     public void moveTo(float x, float y){
-        mediaPlayer.seekTo(0);
-        mediaPlayer.start();
+        Sound.play(R.raw.hadouken);
 
         Bullet bullet = new Bullet(this.x, this.y, x, y);
         MainGame.get().add(bullet);
