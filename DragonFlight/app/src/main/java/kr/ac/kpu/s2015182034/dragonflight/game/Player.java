@@ -25,7 +25,7 @@ public class Player implements GameObject {
         this.y = y;
         this.dx = dx;
         this.dy = dy;
-        this.tx = 0;
+        this.tx = x;
         this.ty = 0;
         this.speed = 800;
         this.bitmap = GameBitmap.load(R.mipmap.plane_240);
@@ -37,23 +37,27 @@ public class Player implements GameObject {
         //Sound.play(R.raw.hadouken);
 
         this.tx = x;
-        this.ty = y;
-
-        float delta_x = tx - this.x;
-        float delta_y = ty - this.y;
+        //this.ty = this.y;
     }
     public void update() {
+        MainGame game = MainGame.get();
+        float dx = speed * game.frameTime;
+        if (tx < x){
+            // Move Left
+            dx = -dx;
+        }
         x += dx;
-        y += dy;
 
         if((dx > 0 && this.x > tx)||(dx < 0 && this.x < tx)) {
             x = tx;
             dx = 0;
         }
-        if((dy > 0 && this.y > ty)||(dy < 0 && this.y < ty)) {
-            y = ty;
-            dy = 0;
-        }
+
+        //y += dy;
+        //if((dy > 0 && this.y > ty)||(dy < 0 && this.y < ty)) {
+        //    y = ty;
+        //    dy = 0;
+        //}
     }
 
     public void draw(Canvas canvas) {

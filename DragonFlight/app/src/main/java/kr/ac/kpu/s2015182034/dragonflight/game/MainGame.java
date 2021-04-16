@@ -1,12 +1,13 @@
 package kr.ac.kpu.s2015182034.dragonflight.game;
 
 import android.graphics.Canvas;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
-import kr.ac.kpu.s2015182034.dragonflight.framework.GameObject;
 import kr.ac.kpu.s2015182034.dragonflight.UI.View.GameView;
+import kr.ac.kpu.s2015182034.dragonflight.framework.GameObject;
 
 public class MainGame {
     private static final int BALL_COUNT = 10;
@@ -57,6 +58,7 @@ public class MainGame {
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
         if (action == MotionEvent.ACTION_DOWN) {
+            player.moveTo(event.getX(), event.getY());
             //if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_MOVE) {
             return true;
         }
@@ -65,7 +67,7 @@ public class MainGame {
 
     public void add(GameObject gameObject) {
         objects.add(gameObject);
-//        Log.d(TAG, "<A> object count = " + objects.size());
+        Log.d(TAG, "<A> object count = " + objects.size());
     }
 
     public void remove(GameObject gameObject) {
@@ -73,7 +75,7 @@ public class MainGame {
             @Override
             public void run() {
                 objects.remove(gameObject);
-//                Log.d(TAG, "<R> object count = " + objects.size());
+                Log.d(TAG, "<R> object count = " + objects.size());
             }
         });
     }
