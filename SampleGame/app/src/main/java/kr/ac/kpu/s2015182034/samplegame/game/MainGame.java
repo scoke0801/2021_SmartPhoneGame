@@ -25,10 +25,11 @@ public class MainGame {
     Player player;
     ArrayList<GameObject> objects = new ArrayList<>();
 
-    public void InitResources() {
+    public boolean InitResources() {
         if(this.initialized){
-            return;
+            return false;
         }
+
         int w = GameView.view.getWidth();
         int h = GameView.view.getHeight();
         Random rand = new Random();
@@ -47,10 +48,13 @@ public class MainGame {
         objects.add(player);
 
         this.initialized = true;
+        return true;
     }
 
     public void update() {
-        if(this.initialized == false) return;
+        if(this.initialized == false) {
+            return;
+        }
 
         for(GameObject o : objects){
             o.update();
@@ -58,7 +62,9 @@ public class MainGame {
     }
 
     public void draw(Canvas canvas) {
-        if(this.initialized == false) return;
+        if(this.initialized == false) {
+            return;
+        }
 
         for(GameObject object : objects) {
             object.draw(canvas);

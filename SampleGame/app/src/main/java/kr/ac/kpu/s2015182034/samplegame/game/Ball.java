@@ -7,6 +7,8 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
+import java.util.Random;
+
 import kr.ac.kpu.s2015182034.samplegame.framework.AnimationGameBitmap;
 import kr.ac.kpu.s2015182034.samplegame.framework.GameObject;
 import kr.ac.kpu.s2015182034.samplegame.R;
@@ -17,17 +19,17 @@ public class Ball implements GameObject {
     private float dx, dy; // 속도
 
     private static float FRAME_RATE = 8.5f; // 1초당 8.5장의 속도로 애니메이션을 수행하도록
-    private static AnimationGameBitmap bitmap;
+    private AnimationGameBitmap bitmap;
     public Ball(float x, float y, float dx, float dy) {
         this.x = x;
         this.y = y;
         this.dx = dx;
         this.dy = dy;
 
-        if(bitmap == null) {
-            Resources res = GameView.view.getResources();
-            bitmap = new AnimationGameBitmap(R.mipmap.fireball_128_24f, FRAME_RATE, 0);
-        }
+        Random r = new Random();
+        // FRAME_RATE의 90 ~ 110 % 사이의 값을 랜덤하게
+        float frameRate = FRAME_RATE * (r.nextFloat() * 0.2f + 0.9f);
+        bitmap = new AnimationGameBitmap(R.mipmap.fireball_128_24f, FRAME_RATE, 0);
     }
 
     public void update() {
