@@ -109,8 +109,9 @@ public class Player implements GameObject {
         canvas.rotate(this.angle, x, y);
 
         bitmap.draw(canvas, x, y);
-
         canvas.restore();
+
+        bitmap.drawAABB(canvas,x,y);
     }
     private int CalculateNextPositionIndex(float x, float y){
         float dists[] = {   // top, bottom, left, right
@@ -126,5 +127,11 @@ public class Player implements GameObject {
             }
         }
         return closerPointIdx;
+    }
+    public RectF getAABB(){
+        return bitmap.getAABB(x,y);
+    }
+    public void fixCollision(){
+
     }
 }

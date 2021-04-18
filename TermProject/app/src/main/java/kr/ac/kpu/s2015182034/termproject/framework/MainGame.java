@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 import java.util.ArrayList;
 import java.util.Random;
 
+import kr.ac.kpu.s2015182034.termproject.game.Car;
 import kr.ac.kpu.s2015182034.termproject.game.Player;
 import kr.ac.kpu.s2015182034.termproject.ui.view.GameView;
 
@@ -31,6 +32,17 @@ public class MainGame {
         }
         int w = GameView.view.getWidth();
         int h = GameView.view.getHeight();
+
+        // test codes
+        int carSizeH = 170;
+        for(int i = 0; i < 10; i += 2){
+            Car car = new Car(0,carSizeH * (i+1), false);
+            objects.add(car);
+        }
+        for(int i = 1; i < 10; i += 2){
+            Car car = new Car(w, carSizeH * (i+1), true);
+            objects.add(car);
+        }
 
         player = new Player(w/ 2, h/2, 0,0);
         objects.add(player);

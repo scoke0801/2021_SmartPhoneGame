@@ -4,6 +4,8 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
@@ -20,6 +22,7 @@ public class AnimationBitmap extends GameBitmap  {
     private final float framePerSecond;
 
     private int frameIndex;
+    private Paint paint;
 
     public AnimationBitmap(int resId, float framePerSecond, int frameCount){
         Resources res = GameView.view.getResources();
@@ -40,6 +43,11 @@ public class AnimationBitmap extends GameBitmap  {
         this.framePerSecond = framePerSecond;
         createOn = System.currentTimeMillis();
         frameIndex = 0;
+
+        paint = new Paint();
+        paint.setColor(0xFFFF0000);
+        paint.setStrokeWidth(10f);
+        paint.setStyle(Paint.Style.STROKE);
     }
 
     public void draw(Canvas canvas, float x, float y){
@@ -53,14 +61,20 @@ public class AnimationBitmap extends GameBitmap  {
         int hh = h / 2 * PIXEL_MULTIPLIER;
 
         Rect src = new Rect(fw * frameIndex, 0, fw  * (frameIndex + 1), h);
-        RectF dst = new RectF(x - hw,y - hh, x + hw, y + hh);
+        RectF dst = getAABB(x,y);
 
         canvas.drawBitmap(bitmap, src, dst, null);
+    }
 
-        // testing
-        //Paint paint = new Paint();
-        //paint.setColor(0xFFFF0000);
-        //canvas.drawRect(dst, paint);
+    public void drawAABB(Canvas canvas, float x, float y){
+        RectF dst = getAABB(x,y);
+        canvas.drawRect(dst, paint);
+    }
+    public RectF getAABB(float x, float y){
+        int hw = getWidth() / 2;
+        int hh = getHeight() / 2;
+        RectF dst = new RectF(x - hw,y - hh, x + hw, y + hh);
+        return dst;
     }
 
     public int getWidth(){
