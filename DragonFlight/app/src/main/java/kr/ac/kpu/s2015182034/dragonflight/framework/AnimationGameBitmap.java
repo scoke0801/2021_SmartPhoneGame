@@ -5,9 +5,9 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
+import kr.ac.kpu.s2015182034.dragonflight.UI.View.GameView;
+
 public class AnimationGameBitmap extends GameBitmap {
-    private static final int PIXEL_MULTIPLIER = 4;
-    private Bitmap bitmap;
     private final int imageWidth;
     private final int imageHeight;
     private final int frameWidth;
@@ -16,8 +16,10 @@ public class AnimationGameBitmap extends GameBitmap {
     private final float framePerSecond;
 
     private int frameIndex;
+    private Rect srcRect = new Rect();
 
     public AnimationGameBitmap(int resId, float framePerSecond, int frameCount){
+        super(resId);
         bitmap = GameBitmap.load(resId);
 
         imageWidth = bitmap.getWidth();
@@ -46,24 +48,19 @@ public class AnimationGameBitmap extends GameBitmap {
         int fw = frameWidth;
         int h = imageHeight;
 
-        int hw = fw / 2 * PIXEL_MULTIPLIER;// 원래 이미지 크기의 4배
-        int hh = h / 2 * PIXEL_MULTIPLIER;
+        float hw = fw / 2 * GameView.MULTIPLIER;// 원래 이미지 크기의 4배
+        float hh = h / 2 *  GameView.MULTIPLIER;
 
-        Rect src = new Rect(fw * frameIndex, 0, fw  * (frameIndex + 1), h);
-        RectF dst = new RectF(x - hw,y - hh, x + hw, y + hh);
+        srcRect.set(fw * frameIndex, 0, fw  * (frameIndex + 1), h);
+        dstRect.set(x - hw,y - hh, x + hw, y + hh);
 
-        canvas.drawBitmap(bitmap, src, dst, null);
-
-        // testing
-        //Paint paint = new Paint();
-        //paint.setColor(0xFFFF0000);
-        //canvas.drawRect(dst, paint);
+        canvas.drawBitmap(bitmap, srcRect, dstRect, null);
     }
 
     public int getWidth(){
-        return frameWidth* PIXEL_MULTIPLIER;
+        return frameWidth;
     }
-    public int getHeight(){
-        return imageHeight * PIXEL_MULTIPLIER;
+    public int getHeight() {
+        return imageHeight;
     }
 }
