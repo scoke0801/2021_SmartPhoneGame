@@ -4,7 +4,6 @@ import android.graphics.Canvas;
 import android.graphics.RectF;
 
 import kr.ac.kpu.s2015182034.dragonflight.R;
-import kr.ac.kpu.s2015182034.dragonflight.UI.View.GameView;
 import kr.ac.kpu.s2015182034.dragonflight.framework.BoxCollidable;
 import kr.ac.kpu.s2015182034.dragonflight.framework.GameBitmap;
 import kr.ac.kpu.s2015182034.dragonflight.framework.GameObject;
@@ -71,7 +70,7 @@ public class Player implements GameObject, BoxCollidable {
 
 
     @Override
-    public RectF getBoundingRect() {
-        return bitmap.geetBoundingRect(x,y);
+    public void getBoundingRect(RectF rect) {
+        bitmap.getBoundingRect(x,y, rect);
     }
 }
