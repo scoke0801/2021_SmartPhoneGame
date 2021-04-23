@@ -12,6 +12,8 @@ public class Player implements GameObject, BoxCollidable {
 
     private static final int BULLET_SPEED = 1500;
     private static final float FIRE_INTERVAL =  1.0f / 7.5f;
+    private static final float LASER_DURATION =  FIRE_INTERVAL / 3.0f;
+
     private float fireTime;
     private float x, y;   // 위치
     private float dx, dy; // 속도
@@ -19,15 +21,16 @@ public class Player implements GameObject, BoxCollidable {
 
     private float speed;
 
-    private GameBitmap bitmap;
-
+    private GameBitmap planeBitmap;
+    private GameBitmap fireBitmap;
     public Player(float x, float y) {
         this.x = x;
         this.y = y;
         this.tx = x;
         this.ty = 0;
         this.speed = 800;
-        this.bitmap = new GameBitmap(R.mipmap.fighter);
+        this.planeBitmap = new GameBitmap(R.mipmap.fighter);
+        this.fireBitmap = new GameBitmap(R.mipmap.laser_0);
         this.fireTime = 0.0f;   //
     }
 
@@ -60,17 +63,19 @@ public class Player implements GameObject, BoxCollidable {
     }
 
     private void fireBullet() {
-        Bullet bullet = new Bullet(this.x, this.y, BULLET_SPEED);
+        Bullet bullet = Bullet.get(this.x, this.y, BULLET_SPEED);
         MainGame.get().add(bullet);
     }
     @Override
     public void draw(Canvas canvas) {
-        bitmap.draw(canvas, x, y);
+        planeBitmap.draw(canvas, x, y);
+        if(fireTime < LASER_DURATION) {
+            fireBitmap.draw(canvas, x, y - 50);
+        }
     }
-
 
     @Override
     public void getBoundingRect(RectF rect) {
-        bitmap.getBoundingRect(x,y, rect);
+        planeBitmap.getBoundingRect(x,y, rect);
     }
 }

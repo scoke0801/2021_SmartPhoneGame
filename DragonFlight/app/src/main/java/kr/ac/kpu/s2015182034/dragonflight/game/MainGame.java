@@ -5,10 +5,12 @@ import android.util.Log;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import kr.ac.kpu.s2015182034.dragonflight.UI.View.GameView;
 import kr.ac.kpu.s2015182034.dragonflight.framework.BoxCollidable;
 import kr.ac.kpu.s2015182034.dragonflight.framework.GameObject;
+import kr.ac.kpu.s2015182034.dragonflight.framework.Recyclable;
 import kr.ac.kpu.s2015182034.dragonflight.utils.CollisionHelper;
 
 public class MainGame {
@@ -28,6 +30,25 @@ public class MainGame {
     private boolean initialized;
 
     ArrayList<GameObject> objects = new ArrayList<>();
+
+    private static HashMap<Class, ArrayList<GameObject>> reclycleBin = new HashMap<>();
+
+    public GameObject get(Class className){
+        ArrayList<GameObject> array = reclycleBin.get(className);
+        if(array == null) return null;
+        if(array.isEmpty()) return null;
+        return array.remove(0);
+    }
+    public void recycle(GameObject object){
+        Class className = object.getClass();
+        ArrayList<GameObject> array = reclycleBin.get(className);
+        if(array == null){
+            // 첫 번째 호출인 경우.
+            array = new ArrayList<>();
+            reclycleBin.put(className, array);
+        }
+        array.add(object);
+    }
 
     public boolean initResources() {
         if (initialized) {
@@ -55,14 +76,17 @@ public class MainGame {
             if(!(o1 instanceof Enemy)){
                 continue;
             }
+            Enemy enemy = (Enemy)o1;
             for(GameObject o2 : objects){
                 if(!(o2 instanceof  Bullet )) {
                     continue;
                 }
+                Bullet bullet = (Bullet)o2;
                 if(CollisionHelper.collides((BoxCollidable)o1, (BoxCollidable)o2)){
                     Log.d(TAG, "Collision!! "  + o1 + " - " + o2);
-                    remove(o1);
-                    remove(o2);
+                    remove(enemy);
+                    remove(bullet);
+                    //bullet.doRecycle();
                     removed = true;
                     break;
                 }
@@ -103,6 +127,10 @@ public class MainGame {
     }
 
     public void remove(GameObject gameObject) {
+        if(gameObject instanceof Recyclable){
+            ((Recyclable)gameObject).recyle();
+            recycle(gameObject);
+        }
         GameView.view.post(new Runnable() {
             @Override
             public void run() {
