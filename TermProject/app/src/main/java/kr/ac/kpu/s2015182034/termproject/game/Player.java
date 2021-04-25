@@ -11,12 +11,13 @@ import java.util.ArrayList;
 
 import kr.ac.kpu.s2015182034.termproject.R;
 import kr.ac.kpu.s2015182034.termproject.animation.AnimationBitmap;
+import kr.ac.kpu.s2015182034.termproject.framework.BoxCollidable;
 import kr.ac.kpu.s2015182034.termproject.framework.CalculateFunctions;
 import kr.ac.kpu.s2015182034.termproject.framework.GameObject;
 import kr.ac.kpu.s2015182034.termproject.framework.MainGame;
 import kr.ac.kpu.s2015182034.termproject.ui.view.GameView;
 
-public class Player implements GameObject {
+public class Player implements GameObject, BoxCollidable {
     private float x, y;   // 위치
     private float dx, dy; // 속도
 
@@ -128,10 +129,12 @@ public class Player implements GameObject {
         }
         return closerPointIdx;
     }
-    public RectF getAABB(){
-        return bitmap.getAABB(x,y);
-    }
     public void fixCollision(){
 
+    }
+
+    @Override
+    public void getBoundingRect(RectF rect) {
+        bitmap.getBoundingRect(x, y, rect);
     }
 }

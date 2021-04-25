@@ -25,6 +25,7 @@ public class AnimationBitmap extends GameBitmap  {
     private Paint paint;
 
     public AnimationBitmap(int resId, float framePerSecond, int frameCount){
+        super(resId);
         Resources res = GameView.view.getResources();
 
         BitmapFactory.Options opts = new BitmapFactory.Options();
@@ -50,6 +51,7 @@ public class AnimationBitmap extends GameBitmap  {
         paint.setStyle(Paint.Style.STROKE);
     }
 
+    private Rect srcRect = new Rect();
     public void draw(Canvas canvas, float x, float y){
         int elapsed = (int)(System.currentTimeMillis() - createOn);
         frameIndex = Math.round(elapsed * framePerSecond * 0.001f) % frameCount;
@@ -57,30 +59,25 @@ public class AnimationBitmap extends GameBitmap  {
         int fw = frameWidth;
         int h = imageHeight;
 
-        int hw = fw / 2 * PIXEL_MULTIPLIER;// 원래 이미지 크기의 4배
-        int hh = h / 2 * PIXEL_MULTIPLIER;
+        float hw = fw / 2 * GameView.MULTIPLIER;// 원래 이미지 크기의 4배
+        float hh = h / 2 *  GameView.MULTIPLIER;
 
-        Rect src = new Rect(fw * frameIndex, 0, fw  * (frameIndex + 1), h);
-        RectF dst = getAABB(x,y);
+        srcRect.set(fw * frameIndex, 0, fw  * (frameIndex + 1), h);
+        dstRect.set(x - hw,y - hh, x + hw, y + hh);
 
-        canvas.drawBitmap(bitmap, src, dst, null);
+        canvas.drawBitmap(bitmap, srcRect, dstRect, null);
     }
 
+    private RectF dstToDrawAABB = new RectF();
     public void drawAABB(Canvas canvas, float x, float y){
-        RectF dst = getAABB(x,y);
-        canvas.drawRect(dst, paint);
-    }
-    public RectF getAABB(float x, float y){
-        int hw = getWidth() / 2;
-        int hh = getHeight() / 2;
-        RectF dst = new RectF(x - hw,y - hh, x + hw, y + hh);
-        return dst;
+        getBoundingRect(x,y, dstToDrawAABB);
+        canvas.drawRect(dstToDrawAABB, paint);
     }
 
     public int getWidth(){
-        return frameWidth* PIXEL_MULTIPLIER;
+        return frameWidth;
     }
-    public int getHeight(){
-        return imageHeight * PIXEL_MULTIPLIER;
+    public int getHeight() {
+        return imageHeight;
     }
 }
