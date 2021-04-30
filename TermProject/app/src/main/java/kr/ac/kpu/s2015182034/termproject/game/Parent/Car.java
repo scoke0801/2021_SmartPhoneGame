@@ -33,7 +33,11 @@ public class Car implements GameObject, BoxCollidable, Recyclable {
             "Car", "Ambulance", "PoliceCar", "Excavator", "Truck"
     };
     private static int[] CAR_RESOURCES = new int[]{
-            R.mipmap.car_digger_left, R.mipmap.car_digger_right
+            R.mipmap.car_left, R.mipmap.car_right,
+            R.mipmap.ambulance_left, R.mipmap.ambulance_right,
+            R.mipmap.police_car_left, R.mipmap.police_car_right,
+            R.mipmap.excavator_left, R.mipmap.excavator_right,
+            R.mipmap.truck_left, R.mipmap.truck_right
     };
 
     protected Car(String type, float x, float y, boolean isLeft) {
@@ -79,10 +83,10 @@ public class Car implements GameObject, BoxCollidable, Recyclable {
         if(bitmap == null) {
             Resources res = GameView.view.getResources();
             if(isLeft) {
-                bitmap = new AnimationBitmap(R.mipmap.car_digger_left, FRAME_RATE, 1);
+                bitmap = new AnimationBitmap(R.mipmap.truck_left, FRAME_RATE, 1);
             }
             else{
-                bitmap = new AnimationBitmap(R.mipmap.car_digger_right, FRAME_RATE, 1);
+                bitmap = new AnimationBitmap(R.mipmap.truck_right, FRAME_RATE, 1);
             }
             this.sx = bitmap.getWidth();
             this.sy = bitmap.getHeight();

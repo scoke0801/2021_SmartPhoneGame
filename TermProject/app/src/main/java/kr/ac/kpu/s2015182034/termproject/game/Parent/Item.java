@@ -29,10 +29,10 @@ public class Item implements GameObject, BoxCollidable, Recyclable {
     protected float spriteIdx = 0;
 
     private String[] ITEM_TYPE = new String[]{
-            "Blinker", "Barrier", "Coin",
+            "Coin", "Barrier", "Blinker",
     };
     private static int[] ITEM_RESOURCES = new int[]{
-            R.mipmap.car_digger_left, R.mipmap.car_digger_right
+            R.mipmap.coin, R.mipmap.barrier, R.mipmap.blinker
     };
 
     protected Item(String type, float x, float y) {
@@ -75,10 +75,10 @@ public class Item implements GameObject, BoxCollidable, Recyclable {
         if(bitmap == null) {
             Resources res = GameView.view.getResources();
             if(isLeft) {
-                bitmap = new AnimationBitmap(R.mipmap.car_digger_left, FRAME_RATE, 1);
+                bitmap = new AnimationBitmap(R.mipmap.truck_left, FRAME_RATE, 1);
             }
             else{
-                bitmap = new AnimationBitmap(R.mipmap.car_digger_right, FRAME_RATE, 1);
+                bitmap = new AnimationBitmap(R.mipmap.truck_right, FRAME_RATE, 1);
             }
             this.sx = bitmap.getWidth();
             this.sy = bitmap.getHeight();
