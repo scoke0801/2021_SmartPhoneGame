@@ -29,12 +29,13 @@ public class Player implements GameObject, BoxCollidable {
 
     private static float FRAME_RATE = 8.5f; // 1초당 8.5장의 속도로 애니메이션을 수행하도록
 
-    private float angle = 0;
+    private static float angle = 0;
     private static float speed = (float)100.0;
-    private boolean isOnMove;
+    private static boolean isOnMove;
 
     private float spriteIdx = 0;
 
+    private static float remainBarrierTime = 0.0f;
     public Player(float x, float y, float dx, float dy) {
         this.x = x;
         this.y = y;
@@ -80,8 +81,8 @@ public class Player implements GameObject, BoxCollidable {
     }
 
     public void update() {
+        float frameTime = MainGame.get().frameTime;
         if (isOnMove){
-            float frameTime = MainGame.get().frameTime;
             spriteIdx += 3 * frameTime;
             if (spriteIdx > 3) {
                 spriteIdx = 0;
@@ -89,6 +90,10 @@ public class Player implements GameObject, BoxCollidable {
         }
         else{
             spriteIdx = 0;
+        }
+        remainBarrierTime += frameTime;
+        if(remainBarrierTime < 0.0f){
+            remainBarrierTime = 0.0f;
         }
         x += dx;
         y += dy;
@@ -136,5 +141,13 @@ public class Player implements GameObject, BoxCollidable {
     @Override
     public void getBoundingRect(RectF rect) {
         bitmap.getBoundingRect(x, y, rect);
+    }
+
+    // 아이템 - Barrier를 획득하였을 경우
+    void SetBarrier(float barrierTime){
+        remainBarrierTime += barrierTime;
+    }
+    boolean IsOnBarrier(){
+        return (remainBarrierTime > 0.0f);
     }
 }

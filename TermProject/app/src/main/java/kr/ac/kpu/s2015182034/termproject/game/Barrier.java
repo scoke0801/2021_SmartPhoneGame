@@ -7,37 +7,28 @@ import kr.ac.kpu.s2015182034.termproject.game.Parent.Item;
 import kr.ac.kpu.s2015182034.termproject.ui.view.GameView;
 
 public class Barrier extends Item {
+
+    private static final float LIFE_TIME = 1.5f;
+    private static float remainLifeTime = LIFE_TIME;
+
     Barrier(String type, float x, float y, boolean isLeft){
         super();
     }
 
     @Override
     public void update() {
-        if (isOnMove){
-        }
-        else{
-        }
-        float dx = MainGame.get().frameTime * this.speed;
-        if(isLeft){
-            dx = -dx;
-        }
-        x += dx;
+        float frameTime = MainGame.get().frameTime;
+        remainLifeTime -= frameTime;
 
-        int w = GameView.view.getWidth();
-        if(isLeft){
-            if( x < 0) {
-                this.x = w;
-            }
-        }
-        else{
-            if(x > w){
-                this.x = 0;
-            }
+        if (remainLifeTime < 0.0f){
+            MainGame.get().remove(this);
         }
     }
 
     public void draw(Canvas canvas) {
-        bitmap.draw(canvas, x, y);
-        bitmap.drawAABB(canvas, x, y);
+        if(remainLifeTime > 0.0f) {
+            bitmap.draw(canvas, x, y);
+            bitmap.drawAABB(canvas, x, y);
+        }
     }
 }

@@ -11,33 +11,17 @@ public class Blinker extends Item {
         super();
     }
 
-    @Override
-    public void update() {
-        if (isOnMove){
-        }
-        else{
-        }
-        float dx = MainGame.get().frameTime * this.speed;
-        if(isLeft){
-            dx = -dx;
-        }
-        x += dx;
+//   @Override
+//    public void update() {
+//        float dx = MainGame.get().frameTime * this.speed;
+//        if(isLeft){
+//            dx = -dx;
+//        }
+//        x += dx;
+//    }
 
-        int w = GameView.view.getWidth();
-        if(isLeft){
-            if( x < 0) {
-                this.x = w;
-            }
-        }
-        else{
-            if(x > w){
-                this.x = 0;
-            }
-        }
-    }
-
-    public void draw(Canvas canvas) {
-        bitmap.draw(canvas, x, y);
-        bitmap.drawAABB(canvas, x, y);
-    }
+//    public void draw(Canvas canvas) {
+//        bitmap.draw(canvas, x, y);
+//        bitmap.drawAABB(canvas, x, y);
+//    }
 }
