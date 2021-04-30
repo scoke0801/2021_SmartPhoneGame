@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
         scoreTextView = findViewById(R.id.scoreTextView);
 
         Log.d(TAG, "onCreate Called");
-
         startGame();
     }
 

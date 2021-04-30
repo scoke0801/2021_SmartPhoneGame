@@ -58,11 +58,11 @@ public class MainGame {
         // test codes
         int carSizeH = 170;
         for(int i = 0; i < 10; i += 2){
-            Car car = Car.get(0,carSizeH * (i+1), false);
+            Car car = Car.get("Car",0,carSizeH * (i+1), false);
             objects.add(car);
         }
         for(int i = 1; i < 10; i += 2){
-            Car car = Car.get(w, carSizeH * (i+1), true);
+            Car car = Car.get("Car",w, carSizeH * (i+1), true);
             objects.add(car);
         }
 

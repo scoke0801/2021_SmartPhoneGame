@@ -42,7 +42,7 @@ public class CarGenerator implements GameObject {
             int level = wave / 10 - r.nextInt(3);
             if(level < 1) level = 1;
             if(level > 20) level = 20;
-            Car car = Car.get(x, y, false);
+            Car car = Car.get("Car", x, y, false);
             game.add(car);
         }
     }
