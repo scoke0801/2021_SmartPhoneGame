@@ -3,6 +3,7 @@ package kr.ac.kpu.s2015182034.termproject.game;
 import android.graphics.Canvas;
 
 import kr.ac.kpu.s2015182034.termproject.framework.MainGame;
+import kr.ac.kpu.s2015182034.termproject.game.Parent.Item;
 import kr.ac.kpu.s2015182034.termproject.ui.view.GameView;
 
 public class Blinker extends Item {

@@ -3,9 +3,10 @@ package kr.ac.kpu.s2015182034.termproject.game;
 import android.graphics.Canvas;
 
 import kr.ac.kpu.s2015182034.termproject.framework.MainGame;
+import kr.ac.kpu.s2015182034.termproject.game.Parent.Car;
 import kr.ac.kpu.s2015182034.termproject.ui.view.GameView;
 
-public class PoliceCar extends Car{
+public class PoliceCar extends Car {
     PoliceCar(String type, float x, float y, boolean isLeft){
         super();
     }

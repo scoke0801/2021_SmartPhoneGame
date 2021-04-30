@@ -1,8 +1,7 @@
-package kr.ac.kpu.s2015182034.termproject.game;
+package kr.ac.kpu.s2015182034.termproject.game.Parent;
 
 import android.content.res.Resources;
 import android.graphics.Canvas;
-import android.graphics.Rect;
 import android.graphics.RectF;
 
 import java.util.Random;
@@ -10,13 +9,12 @@ import java.util.Random;
 import kr.ac.kpu.s2015182034.termproject.R;
 import kr.ac.kpu.s2015182034.termproject.animation.AnimationBitmap;
 import kr.ac.kpu.s2015182034.termproject.framework.BoxCollidable;
-import kr.ac.kpu.s2015182034.termproject.framework.CalculateFunctions;
 import kr.ac.kpu.s2015182034.termproject.framework.GameObject;
 import kr.ac.kpu.s2015182034.termproject.framework.MainGame;
 import kr.ac.kpu.s2015182034.termproject.framework.Recyclable;
 import kr.ac.kpu.s2015182034.termproject.ui.view.GameView;
 
-public class Car implements GameObject, BoxCollidable, Recyclable {
+public class Item implements GameObject, BoxCollidable, Recyclable {
     protected float x, y;   // 위치
 
     protected int sx, sy; // 크기
@@ -27,35 +25,32 @@ public class Car implements GameObject, BoxCollidable, Recyclable {
     private static float FRAME_RATE = 8.5f; // 1초당 8.5장의 속도로 애니메이션을 수행하도록
 
     protected float speed;
-    protected boolean isOnMove;
 
     protected float spriteIdx = 0;
 
-    private String[] CAR_TYPE = new String[]{
-            "Car", "Ambulance", "PoliceCar", "Excavator", "Truck"
+    private String[] ITEM_TYPE = new String[]{
+            "Blinker", "Barrier", "Coin",
     };
-    private static int[] CAR_RESOURCES = new int[]{
+    private static int[] ITEM_RESOURCES = new int[]{
             R.mipmap.car_digger_left, R.mipmap.car_digger_right
     };
 
-    protected Car(String type, float x, float y, boolean isLeft) {
+    protected Item(String type, float x, float y) {
         this.x = x;
         this.y = y;
-        this.isOnMove = false;
         Random r = new Random();
         this.speed = r.nextInt(200) + 100;
-        this.isLeft = isLeft;
         if (bitmap == null) {
             Resources res = GameView.view.getResources();
             int resId = -1;
             int index = -1;
-            for(int i = 0; i < CAR_TYPE.length; ++i){
-                if (CAR_TYPE[i] == type){
+            for(int i = 0; i < ITEM_TYPE.length; ++i){
+                if (ITEM_TYPE[i] == type){
                     index = i;
                     break;
                 }
             }
-            resId = CAR_RESOURCES[index];
+            resId = ITEM_RESOURCES[index];
             bitmap = new AnimationBitmap(resId, FRAME_RATE, 1);
         }
         this.sx = bitmap.getWidth();
@@ -64,17 +59,16 @@ public class Car implements GameObject, BoxCollidable, Recyclable {
 
 
 
-    protected Car() {
+    protected Item() {
 
     }
 
-    private void init(String type, float x, float y, boolean isLeft) {
+    private void init(String type, float x, float y) {
         this.x = x;
         this.y = y;
         if(speed < 0){
             speed = -speed;
         }
-        this.isOnMove = false;
         Random r = new Random();
         this.speed = r.nextInt(200) + 100;
         this.isLeft = isLeft;
@@ -90,39 +84,21 @@ public class Car implements GameObject, BoxCollidable, Recyclable {
             this.sy = bitmap.getHeight();
         }
     }
-    public static Car get(String type, float x, float y, boolean isLef){
+    public static Item get(String type, float x, float y){
         MainGame game = MainGame.get();
-        Car car  = (Car)game.get(Car.class);
-        if(car == null){
-            car = new Car(type, x,y,isLef);
+        Item item  = (Item)game.get(Item.class);
+        if(item == null){
+            item = new Item(type, x,y);
         }
         else{
-            car.init(type, x,y,isLef);
+            item.init(type, x,y);
         }
-        return car;
+        return item;
     }
     public void update() {
-        if (isOnMove){
-        }
-        else{
-        }
-        float dx = MainGame.get().frameTime * this.speed;
-        if(isLeft){
-            dx = -dx;
-        }
-        x += dx;
-
-        int w = GameView.view.getWidth();
-        if(isLeft){
-            if( x < 0) {
-                this.x = w;
-            }
-        }
-        else{
-            if(x > w){
-                this.x = 0;
-            }
-        }
+        // 아이템은 위아래로 둥실거리게만...
+        float dy = MainGame.get().frameTime * this.speed;
+        this.y += dy;
     }
 
     public void draw(Canvas canvas) {

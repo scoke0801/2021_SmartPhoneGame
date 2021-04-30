@@ -7,9 +7,8 @@ import android.view.MotionEvent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Random;
 
-import kr.ac.kpu.s2015182034.termproject.game.Car;
+import kr.ac.kpu.s2015182034.termproject.game.Parent.Car;
 import kr.ac.kpu.s2015182034.termproject.game.Player;
 import kr.ac.kpu.s2015182034.termproject.ui.view.GameView;
 import kr.ac.kpu.s2015182034.termproject.utils.CollisionHelper;

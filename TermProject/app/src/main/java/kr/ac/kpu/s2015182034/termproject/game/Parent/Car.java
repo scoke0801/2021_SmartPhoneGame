@@ -1,4 +1,4 @@
-package kr.ac.kpu.s2015182034.termproject.game;
+package kr.ac.kpu.s2015182034.termproject.game.Parent;
 
 import android.content.res.Resources;
 import android.graphics.Canvas;
@@ -14,7 +14,7 @@ import kr.ac.kpu.s2015182034.termproject.framework.MainGame;
 import kr.ac.kpu.s2015182034.termproject.framework.Recyclable;
 import kr.ac.kpu.s2015182034.termproject.ui.view.GameView;
 
-public class Item implements GameObject, BoxCollidable, Recyclable {
+public class Car implements GameObject, BoxCollidable, Recyclable {
     protected float x, y;   // 위치
 
     protected int sx, sy; // 크기
@@ -29,30 +29,31 @@ public class Item implements GameObject, BoxCollidable, Recyclable {
 
     protected float spriteIdx = 0;
 
-    private String[] ITEM_TYPE = new String[]{
-            "Blinker", "Barrier", "Coin",
+    private String[] CAR_TYPE = new String[]{
+            "Car", "Ambulance", "PoliceCar", "Excavator", "Truck"
     };
-    private static int[] ITEM_RESOURCES = new int[]{
+    private static int[] CAR_RESOURCES = new int[]{
             R.mipmap.car_digger_left, R.mipmap.car_digger_right
     };
 
-    protected Item(String type, float x, float y) {
+    protected Car(String type, float x, float y, boolean isLeft) {
         this.x = x;
         this.y = y;
         this.isOnMove = false;
         Random r = new Random();
         this.speed = r.nextInt(200) + 100;
+        this.isLeft = isLeft;
         if (bitmap == null) {
             Resources res = GameView.view.getResources();
             int resId = -1;
             int index = -1;
-            for(int i = 0; i < ITEM_TYPE.length; ++i){
-                if (ITEM_TYPE[i] == type){
+            for(int i = 0; i < CAR_TYPE.length; ++i){
+                if (CAR_TYPE[i] == type){
                     index = i;
                     break;
                 }
             }
-            resId = ITEM_RESOURCES[index];
+            resId = CAR_RESOURCES[index];
             bitmap = new AnimationBitmap(resId, FRAME_RATE, 1);
         }
         this.sx = bitmap.getWidth();
@@ -61,11 +62,11 @@ public class Item implements GameObject, BoxCollidable, Recyclable {
 
 
 
-    protected Item() {
+    protected Car() {
 
     }
 
-    private void init(String type, float x, float y) {
+    private void init(String type, float x, float y, boolean isLeft) {
         this.x = x;
         this.y = y;
         if(speed < 0){
@@ -87,14 +88,14 @@ public class Item implements GameObject, BoxCollidable, Recyclable {
             this.sy = bitmap.getHeight();
         }
     }
-    public static Item get(String type, float x, float y){
+    public static Car get(String type, float x, float y, boolean isLef){
         MainGame game = MainGame.get();
-        Item car  = (Item)game.get(Item.class);
+        Car car  = (Car)game.get(Car.class);
         if(car == null){
-            car = new Item(type, x,y);
+            car = new Car(type, x,y,isLef);
         }
         else{
-            car.init(type, x,y);
+            car.init(type, x,y,isLef);
         }
         return car;
     }

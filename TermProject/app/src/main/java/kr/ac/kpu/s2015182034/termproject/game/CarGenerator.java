@@ -7,6 +7,7 @@ import java.util.Random;
 
 import kr.ac.kpu.s2015182034.termproject.framework.GameObject;
 import kr.ac.kpu.s2015182034.termproject.framework.MainGame;
+import kr.ac.kpu.s2015182034.termproject.game.Parent.Car;
 import kr.ac.kpu.s2015182034.termproject.ui.view.GameView;
 
 public class CarGenerator implements GameObject {
