@@ -43,6 +43,27 @@ public class GameView extends View {
     }
 
     private void doGameFrame() {
+//         Handler handler = new Handler();
+//         MainGame.get().update();
+//         invalidate();
+//         handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                doGameFrame();
+//            }
+//        }, 15);
+//        --------------------------------------------------------------
+//        Handler handler = new Handler();
+//        MainGame.get().update();
+//        invalidate();
+//        postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                doGameFrame();
+//            }
+//        } , 15);
+
+
         MainGame.get().update();
         invalidate();
 
