@@ -16,7 +16,7 @@ public class Score implements GameObject {
     private final int right;
     private final int top;
 
-    private int score = 0;
+    private int score = 0, displayScore = 0;
     private Rect rectSrc = new Rect();
     private RectF rectDst = new RectF();
 
@@ -33,18 +33,21 @@ public class Score implements GameObject {
 
     public void setScore(int score) {
         this.score = score;
+        this.displayScore = score;
     }
     public void addScore(int score) {
         this.score += score;
     }
     @Override
     public void update() {
-
+        if(displayScore < score){
+            displayScore++;
+        }
     }
 
     @Override
     public void draw(Canvas canvas) {
-        int value = this.score;
+        int value = this.displayScore;
         int nw = bitmap.getWidth() / 10;
         int nh = bitmap.getHeight();
         int x = right;

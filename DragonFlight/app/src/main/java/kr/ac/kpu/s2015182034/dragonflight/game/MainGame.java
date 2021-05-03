@@ -99,7 +99,7 @@ public class MainGame {
                     remove(bullet);
                     remove(enemy);
                     isEnemyRemoved = true;
-                    score.addScore(1);
+                    score.addScore(100);
                     break;
                 }
             }
