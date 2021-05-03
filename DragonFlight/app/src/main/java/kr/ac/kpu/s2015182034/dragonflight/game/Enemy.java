@@ -23,25 +23,17 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
     private float x;
     private float y;
     private int level;
-    private Enemy(int level, float x, float y, int speed){
-        this.x = x;
-        this.y = y;
-        this.speed = speed;
-        this.level = level;
-        int resId =  RESOURCE_IDS[level - 1];
-        this.bitmap = new AnimationGameBitmap(resId,
-                FRMAES_PRE_SECOND, 0);
+    private Enemy(){
     }
     public static Enemy get(int level, float x, float y, int speed){
         MainGame game = MainGame.get();
         Enemy enemy  = (Enemy)game.get(Enemy.class);
         if(speed < 0) speed = -speed;
         if(enemy == null){
-            enemy = new Enemy(level,x,y,speed);
+            enemy = new Enemy();
         }
-        else{
-            enemy.init(level, x,y,speed);
-        }
+        enemy.init(level, x,y,speed);
+
         return enemy;
     }
 

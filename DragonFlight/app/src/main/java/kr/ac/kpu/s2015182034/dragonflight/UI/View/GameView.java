@@ -32,61 +32,46 @@ public class GameView extends View {
 
         Sound.init(context);
 
-        MainGame game = MainGame.get();
+        //MainGame game = MainGame.get();
         //game.InitResources();
 
-        startUpdating();
+       // startUpdating();
     }
 
-    private void startUpdating() {
-        doGameFrame();
-    }
+    //private void startUpdating() {
+    //    doGameFrame();
+    //}
 
-    private void doGameFrame() {
-//         Handler handler = new Handler();
-//         MainGame.get().update();
-//         invalidate();
-//         handler.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                doGameFrame();
-//            }
-//        }, 15);
-//        --------------------------------------------------------------
-//        Handler handler = new Handler();
-//        MainGame.get().update();
-//        invalidate();
-//        postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                doGameFrame();
-//            }
-//        } , 15);
+    private void update() {
+        MainGame game = MainGame.get();
+        game.update();
 
-
-        MainGame.get().update();
         invalidate();
-
-        Choreographer.getInstance().postFrameCallback(
-                new Choreographer.FrameCallback() {
-                    @Override
-                    public void doFrame(long time) {
-                        if(lastFrame == 0) {
-                            lastFrame = time;
-                        }
-                        // time의 단위가 나노 초임... fraem 계산은 밀리 초..
-                        MainGame.get().frameTime = (float)(time - lastFrame) / 1_000_000_000;
-                        doGameFrame();
-                        lastFrame = time;
-                    }
-                });
     }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        MainGame.get().initResources();
+        MainGame game = MainGame.get();
+        boolean justInitialized = game.initResources();
+        if (justInitialized) {
+            requestCallback();
+        }
     }
-
+    private void requestCallback() {
+        Choreographer.getInstance().postFrameCallback(new Choreographer.FrameCallback() {
+            @Override
+            public void doFrame(long time) {
+                if (lastFrame == 0) {
+                    lastFrame = time;
+                }
+                MainGame game = MainGame.get();
+                game.frameTime = (float) (time - lastFrame) / 1_000_000_000;
+                update();
+                lastFrame = time;
+                requestCallback();
+            }
+        });
+    }
     @Override
     protected void onDraw(Canvas canvas) {
         MainGame.get().draw(canvas);
