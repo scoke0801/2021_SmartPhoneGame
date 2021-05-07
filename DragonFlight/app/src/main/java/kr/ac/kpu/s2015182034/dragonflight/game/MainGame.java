@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import kr.ac.kpu.s2015182034.dragonflight.UI.View.GameView;
-import kr.ac.kpu.s2015182034.dragonflight.framework.BoxCollidable;
 import kr.ac.kpu.s2015182034.dragonflight.framework.GameObject;
 import kr.ac.kpu.s2015182034.dragonflight.framework.Recyclable;
 import kr.ac.kpu.s2015182034.dragonflight.utils.CollisionHelper;
@@ -166,21 +165,22 @@ public class MainGame {
     }
 
     public void remove(GameObject gameObject) {
-        if(gameObject instanceof Recyclable){
-            ((Recyclable)gameObject).recyle();
-            recycle(gameObject);
-        }
-        GameView.view.post(new Runnable() {
+        Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                for(ArrayList<GameObject> objects : layers){
+                for (ArrayList<GameObject> objects : layers) {
                     boolean removed = objects.remove(gameObject);
-                    if(removed){
+                    if (removed) {
+                        if (gameObject instanceof Recyclable) {
+                            ((Recyclable) gameObject).recyle();
+                            recycle(gameObject);
+                        }
+                        //Log.d(TAG, "Removed: " + gameObject);
                         break;
                     }
                 }
-                Log.d(TAG, "<R> object count = " + layers.size());
             }
-        });
-    }
+        };
+        GameView.view.post(runnable);
+    };
 }

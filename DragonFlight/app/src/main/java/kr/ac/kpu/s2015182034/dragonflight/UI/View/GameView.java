@@ -22,7 +22,7 @@ public class GameView extends View {
     private long lastFrame;
 
     public static GameView view;
-    public static final float MULTIPLIER = 2;
+    public static float MULTIPLIER = 2;
 
     // 생성자 종류, 필요에 맞게 정의 필요
     public GameView(Context context, @Nullable AttributeSet attrs) {

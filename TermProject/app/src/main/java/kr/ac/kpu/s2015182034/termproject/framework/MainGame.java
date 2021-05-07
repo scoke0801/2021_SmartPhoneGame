@@ -8,7 +8,11 @@ import android.view.MotionEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import kr.ac.kpu.s2015182034.termproject.game.Barrier;
+import kr.ac.kpu.s2015182034.termproject.game.Blinker;
+import kr.ac.kpu.s2015182034.termproject.game.Coin;
 import kr.ac.kpu.s2015182034.termproject.game.Parent.Car;
+import kr.ac.kpu.s2015182034.termproject.game.Parent.Item;
 import kr.ac.kpu.s2015182034.termproject.game.Player;
 import kr.ac.kpu.s2015182034.termproject.game.Score;
 import kr.ac.kpu.s2015182034.termproject.ui.view.GameView;
@@ -21,7 +25,7 @@ public class MainGame {
     private boolean initialized = false;
 
     public enum Layer{
-        car, bullet, player, ui, controller, COUNT
+        car, bullet, item, player, ui, controller, COUNT
     }
     private ArrayList<ArrayList<GameObject>> layers;
     private Player player;
@@ -83,6 +87,12 @@ public class MainGame {
         score.setScore(0);
         add(Layer.ui, score);
 
+//        Barrier barrier = Barrier.get("Barrier", 500, 500);
+//        add(Layer.item, barrier);
+//        Coin coin = Coin.get("Coin", 500, 500);
+//        add(Layer.item, coin);
+//        Blinker blinker = Blinker.get("Blinker", 500, 500);
+//        add(Layer.item, blinker);
         this.initialized = true;
     }
 
@@ -145,23 +155,24 @@ public class MainGame {
     }
 
     public void remove(GameObject gameObject) {
-        if(gameObject instanceof Recyclable){
-            ((Recyclable)gameObject).recyle();
-            recycle(gameObject);
-        }
-        GameView.view.post(new Runnable() {
+        Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                for(ArrayList<GameObject> objects : layers){
+                for (ArrayList<GameObject> objects : layers) {
                     boolean removed = objects.remove(gameObject);
-                    if(removed){
+                    if (removed) {
+                        if (gameObject instanceof Recyclable) {
+                            ((Recyclable) gameObject).recyle();
+                            recycle(gameObject);
+                        }
+                        //Log.d(TAG, "Removed: " + gameObject);
                         break;
                     }
                 }
-                Log.d(TAG, "<R> object count = " + layers.size());
             }
-        });
-    }
+        };
+        GameView.view.post(runnable);
+    };
 
     // 아이템 - Coin을 획득한 경우 점수를 증가시킨다
     public void IncreatePoint(int score){
