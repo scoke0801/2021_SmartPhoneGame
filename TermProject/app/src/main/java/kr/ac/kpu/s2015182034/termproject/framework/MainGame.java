@@ -19,8 +19,12 @@ public class MainGame {
     public static float remainBlinkTime = 0.0f;
 
     private boolean initialized = false;
+
+    public enum Layer{
+        car, bullet, player, ui, controller, COUNT
+    }
+    ArrayList<ArrayList<GameObject>> layers;
     Player player;
-    ArrayList<GameObject> objects = new ArrayList<>();
 
     private static HashMap<Class, ArrayList<GameObject>> reclycleBin = new HashMap<>();
 
@@ -54,6 +58,8 @@ public class MainGame {
         if(this.initialized){
             return;
         }
+        initLayers(Layer.COUNT.ordinal());
+
         int w = GameView.view.getWidth();
         int h = GameView.view.getHeight();
 
@@ -61,46 +67,36 @@ public class MainGame {
         int carSizeH = 170;
         for(int i = 0; i < 10; i += 2){
             Car car = Car.get("Car",0,carSizeH * (i+1), false);
-            objects.add(car);
+            add(Layer.car, car);
         }
         for(int i = 1; i < 10; i += 2){
             Car car = Car.get("Car",w, carSizeH * (i+1), true);
-            objects.add(car);
+            add(Layer.car, car);
         }
 
         player = new Player(w/ 2, h/2, 0,0);
-        objects.add(player);
+        add(Layer.player, player);
 
         this.initialized = true;
     }
 
+    private void initLayers(int layerCount) {
+        layers = new ArrayList<>();
+        for (int i = 0; i < layerCount; i++) {
+            layers.add(new ArrayList<>());
+        }
+    }
     public void update() {
         if(this.initialized == false) return;
 
-        for(GameObject o : objects){
-            o.update();
+        for (ArrayList<GameObject> objects: layers) {
+            for (GameObject o : objects) {
+                o.update();
+            }
         }
-
-        boolean removed = false;
-        for (GameObject o1 : objects) {
-            if(!(o1 instanceof Car)){
-                continue;
-            }
-            /*Car enemy = (Car)o1;
-            for(GameObject o2 : objects){
-                Bullet bullet = (Bullet)o2;
-                if(CollisionHelper.collides((BoxCollidable)o1, (BoxCollidable)o2)){
-                    Log.d(TAG, "Collision!! "  + o1 + " - " + o2);
-                    remove(enemy);
-                    remove(bullet);
-                    //bullet.doRecycle();
-                    removed = true;
-                    break;
-                }
-            }
-            if(removed){
-                continue;
-            }*/
+        ArrayList<GameObject> enemies = layers.get(Layer.car.ordinal());
+        for(GameObject o1 : enemies){
+            Car enemy = (Car) o1;
             if(CollisionHelper.collides((BoxCollidable)o1, player)){
                 Log.d(TAG, "Collision!! Enemy - player" );
             }
@@ -110,8 +106,10 @@ public class MainGame {
     public void draw(Canvas canvas) {
         if(this.initialized == false) return;
 
-        for(GameObject object : objects) {
-            object.draw(canvas);
+        for(ArrayList<GameObject> objects : layers){
+            for (GameObject o : objects) {
+                o.draw(canvas);
+            }
         }
     }
 
@@ -130,14 +128,14 @@ public class MainGame {
         return false;
     }
 
-    public void add(GameObject gameObject){
+    public void add(Layer layer, GameObject gameObject){
         GameView.view.post(new Runnable(){
             @Override
             public void run(){
+                ArrayList<GameObject> objects = layers.get(layer.ordinal());
                 objects.add(gameObject);
             }
         });
-        Log.d(TAG, "<A> object count = " + objects.size());
     }
 
     public void remove(GameObject gameObject) {
@@ -148,8 +146,13 @@ public class MainGame {
         GameView.view.post(new Runnable() {
             @Override
             public void run() {
-                objects.remove(gameObject);
-                Log.d(TAG, "<R> object count = " + objects.size());
+                for(ArrayList<GameObject> objects : layers){
+                    boolean removed = objects.remove(gameObject);
+                    if(removed){
+                        break;
+                    }
+                }
+                Log.d(TAG, "<R> object count = " + layers.size());
             }
         });
     }

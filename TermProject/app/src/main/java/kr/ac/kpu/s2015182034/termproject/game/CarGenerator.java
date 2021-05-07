@@ -44,7 +44,7 @@ public class CarGenerator implements GameObject {
             if(level < 1) level = 1;
             if(level > 20) level = 20;
             Car car = Car.get("Car", x, y, false);
-            game.add(car);
+            MainGame.get().add(MainGame.Layer.car, car);
         }
     }
 
