@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import kr.ac.kpu.s2015182034.termproject.R;
+import kr.ac.kpu.s2015182034.termproject.game.Barrier;
+import kr.ac.kpu.s2015182034.termproject.game.Blinker;
+import kr.ac.kpu.s2015182034.termproject.game.Coin;
 import kr.ac.kpu.s2015182034.termproject.game.Parent.Car;
 import kr.ac.kpu.s2015182034.termproject.game.Player;
 import kr.ac.kpu.s2015182034.termproject.game.Score;
@@ -88,6 +91,12 @@ public class MainGame {
         VerticalScrollBackground bg = new VerticalScrollBackground(R.mipmap.map_1, 10);
         add(Layer.map, bg);
 
+        Coin coin = Coin.get("Coin", 60, 60);
+        add(Layer.item, coin);
+        Barrier barrier = Barrier.get("Barrier", 60, 120);
+        add(Layer.item, barrier);
+        Blinker blinker = Blinker.get("Blinker", 60, 180);
+        add(Layer.item, blinker);
         this.initialized = true;
         return true;
     }

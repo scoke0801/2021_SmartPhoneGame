@@ -22,7 +22,7 @@ public class Item implements GameObject, BoxCollidable, Recyclable {
     protected boolean isLeft;
     protected AnimationBitmap bitmap;
 
-    private static float FRAME_RATE = 8.5f; // 1초당 8.5장의 속도로 애니메이션을 수행하도록
+    protected static float FRAME_RATE = 8.5f; // 1초당 8.5장의 속도로 애니메이션을 수행하도록
 
     protected float speed;
 
@@ -35,7 +35,7 @@ public class Item implements GameObject, BoxCollidable, Recyclable {
             R.mipmap.coin, R.mipmap.barrier, R.mipmap.blinker
     };
 
-    protected Item(String type, float x, float y) {
+    protected Item(String type, float x, float y, int frameCount) {
         this.x = x;
         this.y = y;
         Random r = new Random();
@@ -51,7 +51,7 @@ public class Item implements GameObject, BoxCollidable, Recyclable {
                 }
             }
             resId = ITEM_RESOURCES[index];
-            bitmap = new AnimationBitmap(resId, FRAME_RATE, 1);
+            bitmap = new AnimationBitmap(resId, FRAME_RATE, frameCount);
         }
         this.sx = bitmap.getWidth();
         this.sy = bitmap.getHeight();
@@ -88,7 +88,7 @@ public class Item implements GameObject, BoxCollidable, Recyclable {
         MainGame game = MainGame.get();
         Item item  = (Item)game.get(Item.class);
         if(item == null){
-            item = new Item(type, x,y);
+            item = new Item(type, x,y, 1);
         }
         else{
             item.init(type, x,y);
