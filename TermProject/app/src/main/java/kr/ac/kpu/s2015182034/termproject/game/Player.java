@@ -144,10 +144,16 @@ public class Player implements GameObject, BoxCollidable {
     }
 
     // 아이템 - Barrier를 획득하였을 경우
-    void SetBarrier(float barrierTime){
+    public void SetBarrier(float barrierTime){
         remainBarrierTime += barrierTime;
     }
-    boolean IsOnBarrier(){
+    public boolean IsOnBarrier(){
         return (remainBarrierTime > 0.0f);
+    }
+    public float GetXPos(){
+        return x;
+    }
+    public float GetYPos(){
+        return y;
     }
 }

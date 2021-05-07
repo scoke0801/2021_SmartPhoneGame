@@ -28,6 +28,9 @@ public class Item implements GameObject, BoxCollidable, Recyclable {
 
     protected float spriteIdx = 0;
 
+    private int count = 0;
+    private boolean isUpMove = true;
+    protected String typeName;
     private String[] ITEM_TYPE = new String[]{
             "Coin", "Barrier", "Blinker",
     };
@@ -38,6 +41,7 @@ public class Item implements GameObject, BoxCollidable, Recyclable {
     protected Item(String type, float x, float y, int frameCount) {
         this.x = x;
         this.y = y;
+        this.typeName = type;
         Random r = new Random();
         this.speed = r.nextInt(200) + 100;
         if (bitmap == null) {
@@ -57,15 +61,10 @@ public class Item implements GameObject, BoxCollidable, Recyclable {
         this.sy = bitmap.getHeight();
     }
 
-
-
-    protected Item() {
-
-    }
-
     private void init(String type, float x, float y) {
         this.x = x;
         this.y = y;
+        this.typeName = type;
         if(speed < 0){
             speed = -speed;
         }
@@ -96,9 +95,17 @@ public class Item implements GameObject, BoxCollidable, Recyclable {
         return item;
     }
     public void update() {
-        // 아이템은 위아래로 둥실거리게만...
-        float dy = MainGame.get().frameTime * this.speed;
-        this.y += dy;
+        ++count;
+        if(isUpMove){
+            y += 0.3;
+        }
+        else{
+            y -= 0.3;
+        }
+        if (count > 50){
+            count = 0;
+            isUpMove = !isUpMove;
+        }
     }
 
     public void draw(Canvas canvas) {
@@ -118,5 +125,13 @@ public class Item implements GameObject, BoxCollidable, Recyclable {
     @Override
     public void recyle() {
         // To do
+    }
+    public String GetTypeName(){
+        return typeName;
+    }
+
+    public void SetPosition(float x, float y){
+        this.x = x;
+        this.y = y;
     }
 }

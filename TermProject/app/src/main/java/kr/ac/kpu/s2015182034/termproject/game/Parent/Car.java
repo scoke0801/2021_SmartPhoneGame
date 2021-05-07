@@ -24,20 +24,23 @@ public class Car implements GameObject, BoxCollidable, Recyclable {
 
     private static float FRAME_RATE = 8.5f; // 1초당 8.5장의 속도로 애니메이션을 수행하도록
 
+    protected float remainStopTime = 0.0f;
+
     protected float speed;
     protected boolean isOnMove;
 
     protected float spriteIdx = 0;
 
+    protected boolean isOnStop = false;
     private String[] CAR_TYPE = new String[]{
             "Car", "Ambulance", "PoliceCar", "Excavator", "Truck"
     };
     private static int[] CAR_RESOURCES = new int[]{
-            R.mipmap.car_left, R.mipmap.car_right,
-            R.mipmap.ambulance_left, R.mipmap.ambulance_right,
-            R.mipmap.police_car_left, R.mipmap.police_car_right,
-            R.mipmap.excavator_left, R.mipmap.excavator_right,
-            R.mipmap.truck_left, R.mipmap.truck_right
+            R.mipmap.car_right,         R.mipmap.car_left,
+            R.mipmap.ambulance_right,  R.mipmap.ambulance_left,
+            R.mipmap.police_car_right,R.mipmap.police_car_left,
+            R.mipmap.excavator_right, R.mipmap.excavator_left,
+            R.mipmap.truck_right, R.mipmap.truck_left
     };
 
     protected Car(String type, float x, float y, boolean isLeft) {
@@ -57,14 +60,15 @@ public class Car implements GameObject, BoxCollidable, Recyclable {
                     break;
                 }
             }
+            if(isLeft) {
+                index += 1;
+            }
             resId = CAR_RESOURCES[index];
             bitmap = new AnimationBitmap(resId, FRAME_RATE, 1);
         }
         this.sx = bitmap.getWidth();
         this.sy = bitmap.getHeight();
     }
-
-
 
     protected Car() {
 
@@ -104,25 +108,28 @@ public class Car implements GameObject, BoxCollidable, Recyclable {
         return car;
     }
     public void update() {
-        if (isOnMove){
-        }
-        else{
-        }
-        float dx = MainGame.get().frameTime * this.speed;
-        if(isLeft){
-            dx = -dx;
-        }
-        x += dx;
-
-        int w = GameView.view.getWidth();
-        if(isLeft){
-            if( x < 0) {
-                this.x = w;
+        if(isOnStop){
+            remainStopTime -= MainGame.get().frameTime;
+            if(remainStopTime <= 0.0f){
+                isOnStop = false;
             }
         }
-        else{
-            if(x > w){
-                this.x = 0;
+        else {
+            float dx = MainGame.get().frameTime * this.speed;
+            if (isLeft) {
+                dx = -dx;
+            }
+            x += dx;
+
+            int w = GameView.view.getWidth();
+            if (isLeft) {
+                if (x < 0) {
+                    this.x = w;
+                }
+            } else {
+                if (x > w) {
+                    this.x = 0;
+                }
             }
         }
     }
@@ -144,5 +151,9 @@ public class Car implements GameObject, BoxCollidable, Recyclable {
     @Override
     public void recyle() {
         // To do
+    }
+    public void Stop(boolean stopInfo, float stopTime){
+        this.isOnStop = stopInfo;
+        this.remainStopTime = stopTime;
     }
 }

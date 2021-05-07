@@ -20,23 +20,7 @@ public class Coin extends Item {
 
     @Override
     public void update() {
-        float dx = MainGame.get().frameTime * this.speed;
-        if(isLeft){
-            dx = -dx;
-        }
-        x += dx;
-
-        int w = GameView.view.getWidth();
-        if(isLeft){
-            if( x < 0) {
-                this.x = w;
-            }
-        }
-        else{
-            if(x > w){
-                this.x = 0;
-            }
-        }
+        super.update();
     }
 
     public void draw(Canvas canvas) {

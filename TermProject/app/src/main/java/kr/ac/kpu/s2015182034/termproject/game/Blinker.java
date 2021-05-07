@@ -18,11 +18,7 @@ public class Blinker extends Item {
 
     @Override
     public void update() {
-        float dx = MainGame.get().frameTime * this.speed;
-        if(isLeft){
-            dx = -dx;
-        }
-        x += dx;
+        super.update();
     }
 
     @Override

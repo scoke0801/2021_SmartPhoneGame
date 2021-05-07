@@ -13,6 +13,7 @@ import kr.ac.kpu.s2015182034.termproject.game.Barrier;
 import kr.ac.kpu.s2015182034.termproject.game.Blinker;
 import kr.ac.kpu.s2015182034.termproject.game.Coin;
 import kr.ac.kpu.s2015182034.termproject.game.Parent.Car;
+import kr.ac.kpu.s2015182034.termproject.game.Parent.Item;
 import kr.ac.kpu.s2015182034.termproject.game.Player;
 import kr.ac.kpu.s2015182034.termproject.game.Score;
 import kr.ac.kpu.s2015182034.termproject.game.VerticalScrollBackground;
@@ -91,12 +92,13 @@ public class MainGame {
         VerticalScrollBackground bg = new VerticalScrollBackground(R.mipmap.map_1, 10);
         add(Layer.map, bg);
 
-        Coin coin = Coin.get("Coin", 60, 60);
+        Coin coin = Coin.get("Coin", 160, 60);
         add(Layer.item, coin);
-        Barrier barrier = Barrier.get("Barrier", 60, 120);
+        Barrier barrier = Barrier.get("Barrier", 260, 180);
         add(Layer.item, barrier);
-        Blinker blinker = Blinker.get("Blinker", 60, 180);
+        Blinker blinker = Blinker.get("Blinker", 360, 300);
         add(Layer.item, blinker);
+
         this.initialized = true;
         return true;
     }
@@ -115,11 +117,39 @@ public class MainGame {
                 o.update();
             }
         }
-        ArrayList<GameObject> enemies = layers.get(Layer.car.ordinal());
-        for(GameObject o1 : enemies){
-            Car enemy = (Car) o1;
+        ArrayList<GameObject> cars = layers.get(Layer.car.ordinal());
+        for(GameObject o1 : cars){
+            Car car = (Car) o1;
             if(CollisionHelper.collides((BoxCollidable)o1, player)){
                 Log.d(TAG, "Collision!! Enemy - player" );
+            }
+        }
+        ArrayList<GameObject> items = layers.get(Layer.item.ordinal());
+        for(GameObject o1 : items){
+            Item item = (Item) o1;
+            if(CollisionHelper.collides((BoxCollidable)o1, player)){
+                String typeName = item.GetTypeName();
+                if("Blinker" == typeName) {
+                    Log.d(TAG, "Collision!! Blinker - player" );
+                    remove(o1);
+                    StopCars();
+                }
+                else if("Coin" == typeName) {
+                    Log.d(TAG, "Collision!! Coin - player" );
+                    remove(o1);
+                    score.addScore(100);
+                }
+                else if("Barrier" == typeName) {
+                    Log.d(TAG, "Collision!! Barrier - player" );
+                    Barrier barrier = (Barrier)o1;
+                    if(false == barrier.IsOnUse()){
+                        float x = player.GetXPos();
+                        float y = player.GetYPos();
+                        barrier.SetPosition(x, y);
+                        barrier.ConnectPlayer(player);
+                        barrier.setUse(true);
+                    }
+                }
             }
         }
     }
@@ -179,13 +209,13 @@ public class MainGame {
         GameView.view.post(runnable);
     };
 
-    // 아이템 - Coin을 획득한 경우 점수를 증가시킨다
-    public void IncreatePoint(int score){
-        this.score.addScore(score);
-    }
 
     // 아이템 - Blinker을 획득한 경우, 특정 시간 만큼 장애물(차 종류)들의 이동을 멈춘다
-    public void StopCars(float time){
-        this.remainBlinkTime += time;
+    public void StopCars(){
+        ArrayList<GameObject> cars = layers.get(Layer.car.ordinal());
+        for(GameObject o1 : cars){
+            Car car = (Car) o1;
+            car.Stop(true, 3.0f);
+        }
     }
 }

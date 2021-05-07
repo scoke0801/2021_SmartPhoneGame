@@ -15,18 +15,28 @@ public class Barrier extends Item {
 
     private static final float LIFE_TIME = 1.5f;
     private static float remainLifeTime = LIFE_TIME;
-
+    private boolean isOnUsing = false;
+    private Player connectePlayer;
     Barrier(String type, float x, float y, boolean isLeft){
         super(type, x, y, 1);
     }
 
     @Override
     public void update() {
-        float frameTime = MainGame.get().frameTime;
-        remainLifeTime -= frameTime;
+        if(isOnUsing) {
+            float frameTime = MainGame.get().frameTime;
+            remainLifeTime -= frameTime;
 
-        if (remainLifeTime < 0.0f){
-            MainGame.get().remove(this);
+            float x = connectePlayer.GetXPos();
+            float y = connectePlayer.GetYPos();
+            this.x = x;
+            this.y = y;
+            if (remainLifeTime < 0.0f){
+                MainGame.get().remove(this);
+            }
+        }
+        else{
+            super.update();
         }
     }
 
@@ -37,9 +47,16 @@ public class Barrier extends Item {
         }
     }
 
+    public boolean IsOnUse(){
+        return isOnUsing;
+    }
+    public void setUse(boolean useInfo){
+        isOnUsing = useInfo;
+    }
     private void init(String type, float x, float y) {
         this.x = x;
         this.y = y;
+        isOnUsing = false;
         if(speed < 0){
             speed = -speed;
         }
@@ -68,5 +85,9 @@ public class Barrier extends Item {
             barrier.init(type, x,y);
         }
         return barrier;
+    }
+
+    public void ConnectPlayer(Player player){
+        connectePlayer = player;
     }
 }
