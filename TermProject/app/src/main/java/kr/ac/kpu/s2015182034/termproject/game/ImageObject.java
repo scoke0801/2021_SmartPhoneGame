@@ -1,12 +1,13 @@
-package kr.ac.kpu.s2015182034.dragonflight.game;
+package kr.ac.kpu.s2015182034.termproject.game;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
-import kr.ac.kpu.s2015182034.dragonflight.framework.GameBitmap;
-import kr.ac.kpu.s2015182034.dragonflight.framework.GameObject;
+import kr.ac.kpu.s2015182034.termproject.animation.GameBitmap;
+import kr.ac.kpu.s2015182034.termproject.framework.GameObject;
+
 public class ImageObject implements GameObject {
     private final Bitmap bitmap;
 
@@ -32,4 +33,10 @@ public class ImageObject implements GameObject {
     public void draw(Canvas canvas) {
         canvas.drawBitmap(bitmap, srcRect, dstRect, null);
     }
+
+    @Override
+    public void fixCollision() {
+
+    }
+
 }

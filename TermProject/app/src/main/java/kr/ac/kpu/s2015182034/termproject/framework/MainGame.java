@@ -8,13 +8,11 @@ import android.view.MotionEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import kr.ac.kpu.s2015182034.termproject.game.Barrier;
-import kr.ac.kpu.s2015182034.termproject.game.Blinker;
-import kr.ac.kpu.s2015182034.termproject.game.Coin;
+import kr.ac.kpu.s2015182034.termproject.R;
 import kr.ac.kpu.s2015182034.termproject.game.Parent.Car;
-import kr.ac.kpu.s2015182034.termproject.game.Parent.Item;
 import kr.ac.kpu.s2015182034.termproject.game.Player;
 import kr.ac.kpu.s2015182034.termproject.game.Score;
+import kr.ac.kpu.s2015182034.termproject.game.VerticalScrollBackground;
 import kr.ac.kpu.s2015182034.termproject.ui.view.GameView;
 import kr.ac.kpu.s2015182034.termproject.utils.CollisionHelper;
 
@@ -25,7 +23,7 @@ public class MainGame {
     private boolean initialized = false;
 
     public enum Layer{
-        car, bullet, item, player, ui, controller, COUNT
+        map, car, bullet, item, player, ui, controller, COUNT
     }
     private ArrayList<ArrayList<GameObject>> layers;
     private Player player;
@@ -86,6 +84,9 @@ public class MainGame {
         score = new Score(w - margin, margin);
         score.setScore(0);
         add(Layer.ui, score);
+
+        VerticalScrollBackground bg = new VerticalScrollBackground(R.mipmap.map_1, 10);
+        add(Layer.map, bg);
 
         this.initialized = true;
         return true;
