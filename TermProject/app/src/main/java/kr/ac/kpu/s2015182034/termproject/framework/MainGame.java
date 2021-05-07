@@ -10,12 +10,12 @@ import java.util.HashMap;
 
 import kr.ac.kpu.s2015182034.termproject.game.Parent.Car;
 import kr.ac.kpu.s2015182034.termproject.game.Player;
+import kr.ac.kpu.s2015182034.termproject.game.Score;
 import kr.ac.kpu.s2015182034.termproject.ui.view.GameView;
 import kr.ac.kpu.s2015182034.termproject.utils.CollisionHelper;
 
 public class MainGame {
     private static final String TAG = MainGame.class.getSimpleName();
-    private static int score = 0;
     public static float remainBlinkTime = 0.0f;
 
     private boolean initialized = false;
@@ -23,8 +23,9 @@ public class MainGame {
     public enum Layer{
         car, bullet, player, ui, controller, COUNT
     }
-    ArrayList<ArrayList<GameObject>> layers;
-    Player player;
+    private ArrayList<ArrayList<GameObject>> layers;
+    private Player player;
+    private Score score;
 
     private static HashMap<Class, ArrayList<GameObject>> reclycleBin = new HashMap<>();
 
@@ -76,6 +77,11 @@ public class MainGame {
 
         player = new Player(w/ 2, h/2, 0,0);
         add(Layer.player, player);
+
+        int margin =  (int)(20 * GameView.MULTIPLIER);
+        score = new Score(w - margin, margin);
+        score.setScore(0);
+        add(Layer.ui, score);
 
         this.initialized = true;
     }
@@ -159,7 +165,7 @@ public class MainGame {
 
     // 아이템 - Coin을 획득한 경우 점수를 증가시킨다
     public void IncreatePoint(int score){
-        this.score += score;
+        this.score.addScore(score);
     }
 
     // 아이템 - Blinker을 획득한 경우, 특정 시간 만큼 장애물(차 종류)들의 이동을 멈춘다

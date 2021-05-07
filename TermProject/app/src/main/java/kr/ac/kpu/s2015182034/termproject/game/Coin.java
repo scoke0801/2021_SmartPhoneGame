@@ -12,7 +12,7 @@ public class Coin extends Item {
     }
 
     @Override
-    public void update() { 
+    public void update() {
         float dx = MainGame.get().frameTime * this.speed;
         if(isLeft){
             dx = -dx;
