@@ -9,7 +9,7 @@ import kr.ac.kpu.s2015182034.dragonflight.UI.View.GameView;
 import kr.ac.kpu.s2015182034.dragonflight.framework.GameBitmap;
 import kr.ac.kpu.s2015182034.dragonflight.framework.GameObject;
 
-public class VerticalScrollBackground implements GameObject {
+public class HorizontalScrollBackground implements GameObject {
     private final Bitmap bitmap;
 
     private Rect srcRect = new Rect();
@@ -17,7 +17,7 @@ public class VerticalScrollBackground implements GameObject {
     private float speed;
     private float scroll;
 
-    public VerticalScrollBackground(int resId, int speed) {
+    public HorizontalScrollBackground(int resId, int speed) {
         bitmap = GameBitmap.load(resId);
         this.speed = speed * GameView.MULTIPLIER;
         int w = bitmap.getWidth();
@@ -26,8 +26,8 @@ public class VerticalScrollBackground implements GameObject {
         float l = 0;
         float t = 0;
 
-        float r = GameView.view.getWidth();;
-        float b = r * h / w;
+        float b = GameView.view.getHeight();
+        float r = b * h / w;
         //W:r = h :b
         dstRect.set(l, t, r, b);
     }
@@ -48,11 +48,12 @@ public class VerticalScrollBackground implements GameObject {
         int ih = bitmap.getHeight();
 
         float dh = vw * ih / iw;
-        int curr = (int)(scroll % dh);
-        if(curr > 0) curr -= dh;
+        float dw = vh * ih / iw;
+        int curr = (int)(scroll % dw);
+        if(curr > 0) curr -= dw;
 
-        while(curr < vh){
-            dstRect.set(0, curr, vw, curr + dh);
+        while(curr < vw){
+            dstRect.set(curr, 0, curr + dw, vh);
             canvas.drawBitmap(bitmap, srcRect, dstRect, null);
             curr += dh;
         }

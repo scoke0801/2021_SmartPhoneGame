@@ -73,10 +73,12 @@ public class MainGame {
         add(Layer.ui, score);
         initialized = true;
 
-        VerticalScrollBackground bg = new VerticalScrollBackground(R.mipmap.bg_city, 10);
+        //VerticalScrollBackground bg = new VerticalScrollBackground(R.mipmap.bg_city, 10);
+        HorizontalScrollBackground bg = new HorizontalScrollBackground(R.mipmap.bg_city, 10);
         add(Layer.bg, bg);
 
-        VerticalScrollBackground clouds = new VerticalScrollBackground(R.mipmap.clouds, 20);
+        //VerticalScrollBackground clouds = new VerticalScrollBackground(R.mipmap.clouds, 20);
+        HorizontalScrollBackground clouds = new HorizontalScrollBackground(R.mipmap.clouds, 20);
         add(Layer.fg, clouds);
         return true;
     }
