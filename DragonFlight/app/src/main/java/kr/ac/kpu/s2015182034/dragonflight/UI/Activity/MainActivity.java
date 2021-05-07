@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        GameView.MULTIPLIER = metrics.density* 0.75f;
+        GameView.MULTIPLIER = metrics.density* 0.8f;
     }
 
     @Override

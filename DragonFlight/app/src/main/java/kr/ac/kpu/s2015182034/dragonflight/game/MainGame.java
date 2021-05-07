@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import kr.ac.kpu.s2015182034.dragonflight.R;
 import kr.ac.kpu.s2015182034.dragonflight.UI.View.GameView;
 import kr.ac.kpu.s2015182034.dragonflight.framework.GameObject;
 import kr.ac.kpu.s2015182034.dragonflight.framework.Recyclable;
@@ -50,7 +51,7 @@ public class MainGame {
     }
 
     public enum Layer{
-        enemy, bullet, player, ui, controller, COUNT
+        bg, enemy, bullet, player, fg, ui, controller, COUNT
     }
     public boolean initResources() {
         if (initialized) {
@@ -71,6 +72,12 @@ public class MainGame {
         score.setScore(0);
         add(Layer.ui, score);
         initialized = true;
+
+        ImageObject bg = new ImageObject(R.mipmap.bg_city, w / 2, h / 2);
+        add(Layer.bg, bg);
+
+        ImageObject clouds = new ImageObject(R.mipmap.clouds, w / 2, h / 2);
+        add(Layer.fg, clouds);
         return true;
     }
     private void initLayers(int layerCount) {
@@ -107,34 +114,6 @@ public class MainGame {
             }
         }
     }
-//            boolean removed = false;
-//            for (GameObject o1 : objects) {
-//                if(!(o1 instanceof Enemy)){
-//                    continue;
-//                }
-//                Enemy enemy = (Enemy)o1;
-//                for(GameObject o2 : objects){
-//                    if(!(o2 instanceof  Bullet )) {
-//                        continue;
-//                    }
-//                    Bullet bullet = (Bullet)o2;
-//                    if(CollisionHelper.collides((BoxCollidable)o1, (BoxCollidable)o2)){
-//                        Log.d(TAG, "Collision!! "  + o1 + " - " + o2);
-//                        remove(enemy);
-//                        remove(bullet);
-//                        //bullet.doRecycle();
-//                        removed = true;
-//                        break;
-//                    }
-//                }
-//                if(removed){
-//                    continue;
-//                }
-//                if(CollisionHelper.collides((BoxCollidable)o1, player)){
-//                    Log.d(TAG, "Collision!! Enemy - player" );
-//                }
-//            }
-
     public void draw(Canvas canvas) {
         if (!initialized) return;
         for(ArrayList<GameObject> objects : layers){
