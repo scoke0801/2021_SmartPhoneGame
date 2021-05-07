@@ -59,9 +59,9 @@ public class MainGame {
         }
         array.add(object);
     }
-    public void InitResources() {
+    public boolean InitResources() {
         if(this.initialized){
-            return;
+            return false;
         }
         initLayers(Layer.COUNT.ordinal());
 
@@ -87,13 +87,8 @@ public class MainGame {
         score.setScore(0);
         add(Layer.ui, score);
 
-//        Barrier barrier = Barrier.get("Barrier", 500, 500);
-//        add(Layer.item, barrier);
-//        Coin coin = Coin.get("Coin", 500, 500);
-//        add(Layer.item, coin);
-//        Blinker blinker = Blinker.get("Blinker", 500, 500);
-//        add(Layer.item, blinker);
         this.initialized = true;
+        return true;
     }
 
     private void initLayers(int layerCount) {
@@ -103,7 +98,7 @@ public class MainGame {
         }
     }
     public void update() {
-        if(this.initialized == false) return;
+        //if(this.initialized == false) return;
 
         for (ArrayList<GameObject> objects: layers) {
             for (GameObject o : objects) {
@@ -120,7 +115,7 @@ public class MainGame {
     }
 
     public void draw(Canvas canvas) {
-        if(this.initialized == false) return;
+        //if(this.initialized == false) return;
 
         for(ArrayList<GameObject> objects : layers){
             for (GameObject o : objects) {

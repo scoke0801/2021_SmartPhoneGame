@@ -3,6 +3,7 @@ package kr.ac.kpu.s2015182034.termproject.ui.view;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Choreographer;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,9 +15,7 @@ public class GameView extends View {
     // final 변수는 생성자에서 그 값이 결정되어야 한다.
     private static final String TAG = GameView.class.getSimpleName();
 
-    // public : 외부에서 모르고도 접근할 수 있도록
-    // static: 외부에서 해당 view 객체를 모르고도 접근할 수 있도록
-
+    private boolean running;
     private long lastFrame;
 
     public static GameView view;
@@ -30,35 +29,43 @@ public class GameView extends View {
 
         MainGame game = MainGame.get();
 
-        startUpdating();
+        this.running = true;
     }
 
-    private void startUpdating() {
-        doGameFrame();
-    }
+    private void update() {
+        MainGame game = MainGame.get();
+        game.update();
 
-    private void doGameFrame() {
-        MainGame.get().update();
         invalidate();
+    }
+    private void requestCallback() {
+        if(!this.running){
+            return;
+        }
 
-        Choreographer.getInstance().postFrameCallback(
-                new Choreographer.FrameCallback() {
-                    @Override
-                    public void doFrame(long time) {
-                        if(lastFrame == 0) {
-                            lastFrame = time;
-                        }
-                        // time의 단위가 나노 초임... fraem 계산은 밀리 초..
-                        MainGame.get().frameTime = (float)(time - lastFrame) / 1_000_000_000;
-                        doGameFrame();
-                        lastFrame = time;
-                    }
-                });
+        Choreographer.getInstance().postFrameCallback(new Choreographer.FrameCallback() {
+            @Override
+            public void doFrame(long time) {
+                if (lastFrame == 0) {
+                    lastFrame = time;
+                }
+                MainGame game = MainGame.get();
+                game.frameTime = (float) (time - lastFrame) / 1_000_000_000;
+                update();
+                lastFrame = time;
+                requestCallback();
+            }
+        });
     }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        MainGame.get().InitResources();
+        MainGame game = MainGame.get();
+        boolean justInitialized = game.InitResources();
+
+        if (justInitialized) {
+            requestCallback();
+        }
     }
 
     @Override
@@ -69,5 +76,18 @@ public class GameView extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         return MainGame.get().onTouchEvent(event);
+    }
+
+
+    public void pauseGame(){
+        this.running = false;
+    }
+
+    public void resumeGame(){
+        if(!running){
+            this.running = true;
+            lastFrame = 0;
+            requestCallback();
+        }
     }
 }
