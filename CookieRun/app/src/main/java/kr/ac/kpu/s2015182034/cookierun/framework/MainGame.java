@@ -50,7 +50,7 @@ public class MainGame {
     }
 
     public enum Layer{
-        bg, enemy, bullet, player, fg, ui, controller, COUNT
+        bg,bg2,bg3, enemy, bullet, player, ui, controller, COUNT
     }
     public boolean initResources() {
         if (initialized) {
@@ -62,7 +62,7 @@ public class MainGame {
         int w = GameView.view.getWidth();
         int h = GameView.view.getHeight();
 
-        player = new Player(w/2, h - 300);
+        player = new Player(w/2, h - 750);
         add(Layer.player, player);
 
         int margin =  (int)(20 * GameView.MULTIPLIER);
@@ -71,13 +71,13 @@ public class MainGame {
         add(Layer.ui, score);
         initialized = true;
 
-        //VerticalScrollBackground bg = new VerticalScrollBackground(R.mipmap.bg_city, 10);
-        //HorizontalScrollBackground bg = new HorizontalScrollBackground(R.mipmap.cookie_run_bg_1, 10);
-        //add(Layer.bg, bg);
-
-        //VerticalScrollBackground clouds = new VerticalScrollBackground(R.mipmap.clouds, 20);
-        //HorizontalScrollBackground clouds = new HorizontalScrollBackground(R.mipmap.cookie_run_bg_2, 20);
-        //add(Layer.fg, clouds);
+        // parallax scrolling
+        add(Layer.bg, new HorizontalScrollBackground(R.mipmap.cookie_run_bg_1, -20));
+        add(Layer.bg2, new HorizontalScrollBackground(R.mipmap.cookie_run_bg_2, -10));
+        add(Layer.bg3, new HorizontalScrollBackground(R.mipmap.cookie_run_bg_3, -5));
+//        add(Layer.bg, new VerticalScrollBackground(R.mipmap.cookie_run_bg_1, -20));
+//        add(Layer.bg2, new VerticalScrollBackground(R.mipmap.cookie_run_bg_2, -10));
+//        add(Layer.bg3, new VerticalScrollBackground(R.mipmap.cookie_run_bg_3, -5));
         return true;
     }
     private void initLayers(int layerCount) {

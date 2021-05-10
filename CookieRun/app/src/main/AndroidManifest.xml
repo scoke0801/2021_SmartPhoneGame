@@ -11,7 +11,7 @@
         android:theme="@style/Theme.CookieRun">
         <activity android:name=".MainActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:configChanges="screenSize"
+            android:configChanges="screenSize|orientation"
             android:screenOrientation="landscape">
 
             <intent-filter>

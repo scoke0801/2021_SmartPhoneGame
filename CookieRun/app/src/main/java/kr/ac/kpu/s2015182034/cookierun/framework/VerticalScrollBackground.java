@@ -1,16 +1,14 @@
 package kr.ac.kpu.s2015182034.cookierun.framework;
 
+
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
-import kr.ac.kpu.s2015182034.cookierun.framework.GameBitmap;
-import kr.ac.kpu.s2015182034.cookierun.framework.GameObject;
-import kr.ac.kpu.s2015182034.cookierun.framework.MainGame;
 import kr.ac.kpu.s2015182034.cookierun.framework.View.GameView;
 
-public class HorizontalScrollBackground implements GameObject {
+public class VerticalScrollBackground implements GameObject {
     private final Bitmap bitmap;
 
     private Rect srcRect = new Rect();
@@ -18,7 +16,7 @@ public class HorizontalScrollBackground implements GameObject {
     private float speed;
     private float scroll;
 
-    public HorizontalScrollBackground(int resId, int speed) {
+    public VerticalScrollBackground(int resId, int speed) {
         bitmap = GameBitmap.load(resId);
         this.speed = speed * GameView.MULTIPLIER;
         int w = bitmap.getWidth();
@@ -27,8 +25,8 @@ public class HorizontalScrollBackground implements GameObject {
         float l = 0;
         float t = 0;
 
-        float b = GameView.view.getHeight();
-        float r = b * h / w;
+        float r = GameView.view.getWidth();;
+        float b = r * h / w;
         //W:r = h :b
         dstRect.set(l, t, r, b);
     }
@@ -43,21 +41,21 @@ public class HorizontalScrollBackground implements GameObject {
 
     @Override
     public void draw(Canvas canvas) {
-        int vw = GameView.view.getHeight();
-        int vh = GameView.view.getWidth();
-        int iw = bitmap.getHeight();
-        int ih = bitmap.getWidth();
+        int vw = GameView.view.getWidth();
+        int vh = GameView.view.getHeight();
+        int iw = bitmap.getWidth();
+        int ih = bitmap.getHeight();
 
         float dh = vw * ih / iw;
-        float dw = vh * ih / iw;
-        int curr = (int)(scroll % dw);
-        if(curr > 0) curr -= dw;
+        int curr = (int)(scroll % dh);
+        if(curr > 0) curr -= dh;
 
-        while(curr < vw){
-            dstRect.set(curr, 0, curr + dw, vh);
+        while(curr < vh){
+            dstRect.set(0, curr, vw, curr + dh);
             canvas.drawBitmap(bitmap, srcRect, dstRect, null);
             curr += dh;
         }
 
     }
+
 }

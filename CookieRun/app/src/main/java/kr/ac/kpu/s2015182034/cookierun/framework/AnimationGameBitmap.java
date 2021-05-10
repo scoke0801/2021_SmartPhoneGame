@@ -6,15 +6,15 @@ import android.graphics.Rect;
 import kr.ac.kpu.s2015182034.cookierun.framework.View.GameView;
 
 public class AnimationGameBitmap extends GameBitmap {
-    private final int imageWidth;
-    private final int imageHeight;
-    private final int frameWidth;
-    private final long createOn;
-    private final int frameCount;
-    private final float framePerSecond;
+    protected final int imageWidth;
+    protected final int imageHeight;
+    protected int frameWidth;
+    protected final long createOn;
+    protected int frameCount;
+    protected final float framePerSecond;
 
-    private int frameIndex;
-    private Rect srcRect = new Rect();
+    protected int frameIndex;
+    protected Rect srcRect = new Rect();
 
     public AnimationGameBitmap(int resId, float framePerSecond, int frameCount){
         super(resId);
@@ -39,6 +39,7 @@ public class AnimationGameBitmap extends GameBitmap {
     //    frameIndex = Math.round(elapsed * framePerSecond * 0.001f) % frameCount;
     //}
 
+    @Override
     public void draw(Canvas canvas, float x, float y){
         int elapsed = (int)(System.currentTimeMillis() - createOn);
         frameIndex = Math.round(elapsed * framePerSecond * 0.001f) % frameCount;
@@ -55,9 +56,12 @@ public class AnimationGameBitmap extends GameBitmap {
         canvas.drawBitmap(bitmap, srcRect, dstRect, null);
     }
 
+    @Override
     public int getWidth(){
         return frameWidth;
     }
+
+    @Override
     public int getHeight() {
         return imageHeight;
     }

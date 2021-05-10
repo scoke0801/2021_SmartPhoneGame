@@ -4,9 +4,11 @@ package kr.ac.kpu.s2015182034.cookierun.game;
 import android.graphics.Canvas;
 import android.graphics.RectF;
 
+import kr.ac.kpu.s2015182034.cookierun.R;
 import kr.ac.kpu.s2015182034.cookierun.framework.BoxCollidable;
 import kr.ac.kpu.s2015182034.cookierun.framework.GameBitmap;
 import kr.ac.kpu.s2015182034.cookierun.framework.GameObject;
+import kr.ac.kpu.s2015182034.cookierun.framework.IndexedAnimationGameBitmap;
 import kr.ac.kpu.s2015182034.cookierun.framework.MainGame;
 
 public class Player implements GameObject, BoxCollidable {
@@ -21,7 +23,7 @@ public class Player implements GameObject, BoxCollidable {
 
     private float speed;
 
-    private GameBitmap planeBitmap;
+    private IndexedAnimationGameBitmap charBitmap;
     private GameBitmap fireBitmap;
     public Player(float x, float y) {
         this.x = x;
@@ -29,7 +31,8 @@ public class Player implements GameObject, BoxCollidable {
         this.tx = x;
         this.ty = 0;
         this.speed = 800;
-        //this.planeBitmap = new GameBitmap(R.mipmap.cookie);
+        this.charBitmap = new IndexedAnimationGameBitmap(R.mipmap.cookie, 12.5f, 10);
+        this.charBitmap.setIndices(100, 101, 102, 103);
     }
 
     public void moveTo(float x, float y){
@@ -57,11 +60,11 @@ public class Player implements GameObject, BoxCollidable {
 
     @Override
     public void draw(Canvas canvas) {
-        //planeBitmap.draw(canvas, x, y);
+        charBitmap.draw(canvas, x, y);
     }
 
     @Override
     public void getBoundingRect(RectF rect) {
-        //planeBitmap.getBoundingRect(x,y, rect);
+        charBitmap.getBoundingRect(x,y, rect);
     }
 }
