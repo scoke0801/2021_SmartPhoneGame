@@ -32,6 +32,7 @@ public class MainGame {
     private ArrayList<ArrayList<GameObject>> layers;
     private Player player;
     private Score score;
+    VerticalScrollBackground bg;
 
     private static HashMap<Class, ArrayList<GameObject>> reclycleBin = new HashMap<>();
 
@@ -92,8 +93,8 @@ public class MainGame {
         score.setScore(0);
         add(Layer.ui, score);
 
-        VerticalScrollBackground bg = new VerticalScrollBackground(R.mipmap.map_1, 10);
-        add(Layer.map, bg);
+        this.bg = new VerticalScrollBackground(R.mipmap.map_1, 0);
+        add(Layer.map, this.bg );
 
         Coin coin = Coin.get("Coin", 160, 60);
         add(Layer.item, coin);
@@ -211,6 +212,10 @@ public class MainGame {
         };
         GameView.view.post(runnable);
     };
+
+    public void ScrollMap(float xMoved, float yMoved) {
+        bg.Scroll(xMoved, yMoved);
+    }
 
 
     // 아이템 - Blinker을 획득한 경우, 특정 시간 만큼 장애물(차 종류)들의 이동을 멈춘다

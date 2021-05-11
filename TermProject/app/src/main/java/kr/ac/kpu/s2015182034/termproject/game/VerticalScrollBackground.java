@@ -35,11 +35,6 @@ public class VerticalScrollBackground implements GameObject {
     }
     @Override
     public void update() {
-        MainGame game = MainGame.get();
-        float moveAmount = speed * game.frameTime;
-        scroll += moveAmount;
-        //dstRect.top += moveAmount;
-        //dstRect.bottom += moveAmount;
     }
 
     @Override
@@ -64,5 +59,11 @@ public class VerticalScrollBackground implements GameObject {
     @Override
     public void fixCollision() {
         
+    }
+
+    public void Scroll(float xMoved, float yMoved){
+        MainGame game = MainGame.get();
+        float moveAmount = yMoved;
+        scroll += moveAmount;
     }
 }

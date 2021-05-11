@@ -108,6 +108,7 @@ public class Player implements GameObject, BoxCollidable {
 
             if(moveTime > TO_MOVE_TIME){
                 moveTime += frameTime;
+                MainGame.get().ScrollMap(0.0f, this.dy * TO_MOVE_TIME);
                 dx = dy = 0;
                 isOnMove = false;
                 jumpX = jumpY = 0.0f;
