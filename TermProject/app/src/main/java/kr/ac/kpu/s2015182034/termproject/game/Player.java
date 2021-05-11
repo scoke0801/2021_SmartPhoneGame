@@ -68,12 +68,10 @@ public class Player implements GameObject, BoxCollidable {
         else if(idx == 2){ // 좌
             this.dx = frameTime * -speed;
             this.angle = -90.0f;
-            this.jumpY = -this.sy * 1.00f;
         }
         else if (idx == 3){ // 우
             this.dx = frameTime * speed;
             this.angle = 90.0f;
-            this.jumpY = -this.sy * 1.00f;
         }
         isOnMove = true;
     }
@@ -108,7 +106,8 @@ public class Player implements GameObject, BoxCollidable {
 
             if(moveTime > TO_MOVE_TIME){
                 moveTime += frameTime;
-                MainGame.get().ScrollMap(0.0f, this.dy * TO_MOVE_TIME);
+                int h = GameView.view.getHeight();
+                MainGame.get().ScrollMap(0.0f, -this.dy * TO_MOVE_TIME * 15.5f - h * 1.5f);
                 dx = dy = 0;
                 isOnMove = false;
                 jumpX = jumpY = 0.0f;

@@ -37,6 +37,8 @@ public class Car implements GameObject, BoxCollidable, Recyclable {
     private String[] CAR_TYPE = new String[]{
             "Car", "Ambulance", "PoliceCar", "Excavator", "Truck", "Bus"
     };
+    private int[] CAR_SPEEDS_RANDOM = { 100, 300, 300, 50, 100, 150  };
+    private int[] CAR_SPEEDS_MIN = { 50, 100, 150, 50, 50, 80  };
     private static int[] CAR_RESOURCES = new int[]{
             R.mipmap.car_right,         R.mipmap.car_left,
             R.mipmap.ambulance_right,  R.mipmap.ambulance_left,
@@ -51,7 +53,6 @@ public class Car implements GameObject, BoxCollidable, Recyclable {
         this.y = y;
         this.isOnMove = false;
         Random r = new Random();
-        this.speed = r.nextInt(200) + 100;
         this.isLeft = isLeft;
         if (bitmap == null) {
             Resources res = GameView.view.getResources();
@@ -60,12 +61,14 @@ public class Car implements GameObject, BoxCollidable, Recyclable {
             for(int i = 0; i < CAR_TYPE.length; ++i){
                 if (CAR_TYPE[i] == type){
                     index = i * 2;
+                    this.speed = r.nextInt(CAR_SPEEDS_RANDOM[i]) + CAR_SPEEDS_MIN[i];
                     break;
                 }
             }
             if(isLeft) {
                 index += 1;
             }
+
             resId = CAR_RESOURCES[index];
             bitmap = new AnimationBitmap(resId, FRAME_RATE, 1);
         }
@@ -80,12 +83,9 @@ public class Car implements GameObject, BoxCollidable, Recyclable {
     private void init(String type, float x, float y, boolean isLeft) {
         this.x = x;
         this.y = y;
-        if(speed < 0){
-            speed = -speed;
-        }
         this.isOnMove = false;
         Random r = new Random();
-        this.speed = r.nextInt(200) + 100;
+        //this.speed = r.nextInt(200) + 100;
         this.isLeft = isLeft;
         this.isLeft = isLeft;
         if (bitmap == null) {
@@ -95,6 +95,7 @@ public class Car implements GameObject, BoxCollidable, Recyclable {
             for(int i = 0; i < CAR_TYPE.length; ++i){
                 if (CAR_TYPE[i] == type){
                     index = i * 2;
+                    this.speed = r.nextInt(CAR_SPEEDS_RANDOM[i]) + CAR_SPEEDS_MIN[i];
                     break;
                 }
             }
