@@ -43,7 +43,7 @@ public class Barrier extends Item {
     public void draw(Canvas canvas) {
         if(remainLifeTime > 0.0f) {
             bitmap.draw(canvas, x, y);
-            bitmap.drawAABB(canvas, x, y);
+            //bitmap.drawAABB(canvas, x, y);
         }
     }
 

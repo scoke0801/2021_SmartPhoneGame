@@ -117,7 +117,7 @@ public class Player implements GameObject, BoxCollidable {
         bitmap.draw(canvas, x, y);
         canvas.restore();
 
-        bitmap.drawAABB(canvas,x,y);
+        //bitmap.drawAABB(canvas,x,y);
     }
     private int CalculateNextPositionIndex(float x, float y){
         float dists[] = {   // top, bottom, left, right

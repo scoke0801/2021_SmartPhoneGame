@@ -3,6 +3,7 @@ package kr.ac.kpu.s2015182034.termproject.game.Parent;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.RectF;
+import android.util.Log;
 
 import java.util.Random;
 
@@ -15,6 +16,7 @@ import kr.ac.kpu.s2015182034.termproject.framework.Recyclable;
 import kr.ac.kpu.s2015182034.termproject.ui.view.GameView;
 
 public class Car implements GameObject, BoxCollidable, Recyclable {
+    private static final String TAG = Car.class.getSimpleName();
     protected float x, y;   // 위치
 
     protected int sx, sy; // 크기
@@ -33,14 +35,15 @@ public class Car implements GameObject, BoxCollidable, Recyclable {
 
     protected boolean isOnStop = false;
     private String[] CAR_TYPE = new String[]{
-            "Car", "Ambulance", "PoliceCar", "Excavator", "Truck"
+            "Car", "Ambulance", "PoliceCar", "Excavator", "Truck", "Bus"
     };
     private static int[] CAR_RESOURCES = new int[]{
             R.mipmap.car_right,         R.mipmap.car_left,
             R.mipmap.ambulance_right,  R.mipmap.ambulance_left,
             R.mipmap.police_car_right,R.mipmap.police_car_left,
             R.mipmap.excavator_right, R.mipmap.excavator_left,
-            R.mipmap.truck_right, R.mipmap.truck_left
+            R.mipmap.truck_right, R.mipmap.truck_left,
+            R.mipmap.bus_right, R.mipmap.bus_left
     };
 
     protected Car(String type, float x, float y, boolean isLeft) {
@@ -56,7 +59,7 @@ public class Car implements GameObject, BoxCollidable, Recyclable {
             int index = -1;
             for(int i = 0; i < CAR_TYPE.length; ++i){
                 if (CAR_TYPE[i] == type){
-                    index = i;
+                    index = i * 2;
                     break;
                 }
             }
@@ -84,17 +87,25 @@ public class Car implements GameObject, BoxCollidable, Recyclable {
         Random r = new Random();
         this.speed = r.nextInt(200) + 100;
         this.isLeft = isLeft;
-        if(bitmap == null) {
+        this.isLeft = isLeft;
+        if (bitmap == null) {
             Resources res = GameView.view.getResources();
+            int resId = -1;
+            int index = -1;
+            for(int i = 0; i < CAR_TYPE.length; ++i){
+                if (CAR_TYPE[i] == type){
+                    index = i * 2;
+                    break;
+                }
+            }
             if(isLeft) {
-                bitmap = new AnimationBitmap(R.mipmap.truck_left, FRAME_RATE, 1);
+                index += 1;
             }
-            else{
-                bitmap = new AnimationBitmap(R.mipmap.truck_right, FRAME_RATE, 1);
-            }
-            this.sx = bitmap.getWidth();
-            this.sy = bitmap.getHeight();
+            resId = CAR_RESOURCES[index];
+            bitmap = new AnimationBitmap(resId, FRAME_RATE, 1);
         }
+        this.sx = bitmap.getWidth();
+        this.sy = bitmap.getHeight();
     }
     public static Car get(String type, float x, float y, boolean isLef){
         MainGame game = MainGame.get();
@@ -136,7 +147,7 @@ public class Car implements GameObject, BoxCollidable, Recyclable {
 
     public void draw(Canvas canvas) {
         bitmap.draw(canvas, x, y);
-        bitmap.drawAABB(canvas, x, y);
+        //bitmap.drawAABB(canvas, x, y);
     }
 
     public void fixCollision(){

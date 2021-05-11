@@ -70,14 +70,17 @@ public class MainGame {
         int w = GameView.view.getWidth();
         int h = GameView.view.getHeight();
 
+        String[] CAR_TYPE = new String[]{
+                "Car", "Ambulance", "PoliceCar", "Excavator", "Truck", "Bus"
+        };
         // test codes
         int carSizeH = 170;
         for(int i = 0; i < 10; i += 2){
-            Car car = Car.get("Car",0,carSizeH * (i+1), false);
+            Car car = Car.get(CAR_TYPE[i % 5],0,carSizeH * (i+1), false);
             add(Layer.car, car);
         }
         for(int i = 1; i < 10; i += 2){
-            Car car = Car.get("Car",w, carSizeH * (i+1), true);
+            Car car = Car.get(CAR_TYPE[i % 5],w, carSizeH * (i+1), true);
             add(Layer.car, car);
         }
 
@@ -121,7 +124,7 @@ public class MainGame {
         for(GameObject o1 : cars){
             Car car = (Car) o1;
             if(CollisionHelper.collides((BoxCollidable)o1, player)){
-                Log.d(TAG, "Collision!! Enemy - player" );
+                //Log.d(TAG, "Collision!! Enemy - player" );
             }
         }
         ArrayList<GameObject> items = layers.get(Layer.item.ordinal());

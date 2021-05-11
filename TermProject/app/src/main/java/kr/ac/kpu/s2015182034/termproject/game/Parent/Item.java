@@ -110,7 +110,7 @@ public class Item implements GameObject, BoxCollidable, Recyclable {
 
     public void draw(Canvas canvas) {
         bitmap.draw(canvas, x, y);
-        bitmap.drawAABB(canvas, x, y);
+        //bitmap.drawAABB(canvas, x, y);
     }
 
     public void fixCollision(){

@@ -25,7 +25,7 @@ public class Coin extends Item {
 
     public void draw(Canvas canvas) {
         bitmap.draw(canvas, x, y);
-        bitmap.drawAABB(canvas, x, y);
+        //bitmap.drawAABB(canvas, x, y);
     }
     private void init(String type, float x, float y) {
         this.x = x;
