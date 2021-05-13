@@ -17,6 +17,7 @@ import kr.ac.kpu.s2015182034.termproject.game.Parent.Item;
 import kr.ac.kpu.s2015182034.termproject.game.Player;
 import kr.ac.kpu.s2015182034.termproject.game.Score;
 import kr.ac.kpu.s2015182034.termproject.game.VerticalScrollBackground;
+import kr.ac.kpu.s2015182034.termproject.game.WoodPlatform;
 import kr.ac.kpu.s2015182034.termproject.ui.view.GameView;
 import kr.ac.kpu.s2015182034.termproject.utils.CollisionHelper;
 
@@ -27,7 +28,7 @@ public class MainGame {
     private boolean initialized = false;
 
     public enum Layer{
-        map, car, bullet, item, player, ui, controller, COUNT
+        map, car, platform, bullet, item, player, ui, controller, COUNT
     }
     private ArrayList<ArrayList<GameObject>> layers;
     private Player player;
@@ -84,6 +85,8 @@ public class MainGame {
             Car car = Car.get(CAR_TYPE[i % 5],w, carSizeH * (i+1), true);
             add(Layer.car, car);
         }
+        add(Layer.platform, WoodPlatform.get("LongWood", 300, 500));
+        add(Layer.platform, WoodPlatform.get("ShortWood", 300, 300));
 
         player = new Player(w/ 2, h/2, 0,0);
         add(Layer.player, player);
