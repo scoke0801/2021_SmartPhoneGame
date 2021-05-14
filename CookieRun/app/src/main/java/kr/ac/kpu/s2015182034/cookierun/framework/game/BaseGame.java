@@ -22,7 +22,9 @@ public class BaseGame {
         return instance;
     }
     protected BaseGame(){
-        instance = this;
+        if(instance == null){
+            instance = this;
+        }
     }
 
     ArrayList<ArrayList<GameObject>> layers;
