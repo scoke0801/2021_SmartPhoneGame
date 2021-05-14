@@ -22,7 +22,6 @@ public class AnimationBitmap extends GameBitmap  {
     private final float framePerSecond;
 
     private int frameIndex;
-    private Paint paint;
 
     public AnimationBitmap(int resId, float framePerSecond, int frameCount){
         super(resId);
@@ -68,11 +67,6 @@ public class AnimationBitmap extends GameBitmap  {
         canvas.drawBitmap(bitmap, srcRect, dstRect, null);
     }
 
-    private RectF dstToDrawAABB = new RectF();
-    public void drawAABB(Canvas canvas, float x, float y){
-        getBoundingRect(x,y, dstToDrawAABB);
-        canvas.drawRect(dstToDrawAABB, paint);
-    }
 
     public int getWidth(){
         return frameWidth;

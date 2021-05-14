@@ -30,6 +30,8 @@ public class WoodPlatform implements GameObject, BoxCollidable, Recyclable {
     protected boolean isOnMove;
 
     protected float spriteIdx = 0;
+    private Player onPlayer = null;    // 자신위에 올라와있는 플레이어
+    private boolean isOnPlayerExist = false;
     private WoodPlatform(String type, float x, float y){
         Random r = new Random();
         this.speed = r.nextInt(100) + 100;
@@ -56,15 +58,21 @@ public class WoodPlatform implements GameObject, BoxCollidable, Recyclable {
         float dx = MainGame.get().frameTime * this.speed;
 
         x -= dx;
-
+        if(true == isOnPlayerExist){
+            onPlayer.movePosition(-dx, 0.0f);
+        }
         int w = GameView.view.getWidth();
         if( x < 0) {
+            if (true == isOnPlayerExist) {
+                onPlayer.movePosition(w - x, 0.0f);
+            }
             this.x = w;
         }
     }
 
     public void draw(Canvas canvas) {
         bitmap.draw(canvas, x, y);
+        bitmap.drawAABB(canvas, x, y);
     }
 
     @Override
@@ -115,5 +123,15 @@ public class WoodPlatform implements GameObject, BoxCollidable, Recyclable {
     public void movePosition(float xMoved, float yMoved) {
         this.x += xMoved;
         this.y += yMoved;
+    }
+    public void ConnectPlayer(Player player){
+        if(player == null){
+            isOnPlayerExist = false;
+            onPlayer = null;
+        }
+        else{
+            onPlayer = player;
+            isOnPlayerExist = true;
+        }
     }
 }

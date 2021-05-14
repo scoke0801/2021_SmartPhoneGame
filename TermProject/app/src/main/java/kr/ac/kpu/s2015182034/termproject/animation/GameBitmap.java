@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.RectF;
 
 import java.util.HashMap;
@@ -14,6 +15,7 @@ import kr.ac.kpu.s2015182034.termproject.ui.view.GameView;
 public class GameBitmap {
     private static HashMap<Integer, Bitmap> bitmaps = new HashMap<Integer, Bitmap>();
 
+    protected Paint paint;
     public static Bitmap load(int resId) {
         Bitmap bitmap = bitmaps.get(resId);
         if (bitmap == null) {
@@ -32,6 +34,11 @@ public class GameBitmap {
     protected RectF dstRect = new RectF();
     public GameBitmap(int resId){
         bitmap = load(resId);
+
+        paint = new Paint();
+        paint.setColor(0xFFFF0000);
+        paint.setStrokeWidth(10f);
+        paint.setStyle(Paint.Style.STROKE);
     }
     public void draw(Canvas canvas, float x, float y){
         float hw = getWidth() / 2;
@@ -61,5 +68,11 @@ public class GameBitmap {
         float dr = x + hw * GameView.MULTIPLIER;
         float db = y + hh * GameView.MULTIPLIER;
         rect.set(dl,dt,dr,db);
+    }
+
+    private RectF dstToDrawAABB = new RectF();
+    public void drawAABB(Canvas canvas, float x, float y){
+        getBoundingRect(x,y, dstToDrawAABB);
+        canvas.drawRect(dstToDrawAABB, paint);
     }
 }

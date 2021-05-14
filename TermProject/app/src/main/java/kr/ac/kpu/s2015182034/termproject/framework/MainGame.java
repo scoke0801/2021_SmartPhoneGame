@@ -88,6 +88,10 @@ public class MainGame {
         add(Layer.platform, WoodPlatform.get("LongWood", 300, -500));
         add(Layer.platform, WoodPlatform.get("ShortWood", 300, -300));
 
+        add(Layer.platform, WoodPlatform.get("LongWood", 300, 500));
+        add(Layer.platform, WoodPlatform.get("ShortWood", 100, 300));
+        add(Layer.platform, WoodPlatform.get("ShortWood", 400, 300));
+        add(Layer.platform, WoodPlatform.get("ShortWood", 700, 300));
         player = new Player(w/ 2, h/2, 0,0);
         add(Layer.player, player);
 
@@ -129,6 +133,17 @@ public class MainGame {
             Car car = (Car) o1;
             if(CollisionHelper.collides((BoxCollidable)o1, player)){
                 //Log.d(TAG, "Collision!! Enemy - player" );
+            }
+        }
+        ArrayList<GameObject> platforms = layers.get(Layer.platform.ordinal());
+        for(GameObject o1 : platforms){
+            WoodPlatform platform = (WoodPlatform) o1;
+            if(CollisionHelper.collidesIn((BoxCollidable)o1, player)){
+                Log.d(TAG, "Collision!! platform - player" );
+                platform.ConnectPlayer(player);
+            }
+            else{
+                platform.ConnectPlayer(null);
             }
         }
         ArrayList<GameObject> items = layers.get(Layer.item.ordinal());

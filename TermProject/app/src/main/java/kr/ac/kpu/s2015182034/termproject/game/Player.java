@@ -15,12 +15,11 @@ import kr.ac.kpu.s2015182034.termproject.ui.view.GameView;
 
 public class Player implements GameObject, BoxCollidable {
     private static final String TAG = Player.class.getSimpleName();
+
     private float x, y;   // 위치
     private float sppedX, speedY; // 속도
-
     private int sx, sy; // 크기
-    
-    private float jumpX, jumpY; // jump 계산에 사용할 변수
+
     private float moveTime = 0.0f;
     private final float TO_MOVE_TIME = 1.0f;
     private static AnimationBitmap bitmap;
@@ -42,7 +41,7 @@ public class Player implements GameObject, BoxCollidable {
         this.isOnMove = false;
         if(bitmap == null) {
             Resources res = GameView.view.getResources();
-            bitmap = new AnimationBitmap(R.mipmap.frog, FRAME_RATE, 4);
+            bitmap = new AnimationBitmap(R.mipmap.frog_, FRAME_RATE, 4);
             this.sx = bitmap.getWidth();
             this.sy = bitmap.getHeight();
         }
@@ -56,14 +55,10 @@ public class Player implements GameObject, BoxCollidable {
         if(idx == 0){   // 상
             this.speedY = frameTime * -speed;
             this.angle = 0.0f;
-            this.jumpX = -this.sx * 0.75f;
-            this.jumpY = this.sy * 0.75f;
         }
         else if(idx == 1){ // 하
             this.speedY = frameTime * speed;
             this.angle = 180.0f;
-            this.jumpX = -this.sx * 0.75f;
-            this.jumpY = -this.sy * 0.75f;
         }
         else if(idx == 2){ // 좌
             this.sppedX = frameTime * -speed;
@@ -96,19 +91,8 @@ public class Player implements GameObject, BoxCollidable {
             frameY += speedY;
 
             x += sppedX;
-            //y += dy;
 
             MainGame.get().ScrollMap(0.0f, -this.speedY);
-            if(moveTime > TO_MOVE_TIME * 0.5f){
-                x -= jumpX * frameTime;
-                //frameY -=  jumpY * frameTime;
-                //MainGame.get().ScrollMap(0.0f, jumpY * frameTime );
-            }
-            else{
-                x += jumpX * frameTime;
-                //frameY +=  jumpY * frameTime;
-                //MainGame.get().ScrollMap(0.0f, -jumpY * frameTime );
-            }
             //y += frameY;
 
             // 스크롤 되는 방향은 이동 방향과 반대가 되도록
@@ -120,17 +104,11 @@ public class Player implements GameObject, BoxCollidable {
                 moveTime += frameTime;
                 int h = GameView.view.getHeight();
                 Log.d(TAG, "DY: " + this.speedY + " ScroolSize: " + this.speedY * TO_MOVE_TIME * 100.0f);
-                //MainGame.get().ScrollMap(0.0f, this.dy * TO_MOVE_TIME * 100.0f);
                 sppedX = speedY = 0;
                 isOnMove = false;
-                jumpX = jumpY = 0.0f;
                 moveTime = 0.0f;
             }
         }
-    }
-
-    public void Jump(){
-        
     }
 
     public void draw(Canvas canvas) {
@@ -140,7 +118,7 @@ public class Player implements GameObject, BoxCollidable {
         bitmap.draw(canvas, x, y);
         canvas.restore();
 
-        //bitmap.drawAABB(canvas,x,y);
+        bitmap.drawAABB(canvas,x,y);
     }
     private int CalculateNextPositionIndex(float x, float y){
         float dists[] = {   // top, bottom, left, right
