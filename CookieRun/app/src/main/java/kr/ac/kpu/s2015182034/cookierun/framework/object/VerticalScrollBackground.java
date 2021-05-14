@@ -6,9 +6,9 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
-import kr.ac.kpu.s2015182034.cookierun.framework.game.BaseGame;
 import kr.ac.kpu.s2015182034.cookierun.framework.View.GameView;
 import kr.ac.kpu.s2015182034.cookierun.framework.bitmap.GameBitmap;
+import kr.ac.kpu.s2015182034.cookierun.framework.game.BaseGame;
 import kr.ac.kpu.s2015182034.cookierun.framework.iface.GameObject;
 
 public class VerticalScrollBackground implements GameObject {

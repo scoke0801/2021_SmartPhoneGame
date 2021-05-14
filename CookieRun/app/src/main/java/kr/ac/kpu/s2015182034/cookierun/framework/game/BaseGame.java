@@ -7,33 +7,37 @@ import android.view.MotionEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import kr.ac.kpu.s2015182034.cookierun.R;
 import kr.ac.kpu.s2015182034.cookierun.framework.View.GameView;
 import kr.ac.kpu.s2015182034.cookierun.framework.iface.GameObject;
 import kr.ac.kpu.s2015182034.cookierun.framework.iface.Recyclable;
-import kr.ac.kpu.s2015182034.cookierun.framework.object.HorizontalScrollBackground;
-import kr.ac.kpu.s2015182034.cookierun.game.Player;
-import kr.ac.kpu.s2015182034.cookierun.game.Score;
 
 public class BaseGame {
-    private static final int BALL_COUNT = 10;
     private static final String TAG = BaseGame.class.getSimpleName();
     // singleton
     private static BaseGame instance;
-    private Player player;
-    private Score score;
+
+    public float frameTime;
 
     public static BaseGame get() {
-        if (instance == null) {
-            instance = new BaseGame();
-        }
         return instance;
     }
-    public float frameTime;
-    private boolean initialized;
+    protected BaseGame(){
+        instance = this;
+    }
 
     ArrayList<ArrayList<GameObject>> layers;
     private static HashMap<Class, ArrayList<GameObject>> reclycleBin = new HashMap<>();
+
+
+    public void recycle(GameObject object){
+        Class className = object.getClass();
+        ArrayList<GameObject> array = reclycleBin.get(className);
+        if(array == null){
+            array = new ArrayList<>();
+            reclycleBin.put(className, array);
+        }
+        array.add(object);
+    }
 
     public GameObject get(Class className){
         ArrayList<GameObject> array = reclycleBin.get(className);
@@ -41,46 +45,12 @@ public class BaseGame {
         if(array.isEmpty()) return null;
         return array.remove(0);
     }
-    public void recycle(GameObject object){
-        Class className = object.getClass();
-        ArrayList<GameObject> array = reclycleBin.get(className);
-        if(array == null){
-            // 첫 번째 호출인 경우.
-            array = new ArrayList<>();
-            reclycleBin.put(className, array);
-        }
-        array.add(object);
-    }
-
-    public enum Layer{
-        bg,bg2,bg3, enemy, bullet, player, ui, controller, COUNT
-    }
     public boolean initResources() {
-        if (initialized) {
-            return false;
-        }
-
-        initLayers(Layer.COUNT.ordinal());
-
-        int w = GameView.view.getWidth();
-        int h = GameView.view.getHeight();
-
-        player = new Player(w/2, h - 750);
-        add(Layer.player, player);
-
-        int margin =  (int)(20 * GameView.MULTIPLIER);
-        score = new Score(w - margin, margin);
-        score.setScore(0);
-        add(Layer.ui, score);
-        initialized = true;
-
-        // parallax scrolling
-        add(Layer.bg, new HorizontalScrollBackground(R.mipmap.cookie_run_bg_1, -40));
-        add(Layer.bg2, new HorizontalScrollBackground(R.mipmap.cookie_run_bg_2, -20));
-        add(Layer.bg3, new HorizontalScrollBackground(R.mipmap.cookie_run_bg_3, -10));
-        return true;
+        Log.d(TAG, "BaseGame::initResources is error");
+        return false;
     }
-    private void initLayers(int layerCount) {
+
+    protected void initLayers(int layerCount) {
         layers = new ArrayList<>();
         for (int i = 0; i < layerCount; i++) {
             layers.add(new ArrayList<>());
@@ -88,7 +58,7 @@ public class BaseGame {
     }
 
     public void update() {
-        if (!initialized) return;
+        //if (!initialized) return;
         for (ArrayList<GameObject> objects: layers) {
             for (GameObject o : objects) {
                 o.update();
@@ -96,7 +66,7 @@ public class BaseGame {
         }
     }
     public void draw(Canvas canvas) {
-        if (!initialized) return;
+        //if (!initialized) return;
         for(ArrayList<GameObject> objects : layers){
             for (GameObject o : objects) {
                 o.draw(canvas);
@@ -105,19 +75,15 @@ public class BaseGame {
     }
 
     public boolean onTouchEvent(MotionEvent event) {
-        int action = event.getAction();
-        if (action == MotionEvent.ACTION_DOWN) {
-            player.moveTo(event.getX(), event.getY());
-            return true;
-        }
+        Log.d(TAG, "BaseGame::onTouchEvent is error");
         return false;
     }
 
-    public void add(Layer layer, GameObject gameObject) {
+    public void add(int layerIndex, GameObject gameObject) {
         GameView.view.post(new Runnable(){
             @Override
             public void run(){
-                ArrayList<GameObject> objects = layers.get(layer.ordinal());
+                ArrayList<GameObject> objects = layers.get(layerIndex);
                 objects.add(gameObject);
             }
         });
