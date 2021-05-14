@@ -103,7 +103,6 @@ public class Player implements GameObject, BoxCollidable {
             if(moveTime > TO_MOVE_TIME){
                 moveTime += frameTime;
                 int h = GameView.view.getHeight();
-                Log.d(TAG, "DY: " + this.speedY + " ScroolSize: " + this.speedY * TO_MOVE_TIME * 100.0f);
                 sppedX = speedY = 0;
                 isOnMove = false;
                 moveTime = 0.0f;

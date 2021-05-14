@@ -72,6 +72,7 @@ public class MainGame {
         int w = GameView.view.getWidth();
         int h = GameView.view.getHeight();
 
+        //Log.d(TAG, "App Size W : " + w + " h : " + h );
         String[] CAR_TYPE = new String[]{
                 "Car", "Ambulance", "PoliceCar", "Excavator", "Truck", "Bus"
         };
@@ -92,7 +93,8 @@ public class MainGame {
         add(Layer.platform, WoodPlatform.get("ShortWood", 100, 300));
         add(Layer.platform, WoodPlatform.get("ShortWood", 400, 300));
         add(Layer.platform, WoodPlatform.get("ShortWood", 700, 300));
-        player = new Player(w/ 2, h/2, 0,0);
+
+        player = new Player(w/ 2, h - 300, 0,0);
         add(Layer.player, player);
 
         int margin =  (int)(20 * GameView.MULTIPLIER);
@@ -141,6 +143,7 @@ public class MainGame {
             if(CollisionHelper.collidesIn((BoxCollidable)o1, player)){
                 Log.d(TAG, "Collision!! platform - player" );
                 platform.ConnectPlayer(player);
+                break;
             }
             else{
                 platform.ConnectPlayer(null);

@@ -21,16 +21,6 @@ public class CollisionHelper {
     }
 
     public static boolean collidesIn(BoxCollidable objA, BoxCollidable objB){
-//        objB.getBoundingRect(rect2);
-//        objA.getBoundingRect(rect1);
-//
-//        float centerX = rect2.right - rect2.left;
-//        float centerY = rect2.bottom - rect2.top;
-//
-//        if (rect1.left   > centerX) return false;
-//        if (rect1.top    > centerY )return false;
-//        if (rect1.right  < centerX)  return false;
-//        if (rect1.bottom < centerY )   return false;
         objB.getBoundingRect(rect2);
         objA.getBoundingRect(rect1);
 
@@ -38,6 +28,7 @@ public class CollisionHelper {
         if (rect1.top    > rect2.bottom)return false;
         if (rect1.right  < rect2.left)  return false;
         if (rect1.bottom < rect2.top)   return false;
+
         return true;
     }
 }
