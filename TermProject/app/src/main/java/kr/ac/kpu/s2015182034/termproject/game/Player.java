@@ -92,23 +92,37 @@ public class Player implements GameObject, BoxCollidable {
             remainBarrierTime = 0.0f;
         }
         if(isOnMove) {
-            y += dy;
+            float frameY = 0.0f;
+            frameY += dy;
+
             x += dx;
+            //y += dy;
+
+            MainGame.get().ScrollMap(0.0f, -this.dy );
             if(moveTime > TO_MOVE_TIME * 0.5f){
                 x -= jumpX * frameTime;
-                y -= jumpY * frameTime;
+               // y -= jumpY * frameTime;
+                frameY -=  jumpY * frameTime;
+                //MainGame.get().ScrollMap(0.0f, jumpY * frameTime );
             }
             else{
                 x += jumpX * frameTime;
-                y += jumpY * frameTime;
+                //y += jumpY * frameTime;
+                frameY +=  jumpY * frameTime;
+                //MainGame.get().ScrollMap(0.0f, -jumpY * frameTime );
             }
+            y += frameY;
+
+            // 스크롤 되는 방향은 이동 방향과 반대가 되도록
+            MainGame.get().ScrollMap(0.0f,- frameY);
+
             moveTime += frameTime;
 
             if(moveTime > TO_MOVE_TIME){
                 moveTime += frameTime;
                 int h = GameView.view.getHeight();
                 Log.d(TAG, "DY: " + this.dy + " ScroolSize: " + this.dy * TO_MOVE_TIME * 100.0f);
-                MainGame.get().ScrollMap(0.0f, this.dy * TO_MOVE_TIME * 100.0f);
+                //MainGame.get().ScrollMap(0.0f, this.dy * TO_MOVE_TIME * 100.0f);
                 dx = dy = 0;
                 isOnMove = false;
                 jumpX = jumpY = 0.0f;
