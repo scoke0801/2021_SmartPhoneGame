@@ -5,11 +5,11 @@ import android.graphics.Canvas;
 import android.graphics.RectF;
 
 import kr.ac.kpu.s2015182034.cookierun.R;
-import kr.ac.kpu.s2015182034.cookierun.framework.BoxCollidable;
-import kr.ac.kpu.s2015182034.cookierun.framework.GameBitmap;
-import kr.ac.kpu.s2015182034.cookierun.framework.GameObject;
-import kr.ac.kpu.s2015182034.cookierun.framework.IndexedAnimationGameBitmap;
-import kr.ac.kpu.s2015182034.cookierun.framework.MainGame;
+import kr.ac.kpu.s2015182034.cookierun.framework.iface.BoxCollidable;
+import kr.ac.kpu.s2015182034.cookierun.framework.bitmap.GameBitmap;
+import kr.ac.kpu.s2015182034.cookierun.framework.iface.GameObject;
+import kr.ac.kpu.s2015182034.cookierun.framework.bitmap.IndexedAnimationGameBitmap;
+import kr.ac.kpu.s2015182034.cookierun.framework.game.BaseGame;
 
 public class Player implements GameObject, BoxCollidable {
 
@@ -44,7 +44,7 @@ public class Player implements GameObject, BoxCollidable {
     }
     @Override
     public void update() {
-        MainGame game = MainGame.get();
+        BaseGame game = BaseGame.get();
         float dx = speed * game.frameTime;
         if (tx < x){
             // Move Left

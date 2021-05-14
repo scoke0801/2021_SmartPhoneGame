@@ -2,7 +2,7 @@ package kr.ac.kpu.s2015182034.cookierun.framework.utils;
 
 import android.graphics.RectF;
 
-import kr.ac.kpu.s2015182034.cookierun.framework.BoxCollidable;
+import kr.ac.kpu.s2015182034.cookierun.framework.iface.BoxCollidable;
 
 
 public class CollisionHelper {

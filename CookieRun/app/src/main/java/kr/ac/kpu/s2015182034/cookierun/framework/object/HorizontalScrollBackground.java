@@ -1,13 +1,13 @@
-package kr.ac.kpu.s2015182034.cookierun.framework;
+package kr.ac.kpu.s2015182034.cookierun.framework.object;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
-import kr.ac.kpu.s2015182034.cookierun.framework.GameBitmap;
-import kr.ac.kpu.s2015182034.cookierun.framework.GameObject;
-import kr.ac.kpu.s2015182034.cookierun.framework.MainGame;
+import kr.ac.kpu.s2015182034.cookierun.framework.game.BaseGame;
+import kr.ac.kpu.s2015182034.cookierun.framework.bitmap.GameBitmap;
+import kr.ac.kpu.s2015182034.cookierun.framework.iface.GameObject;
 import kr.ac.kpu.s2015182034.cookierun.framework.View.GameView;
 
 public class HorizontalScrollBackground implements GameObject {
@@ -34,11 +34,9 @@ public class HorizontalScrollBackground implements GameObject {
     }
     @Override
     public void update() {
-        MainGame game = MainGame.get();
+        BaseGame game = BaseGame.get();
         float moveAmount = speed * game.frameTime;
         scroll += moveAmount;
-        //dstRect.top += moveAmount;
-        //dstRect.bottom += moveAmount;
     }
 
     @Override
@@ -48,7 +46,6 @@ public class HorizontalScrollBackground implements GameObject {
         int iw = bitmap.getHeight();
         int ih = bitmap.getWidth();
 
-        float dh = vw * ih / iw;
         float dw = vh * ih / iw;
         int curr = (int)(scroll % dw);
         if(curr > 0) curr -= dw;
@@ -56,7 +53,7 @@ public class HorizontalScrollBackground implements GameObject {
         while(curr < vw){
             dstRect.set(curr, 0, curr + dw, vh);
             canvas.drawBitmap(bitmap, srcRect, dstRect, null);
-            curr += dh;
+            curr += dw;
         }
 
     }

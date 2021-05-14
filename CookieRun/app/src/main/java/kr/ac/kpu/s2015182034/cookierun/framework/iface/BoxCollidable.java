@@ -1,4 +1,4 @@
-package kr.ac.kpu.s2015182034.cookierun.framework;
+package kr.ac.kpu.s2015182034.cookierun.framework.iface;
 
 import android.graphics.RectF;
 

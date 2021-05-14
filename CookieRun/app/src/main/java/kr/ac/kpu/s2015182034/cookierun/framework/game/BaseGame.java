@@ -1,4 +1,4 @@
-package kr.ac.kpu.s2015182034.cookierun.framework;
+package kr.ac.kpu.s2015182034.cookierun.framework.game;
 
 import android.graphics.Canvas;
 import android.util.Log;
@@ -9,20 +9,23 @@ import java.util.HashMap;
 
 import kr.ac.kpu.s2015182034.cookierun.R;
 import kr.ac.kpu.s2015182034.cookierun.framework.View.GameView;
+import kr.ac.kpu.s2015182034.cookierun.framework.iface.GameObject;
+import kr.ac.kpu.s2015182034.cookierun.framework.iface.Recyclable;
+import kr.ac.kpu.s2015182034.cookierun.framework.object.HorizontalScrollBackground;
 import kr.ac.kpu.s2015182034.cookierun.game.Player;
 import kr.ac.kpu.s2015182034.cookierun.game.Score;
 
-public class MainGame {
+public class BaseGame {
     private static final int BALL_COUNT = 10;
-    private static final String TAG = MainGame.class.getSimpleName();
+    private static final String TAG = BaseGame.class.getSimpleName();
     // singleton
-    private static MainGame instance;
+    private static BaseGame instance;
     private Player player;
     private Score score;
 
-    public static MainGame get() {
+    public static BaseGame get() {
         if (instance == null) {
-            instance = new MainGame();
+            instance = new BaseGame();
         }
         return instance;
     }
@@ -72,12 +75,9 @@ public class MainGame {
         initialized = true;
 
         // parallax scrolling
-        add(Layer.bg, new HorizontalScrollBackground(R.mipmap.cookie_run_bg_1, -20));
-        add(Layer.bg2, new HorizontalScrollBackground(R.mipmap.cookie_run_bg_2, -10));
-        add(Layer.bg3, new HorizontalScrollBackground(R.mipmap.cookie_run_bg_3, -5));
-//        add(Layer.bg, new VerticalScrollBackground(R.mipmap.cookie_run_bg_1, -20));
-//        add(Layer.bg2, new VerticalScrollBackground(R.mipmap.cookie_run_bg_2, -10));
-//        add(Layer.bg3, new VerticalScrollBackground(R.mipmap.cookie_run_bg_3, -5));
+        add(Layer.bg, new HorizontalScrollBackground(R.mipmap.cookie_run_bg_1, -40));
+        add(Layer.bg2, new HorizontalScrollBackground(R.mipmap.cookie_run_bg_2, -20));
+        add(Layer.bg3, new HorizontalScrollBackground(R.mipmap.cookie_run_bg_3, -10));
         return true;
     }
     private void initLayers(int layerCount) {
