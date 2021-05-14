@@ -66,4 +66,7 @@ public class VerticalScrollBackground implements GameObject {
         float moveAmount = yMoved;
         scroll += moveAmount;
     }
+    @Override
+    public void movePosition(float xMoved, float yMoved) {
+    }
 }

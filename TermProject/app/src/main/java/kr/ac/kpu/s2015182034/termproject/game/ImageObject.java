@@ -36,7 +36,9 @@ public class ImageObject implements GameObject {
 
     @Override
     public void fixCollision() {
-
     }
 
+    @Override
+    public void movePosition(float xMoved, float yMoved) {
+    }
 }

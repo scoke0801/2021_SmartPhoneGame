@@ -168,4 +168,10 @@ public class Car implements GameObject, BoxCollidable, Recyclable {
         this.isOnStop = stopInfo;
         this.remainStopTime = stopTime;
     }
+
+    @Override
+    public void movePosition(float xMoved, float yMoved) {
+        this.x += xMoved;
+        this.y += yMoved;
+    }
 }

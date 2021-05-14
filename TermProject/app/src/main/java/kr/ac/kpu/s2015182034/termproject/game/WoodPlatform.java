@@ -110,4 +110,10 @@ public class WoodPlatform implements GameObject, BoxCollidable, Recyclable {
     public void recyle() {
         // To do
     }
+
+    @Override
+    public void movePosition(float xMoved, float yMoved) {
+        this.x += xMoved;
+        this.y += yMoved;
+    }
 }

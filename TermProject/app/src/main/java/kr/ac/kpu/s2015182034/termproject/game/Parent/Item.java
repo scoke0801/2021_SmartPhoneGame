@@ -134,4 +134,10 @@ public class Item implements GameObject, BoxCollidable, Recyclable {
         this.x = x;
         this.y = y;
     }
+
+    @Override
+    public void movePosition(float xMoved, float yMoved) {
+        this.x += xMoved;
+        this.y += yMoved;
+    }
 }

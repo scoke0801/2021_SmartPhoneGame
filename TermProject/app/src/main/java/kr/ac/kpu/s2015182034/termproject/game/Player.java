@@ -16,7 +16,7 @@ import kr.ac.kpu.s2015182034.termproject.ui.view.GameView;
 public class Player implements GameObject, BoxCollidable {
     private static final String TAG = Player.class.getSimpleName();
     private float x, y;   // 위치
-    private float dx, dy; // 속도
+    private float sppedX, speedY; // 속도
 
     private int sx, sy; // 크기
     
@@ -37,8 +37,8 @@ public class Player implements GameObject, BoxCollidable {
     public Player(float x, float y, float dx, float dy) {
         this.x = x;
         this.y = y;
-        this.dx = dx;
-        this.dy = dy;
+        this.sppedX = dx;
+        this.speedY = dy;
         this.isOnMove = false;
         if(bitmap == null) {
             Resources res = GameView.view.getResources();
@@ -54,23 +54,23 @@ public class Player implements GameObject, BoxCollidable {
         float frameTime = MainGame.get().frameTime;
         int idx = CalculateNextPositionIndex(x, y);
         if(idx == 0){   // 상
-            this.dy = frameTime * -speed;
+            this.speedY = frameTime * -speed;
             this.angle = 0.0f;
             this.jumpX = -this.sx * 0.75f;
             this.jumpY = this.sy * 0.75f;
         }
         else if(idx == 1){ // 하
-            this.dy = frameTime * speed;
+            this.speedY = frameTime * speed;
             this.angle = 180.0f;
             this.jumpX = -this.sx * 0.75f;
             this.jumpY = -this.sy * 0.75f;
         }
         else if(idx == 2){ // 좌
-            this.dx = frameTime * -speed;
+            this.sppedX = frameTime * -speed;
             this.angle = -90.0f;
         }
         else if (idx == 3){ // 우
-            this.dx = frameTime * speed;
+            this.sppedX = frameTime * speed;
             this.angle = 90.0f;
         }
         isOnMove = true;
@@ -93,37 +93,35 @@ public class Player implements GameObject, BoxCollidable {
         }
         if(isOnMove) {
             float frameY = 0.0f;
-            frameY += dy;
+            frameY += speedY;
 
-            x += dx;
+            x += sppedX;
             //y += dy;
 
-            MainGame.get().ScrollMap(0.0f, -this.dy );
+            MainGame.get().ScrollMap(0.0f, -this.speedY);
             if(moveTime > TO_MOVE_TIME * 0.5f){
                 x -= jumpX * frameTime;
-               // y -= jumpY * frameTime;
-                frameY -=  jumpY * frameTime;
+                //frameY -=  jumpY * frameTime;
                 //MainGame.get().ScrollMap(0.0f, jumpY * frameTime );
             }
             else{
                 x += jumpX * frameTime;
-                //y += jumpY * frameTime;
-                frameY +=  jumpY * frameTime;
+                //frameY +=  jumpY * frameTime;
                 //MainGame.get().ScrollMap(0.0f, -jumpY * frameTime );
             }
-            y += frameY;
+            //y += frameY;
 
             // 스크롤 되는 방향은 이동 방향과 반대가 되도록
-            MainGame.get().ScrollMap(0.0f,- frameY);
+            MainGame.get().ScrollMap(0.0f,-frameY);
 
             moveTime += frameTime;
 
             if(moveTime > TO_MOVE_TIME){
                 moveTime += frameTime;
                 int h = GameView.view.getHeight();
-                Log.d(TAG, "DY: " + this.dy + " ScroolSize: " + this.dy * TO_MOVE_TIME * 100.0f);
+                Log.d(TAG, "DY: " + this.speedY + " ScroolSize: " + this.speedY * TO_MOVE_TIME * 100.0f);
                 //MainGame.get().ScrollMap(0.0f, this.dy * TO_MOVE_TIME * 100.0f);
-                dx = dy = 0;
+                sppedX = speedY = 0;
                 isOnMove = false;
                 jumpX = jumpY = 0.0f;
                 moveTime = 0.0f;
@@ -180,5 +178,11 @@ public class Player implements GameObject, BoxCollidable {
     }
     public float GetYPos(){
         return y;
+    }
+
+    @Override
+    public void movePosition(float xMoved, float yMoved) {
+        this.x += xMoved;
+        this.y += yMoved;
     }
 }

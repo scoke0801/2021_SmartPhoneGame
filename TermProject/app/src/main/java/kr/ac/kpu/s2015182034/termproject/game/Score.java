@@ -70,4 +70,7 @@ public class Score implements GameObject {
     public void fixCollision() {
 
     }
+    @Override
+    public void movePosition(float xMoved, float yMoved) {
+    }
 }

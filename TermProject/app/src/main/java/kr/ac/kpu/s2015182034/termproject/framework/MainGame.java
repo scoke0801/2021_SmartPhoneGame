@@ -28,7 +28,7 @@ public class MainGame {
     private boolean initialized = false;
 
     public enum Layer{
-        map, car, platform, bullet, item, player, ui, controller, COUNT
+        map, car, platform, item, player, ui, controller, COUNT
     }
     private ArrayList<ArrayList<GameObject>> layers;
     private Player player;
@@ -85,8 +85,8 @@ public class MainGame {
             Car car = Car.get(CAR_TYPE[i % 5],w, carSizeH * (i+1), true);
             add(Layer.car, car);
         }
-        add(Layer.platform, WoodPlatform.get("LongWood", 300, 500));
-        add(Layer.platform, WoodPlatform.get("ShortWood", 300, 300));
+        add(Layer.platform, WoodPlatform.get("LongWood", 300, -500));
+        add(Layer.platform, WoodPlatform.get("ShortWood", 300, -300));
 
         player = new Player(w/ 2, h/2, 0,0);
         add(Layer.player, player);
@@ -217,6 +217,19 @@ public class MainGame {
     };
 
     public void ScrollMap(float xMoved, float yMoved) {
+        //car, platform, item
+        ArrayList<GameObject> carObjs = layers.get(Layer.car.ordinal());
+        for (GameObject o : carObjs) {
+            o.movePosition(xMoved, yMoved);
+        }
+        ArrayList<GameObject> platformObjs = layers.get(Layer.platform.ordinal());
+        for (GameObject o : platformObjs) {
+            o.movePosition(xMoved, yMoved);
+        }
+        ArrayList<GameObject> itemObjs = layers.get(Layer.item.ordinal());
+        for (GameObject o : itemObjs) {
+            o.movePosition(xMoved, yMoved);
+        }
         bg.Scroll(xMoved, yMoved);
     }
 
