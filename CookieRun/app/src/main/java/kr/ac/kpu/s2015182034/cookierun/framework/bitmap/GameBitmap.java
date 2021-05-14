@@ -61,4 +61,5 @@ public class GameBitmap {
         float db = y + hh * GameView.MULTIPLIER;
         rect.set(dl,dt,dr,db);
     }
+
 }

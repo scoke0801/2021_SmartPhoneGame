@@ -31,7 +31,7 @@ public class MainGame extends BaseGame {
         int w = GameView.view.getWidth();
         int h = GameView.view.getHeight();
 
-        player = new Player(w/2, h - 750);
+        player = new Player(200, h - 750);
         add(Layer.player, player);
 
         int margin =  (int)(20 * GameView.MULTIPLIER);
@@ -80,7 +80,8 @@ public class MainGame extends BaseGame {
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
         if (action == MotionEvent.ACTION_DOWN) {
-            player.moveTo(event.getX(), event.getY());
+            player.Jump();
+            //player.moveTo(event.getX(), event.getY());
             return true;
         }
         return false;
