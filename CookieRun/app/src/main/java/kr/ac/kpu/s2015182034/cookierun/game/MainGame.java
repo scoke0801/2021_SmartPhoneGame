@@ -10,7 +10,7 @@ import kr.ac.kpu.s2015182034.cookierun.framework.object.HorizontalScrollBackgrou
 
 public class MainGame extends BaseGame {
     public enum Layer{
-        bg,bg2,bg3, enemy, bullet, player, ui, controller, COUNT
+        bg, platform, player, ui, controller, COUNT
     }
     private Player player;
     private Score score;
@@ -41,9 +41,30 @@ public class MainGame extends BaseGame {
 
         // parallax scrolling
         add(Layer.bg, new HorizontalScrollBackground(R.mipmap.cookie_run_bg_1, -40));
-        add(Layer.bg2, new HorizontalScrollBackground(R.mipmap.cookie_run_bg_2, -20));
-        add(Layer.bg3, new HorizontalScrollBackground(R.mipmap.cookie_run_bg_3, -10));
+        add(Layer.bg, new HorizontalScrollBackground(R.mipmap.cookie_run_bg_2, -20));
+        add(Layer.bg, new HorizontalScrollBackground(R.mipmap.cookie_run_bg_3, -10));
 
+        float tx = 0.0f, ty = h - 100;
+        while(tx < w){
+            Platform platform = new Platform(Platform.PlatformType.PT_10x2, tx, ty);
+            add(Layer.platform, platform);
+
+            tx += platform.getDstWidth();
+        }
+        tx = 200f;
+        while(tx < w - 200){
+            Platform platform = new Platform(Platform.PlatformType.PT_2x2, tx, ty - 300);
+            add(Layer.platform, platform);
+
+            tx += platform.getDstWidth();
+        }
+        tx = 400.0f;
+        while(tx < w- 400){
+            Platform platform = new Platform(Platform.PlatformType.PT_3x1, tx, ty - 600);
+            add(Layer.platform, platform);
+
+            tx += platform.getDstWidth();
+        }
         initialized = true;
         return true;
     }

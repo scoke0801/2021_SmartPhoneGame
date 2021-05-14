@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         GameView.MULTIPLIER = metrics.density* 0.35f;
+        //GameView.MULTIPLIER = 1.0f;
     }
 
     @Override

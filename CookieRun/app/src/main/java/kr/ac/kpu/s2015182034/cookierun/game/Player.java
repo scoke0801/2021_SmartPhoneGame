@@ -12,10 +12,7 @@ import kr.ac.kpu.s2015182034.cookierun.framework.iface.BoxCollidable;
 import kr.ac.kpu.s2015182034.cookierun.framework.iface.GameObject;
 
 public class Player implements GameObject, BoxCollidable {
-
-    private static final int BULLET_SPEED = 1500;
     private static final float FIRE_INTERVAL =  1.0f / 7.5f;
-    private static final float LASER_DURATION =  FIRE_INTERVAL / 3.0f;
 
     private float x, y;   // 위치
     private float dx, dy; // 속도
@@ -39,8 +36,6 @@ public class Player implements GameObject, BoxCollidable {
         //Sound.play(R.raw.hadouken);
 
         this.tx = x;
-        //this.ty = this.y;
-
     }
     @Override
     public void update() {

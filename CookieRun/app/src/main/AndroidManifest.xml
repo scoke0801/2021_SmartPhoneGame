@@ -13,10 +13,8 @@
             android:theme="@style/Theme.AppCompat.NoActionBar"
             android:configChanges="screenSize|orientation"
             android:screenOrientation="landscape">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

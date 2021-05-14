@@ -32,17 +32,8 @@ public class GameView extends View {
         GameView.view = this;
 
         Sound.init(context);
-
-        //MainGame game = MainGame.get();
-        //game.InitResources();
-
-       // startUpdating();
         this.running = true;
     }
-
-    //private void startUpdating() {
-    //    doGameFrame();
-    //}
 
     private void update() {
         BaseGame game = BaseGame.get();
