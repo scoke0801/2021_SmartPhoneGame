@@ -12,6 +12,7 @@ import kr.ac.kpu.s2015182034.termproject.R;
 import kr.ac.kpu.s2015182034.termproject.game.Barrier;
 import kr.ac.kpu.s2015182034.termproject.game.Blinker;
 import kr.ac.kpu.s2015182034.termproject.game.Coin;
+import kr.ac.kpu.s2015182034.termproject.game.ImageObject;
 import kr.ac.kpu.s2015182034.termproject.game.Parent.Car;
 import kr.ac.kpu.s2015182034.termproject.game.Parent.Item;
 import kr.ac.kpu.s2015182034.termproject.game.Player;
@@ -28,7 +29,7 @@ public class MainGame {
     private boolean initialized = false;
 
     public enum Layer{
-        map, car, platform, item, player, ui, controller, COUNT
+        map, water, car, platform, item, player, ui, controller, COUNT
     }
     private ArrayList<ArrayList<GameObject>> layers;
     private Player player;
@@ -93,6 +94,8 @@ public class MainGame {
         add(Layer.platform, WoodPlatform.get("ShortWood", 100, 300));
         add(Layer.platform, WoodPlatform.get("ShortWood", 400, 300));
         add(Layer.platform, WoodPlatform.get("ShortWood", 700, 300));
+
+        add(Layer.water, new ImageObject(R.mipmap.water, 0, 300));
 
         player = new Player(w/ 2, h - 300, 0,0);
         add(Layer.player, player);
@@ -246,6 +249,10 @@ public class MainGame {
         }
         ArrayList<GameObject> itemObjs = layers.get(Layer.item.ordinal());
         for (GameObject o : itemObjs) {
+            o.movePosition(xMoved, yMoved);
+        }
+        ArrayList<GameObject> waterObjs = layers.get(Layer.water.ordinal());
+        for (GameObject o : waterObjs) {
             o.movePosition(xMoved, yMoved);
         }
         bg.Scroll(xMoved, yMoved);
