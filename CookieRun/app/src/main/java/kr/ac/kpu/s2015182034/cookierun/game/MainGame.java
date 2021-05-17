@@ -12,7 +12,7 @@ import kr.ac.kpu.s2015182034.cookierun.framework.object.HorizontalScrollBackgrou
 
 public class MainGame extends BaseGame {
     public enum Layer{
-        bg, platform, player, ui, controller, COUNT
+        bg, platform, item, player, ui, controller, COUNT
     }
     private Player player;
     private Score score;

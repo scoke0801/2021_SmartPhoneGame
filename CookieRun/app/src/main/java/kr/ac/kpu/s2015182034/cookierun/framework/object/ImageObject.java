@@ -45,8 +45,11 @@ public class ImageObject implements GameObject {
         return dstRect.width();
     }
 
-
     public float getDstHeight() {
         return dstRect.height();
+    }
+
+    public float getRight() {
+        return dstRect.right;
     }
 }

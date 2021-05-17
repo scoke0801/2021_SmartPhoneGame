@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import kr.ac.kpu.s2015182034.cookierun.framework.View.GameView;
 import kr.ac.kpu.s2015182034.cookierun.framework.game.BaseGame;
@@ -35,6 +36,9 @@ public class StageMap implements GameObject {
             float tx = rightMost, ty =  vh - Platform.Type.T_10x2.height();
             Platform platform = new Platform(Platform.Type.RANDOM, tx, ty);
             game.add(MainGame.Layer.platform, platform);
+
+            Random r = new Random();
+            game.add(MainGame.Layer.item, new Jelly(r.nextInt(60), tx, r.nextInt((int)ty)));
         }
     }
 

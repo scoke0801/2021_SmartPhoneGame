@@ -67,8 +67,4 @@ public class Platform extends ImageObject {
             game.remove(this);
         }
     }
-
-    public float getRight() {
-        return dstRect.right;
-    }
 }
