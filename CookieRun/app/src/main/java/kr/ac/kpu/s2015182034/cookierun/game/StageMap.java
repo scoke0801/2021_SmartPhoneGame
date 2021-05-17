@@ -31,7 +31,7 @@ public class StageMap implements GameObject {
         float vh = GameView.view.getHeight();
         if(rightMost < vw){
             // create a Platform;
-            Log.d(TAG, "Create Platform In StageMap");
+            //Log.d(TAG, "Create Platform In StageMap");
             float tx = rightMost, ty =  vh - Platform.Type.T_10x2.height();
             Platform platform = new Platform(Platform.Type.T_10x2, tx, ty);
             game.add(MainGame.Layer.platform.ordinal(), platform);

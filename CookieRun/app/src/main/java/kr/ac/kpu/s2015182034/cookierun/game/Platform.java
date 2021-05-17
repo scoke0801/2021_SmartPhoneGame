@@ -42,6 +42,10 @@ public class Platform extends ImageObject {
         BaseGame game = BaseGame.get();
         float dx = SPEED * game.frameTime;
         dstRect.offset(-dx, 0);
+
+        if(getRight() < 0){
+            game.remove(this);
+        }
     }
 
     public float getRight() {
