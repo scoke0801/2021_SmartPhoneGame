@@ -3,6 +3,7 @@ package kr.ac.kpu.s2015182034.cookierun.framework.View;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Choreographer;
 import android.view.MotionEvent;
 import android.view.View;
@@ -13,26 +14,32 @@ import kr.ac.kpu.s2015182034.cookierun.framework.game.BaseGame;
 import kr.ac.kpu.s2015182034.cookierun.framework.utils.Sound;
 
 public class GameView extends View {
-    // final 변수는 생성자에서 그 값이 결정되어야 한다.
     private static final String TAG = GameView.class.getSimpleName();
-    private boolean running;
 
-    // public : 외부에서 모르고도 접근할 수 있도록
-    // static: 외부에서 해당 view 객체를 모르고도 접근할 수 있도록
+    public static float MULTIPLIER = 2;
+    private boolean running;
+    //    private Ball b1, b2;
 
     private long lastFrame;
-
     public static GameView view;
-    public static float MULTIPLIER = 2;
 
-    // 생성자 종류, 필요에 맞게 정의 필요
     public GameView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-
         GameView.view = this;
-
         Sound.init(context);
-        this.running = true;
+        running = true;
+//        startUpdating();
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        //super.onSizeChanged(w, h, oldw, oldh);
+        Log.d(TAG, "onSize: " + w + "," + h);
+        BaseGame game = BaseGame.get();
+        boolean justInitialized = game.initResources();
+        if (justInitialized) {
+            requestCallback();
+        }
     }
 
     private void update() {
@@ -42,16 +49,9 @@ public class GameView extends View {
         invalidate();
     }
 
-    @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        BaseGame game = BaseGame.get();
-        boolean justInitialized = game.initResources();
-        if (justInitialized) {
-            requestCallback();
-        }
-    }
     private void requestCallback() {
-        if(!this.running){
+        if (!running) {
+            Log.d(TAG, "Not running. Not calling Choreographer.postFrameCallback()");
             return;
         }
         Choreographer.getInstance().postFrameCallback(new Choreographer.FrameCallback() {
@@ -68,25 +68,34 @@ public class GameView extends View {
             }
         });
     }
+
     @Override
     protected void onDraw(Canvas canvas) {
-        BaseGame.get().draw(canvas);
+        BaseGame game = BaseGame.get();
+        game.draw(canvas);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        return BaseGame.get().onTouchEvent(event);
+        BaseGame game = BaseGame.get();
+        return game.onTouchEvent(event);
     }
 
-    public void pauseGame(){
-        this.running = false;
+    public void pauseGame() {
+        running = false;
     }
 
-    public void resumeGame(){
-        if(!running){
-            this.running = true;
+    public void resumeGame() {
+        if (!running) {
+            running = true;
             lastFrame = 0;
             requestCallback();
         }
     }
 }
+
+
+
+
+
+

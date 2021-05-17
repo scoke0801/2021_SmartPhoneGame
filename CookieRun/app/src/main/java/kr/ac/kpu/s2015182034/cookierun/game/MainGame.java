@@ -31,7 +31,8 @@ public class MainGame extends BaseGame {
         int w = GameView.view.getWidth();
         int h = GameView.view.getHeight();
 
-        player = new Player(200, h - 750);
+        float y = h - Platform.Type.T_2x2.height() - 140;
+        player = new Player(200, y);
         add(Layer.player, player);
 
         int margin =  (int)(20 * GameView.MULTIPLIER);
@@ -46,21 +47,21 @@ public class MainGame extends BaseGame {
 
         float tx = 0.0f, ty = h - 100;
         while(tx < w){
-            Platform platform = new Platform(Platform.PlatformType.PT_10x2, tx, ty);
+            Platform platform = new Platform(Platform.Type.T_10x2, tx, ty);
             add(Layer.platform, platform);
 
             tx += platform.getDstWidth();
         }
         tx = 200f;
         while(tx < w - 200){
-            Platform platform = new Platform(Platform.PlatformType.PT_2x2, tx, ty - 300);
+            Platform platform = new Platform(Platform.Type.T_2x2, tx, ty - 300);
             add(Layer.platform, platform);
 
             tx += platform.getDstWidth();
         }
         tx = 400.0f;
         while(tx < w- 400){
-            Platform platform = new Platform(Platform.PlatformType.PT_3x1, tx, ty - 600);
+            Platform platform = new Platform(Platform.Type.T_3x1, tx, ty - 600);
             add(Layer.platform, platform);
 
             tx += platform.getDstWidth();

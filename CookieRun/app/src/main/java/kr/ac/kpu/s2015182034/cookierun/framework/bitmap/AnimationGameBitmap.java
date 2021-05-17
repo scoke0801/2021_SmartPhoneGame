@@ -6,63 +6,68 @@ import android.graphics.Rect;
 import kr.ac.kpu.s2015182034.cookierun.framework.View.GameView;
 
 public class AnimationGameBitmap extends GameBitmap {
-    protected final int imageWidth;
-    protected final int imageHeight;
+    //private Bitmap bitmap;
+    private final int imageWidth;
+    private final int imageHeight;
     protected int frameWidth;
-    protected final long createOn;
-    protected int frameCount;
-    protected final float framePerSecond;
-
+    protected final long createdOn;
     protected int frameIndex;
+    protected final float framesPerSecond;
+    protected int frameCount;
+
     protected Rect srcRect = new Rect();
 
-    public AnimationGameBitmap(int resId, float framePerSecond, int frameCount){
+    public AnimationGameBitmap(int resId, float framesPerSecond, int frameCount) {
         super(resId);
-        bitmap = GameBitmap.load(resId);
-
+        //bitmap = GameBitmap.load(resId);
         imageWidth = bitmap.getWidth();
         imageHeight = bitmap.getHeight();
-
-        if(frameCount == 0){
+        if (frameCount == 0) {
             frameCount = imageWidth / imageHeight;
         }
-
         frameWidth = imageWidth / frameCount;
+        this.framesPerSecond = framesPerSecond;
         this.frameCount = frameCount;
-        this.framePerSecond = framePerSecond;
-        createOn = System.currentTimeMillis();
+        createdOn = System.currentTimeMillis();
         frameIndex = 0;
     }
 
-    //public void update(){
-    //    int elapsed = (int)(System.currentTimeMillis() - createOn);
-    //    frameIndex = Math.round(elapsed * framePerSecond * 0.001f) % frameCount;
-    //}
+    //    public void update() {
+//        int elapsed = (int)(System.currentTimeMillis() - createdOn);
+//        frameIndex = Math.round(elapsed * 0.001f * framesPerSecond) % frameCount;
+//    }
 
-    @Override
-    public void draw(Canvas canvas, float x, float y){
-        int elapsed = (int)(System.currentTimeMillis() - createOn);
-        frameIndex = Math.round(elapsed * framePerSecond * 0.001f) % frameCount;
+    public void draw(Canvas canvas, float x, float y) {
+        int elapsed = (int)(System.currentTimeMillis() - createdOn);
+        frameIndex = Math.round(elapsed * 0.001f * framesPerSecond) % frameCount;
 
         int fw = frameWidth;
         int h = imageHeight;
-
-        float hw = fw / 2 * GameView.MULTIPLIER;// 원래 이미지 크기의 4배
-        float hh = h / 2 *  GameView.MULTIPLIER;
-
-        srcRect.set(fw * frameIndex, 0, fw  * (frameIndex + 1), h);
-        dstRect.set(x - hw,y - hh, x + hw, y + hh);
-
+        float hw = fw / 2 * GameView.MULTIPLIER;
+        float hh = h / 2 * GameView.MULTIPLIER;
+        srcRect.set(fw * frameIndex, 0, fw * frameIndex + fw, h);
+        dstRect.set(x - hw, y - hh, x + hw, y + hh);
         canvas.drawBitmap(bitmap, srcRect, dstRect, null);
     }
 
-    @Override
-    public int getWidth(){
+    public int getWidth() {
         return frameWidth;
     }
 
-    @Override
     public int getHeight() {
         return imageHeight;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

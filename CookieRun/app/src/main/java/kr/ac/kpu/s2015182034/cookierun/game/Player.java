@@ -29,6 +29,9 @@ public class Player implements GameObject, BoxCollidable {
     private IndexedAnimationGameBitmap charBitmap;
     private GameBitmap fireBitmap;
 
+    private int[] ANIM_INDICIES_RUNNING = { 100, 101, 102, 103};
+    private int[] ANIM_INDICIES_JUMP = { 7, 8};
+    private int[] ANIM_INDICIES_DOUBLE_JUMP = { 1,2,3,4};
     private enum State{
         running, jump, doubleJump, slide, hit
     }
@@ -44,7 +47,7 @@ public class Player implements GameObject, BoxCollidable {
         this.speed = 800;
         this.vertSpeed = 0.0f;
         this.charBitmap = new IndexedAnimationGameBitmap(R.mipmap.cookie, 12.5f, 10);
-        this.charBitmap.setIndices(100, 101, 102, 103);
+        setState(state.running);
     }
 
     public void moveTo(float x, float y){
@@ -63,7 +66,7 @@ public class Player implements GameObject, BoxCollidable {
             if(y >= ground_y){
                 y = ground_y;
                 this.state = State.running;
-                this.charBitmap.setIndices(100, 101, 102, 103);
+                setState(state.running);
             }
         }
     }
@@ -85,14 +88,34 @@ public class Player implements GameObject, BoxCollidable {
             return;
         }
         if(state == State.jump) {
-            state = State.doubleJump;
-            charBitmap.setIndices(1,2,3,4);
+            setState(state.doubleJump);
+            vertSpeed = -JUMP_POWER;
         }
         else {
-            state = State.jump;
-            charBitmap.setIndices(7, 8);
-
+            setState(state.jump);
+            vertSpeed = -JUMP_POWER;
         }
-        vertSpeed = -JUMP_POWER;
+    }
+
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+        int[] indices = ANIM_INDICIES_RUNNING;
+        switch(state){
+            case running:
+                indices = ANIM_INDICIES_RUNNING;
+                break;
+            case jump:
+                indices = ANIM_INDICIES_JUMP;
+                break;
+            case doubleJump:
+                indices = ANIM_INDICIES_DOUBLE_JUMP;
+                break;
+        }
+        charBitmap.setIndices(indices);
     }
 }
