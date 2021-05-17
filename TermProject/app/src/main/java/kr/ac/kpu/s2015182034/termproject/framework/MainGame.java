@@ -134,11 +134,14 @@ public class MainGame {
                 o.update();
             }
         }
-        ArrayList<GameObject> cars = layers.get(Layer.car.ordinal());
-        for(GameObject o1 : cars){
-            Car car = (Car) o1;
-            if(CollisionHelper.collides((BoxCollidable)o1, player)){
-                //Log.d(TAG, "Collision!! Enemy - player" );
+        if( false == player.IsOnBarrier()) {
+            ArrayList<GameObject> cars = layers.get(Layer.car.ordinal());
+            for (GameObject o1 : cars) {
+                Car car = (Car) o1;
+                if (CollisionHelper.collides((BoxCollidable) o1, player)) {
+                    //Log.d(TAG, "Collision!! Enemy - player" );
+                    // to do
+                }
             }
         }
         ArrayList<GameObject> platforms = layers.get(Layer.platform.ordinal());
@@ -147,10 +150,25 @@ public class MainGame {
             if(CollisionHelper.collidesIn((BoxCollidable)o1, player)){
                 Log.d(TAG, "Collision!! platform - player" );
                 platform.ConnectPlayer(player);
+                player.SetOnPlatform(true);
                 break;
             }
             else{
+                player.SetOnPlatform(false);
                 platform.ConnectPlayer(null);
+            }
+        }
+        ArrayList<GameObject> waters = layers.get(Layer.water.ordinal());
+        for(GameObject o1 : waters){
+            WaterObject water = (WaterObject) o1;
+            if(CollisionHelper.collidesIn((BoxCollidable)o1, player)){
+                // 만약 플레이어가 플랫폼에 타 있지 않다면...
+                // 충돌처리를 하도록..
+                if(false == player.IsOnPlatform()){
+                    Log.d(TAG, "Collision!! WaterObject - player" );
+                    // to do
+                }
+                break;
             }
         }
         ArrayList<GameObject> items = layers.get(Layer.item.ordinal());

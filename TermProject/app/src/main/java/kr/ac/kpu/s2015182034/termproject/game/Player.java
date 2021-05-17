@@ -33,6 +33,8 @@ public class Player implements GameObject, BoxCollidable {
     private float spriteIdx = 0;
 
     private static float remainBarrierTime = 0.0f;
+    private boolean isOnPlatform;
+
     public Player(float x, float y, float dx, float dy) {
         this.x = x;
         this.y = y;
@@ -161,5 +163,12 @@ public class Player implements GameObject, BoxCollidable {
     public void movePosition(float xMoved, float yMoved) {
         this.x += xMoved;
         this.y += yMoved;
+    }
+
+    public void SetOnPlatform(boolean info){
+        this.isOnPlatform = info;
+    }
+    public boolean IsOnPlatform(){
+        return this.isOnPlatform;
     }
 }
