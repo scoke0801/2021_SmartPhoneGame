@@ -45,23 +45,11 @@ public class MainGame extends BaseGame {
         add(Layer.bg, new HorizontalScrollBackground(R.mipmap.cookie_run_bg_2, -20));
         add(Layer.bg, new HorizontalScrollBackground(R.mipmap.cookie_run_bg_3, -10));
 
-        float tx = 0.0f, ty = h - 100;
+        add(Layer.controller, new StageMap());
+
+        float tx = 0.0f, ty = h - Platform.Type.T_10x2.height();
         while(tx < w){
             Platform platform = new Platform(Platform.Type.T_10x2, tx, ty);
-            add(Layer.platform, platform);
-
-            tx += platform.getDstWidth();
-        }
-        tx = 200f;
-        while(tx < w - 200){
-            Platform platform = new Platform(Platform.Type.T_2x2, tx, ty - 300);
-            add(Layer.platform, platform);
-
-            tx += platform.getDstWidth();
-        }
-        tx = 400.0f;
-        while(tx < w- 400){
-            Platform platform = new Platform(Platform.Type.T_3x1, tx, ty - 600);
             add(Layer.platform, platform);
 
             tx += platform.getDstWidth();
