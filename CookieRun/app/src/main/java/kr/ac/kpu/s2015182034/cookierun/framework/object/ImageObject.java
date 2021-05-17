@@ -10,11 +10,17 @@ import kr.ac.kpu.s2015182034.cookierun.framework.bitmap.GameBitmap;
 import kr.ac.kpu.s2015182034.cookierun.framework.iface.GameObject;
 
 public class ImageObject implements GameObject {
-    private final Bitmap bitmap;
+    private Bitmap bitmap;
 
     protected Rect srcRect = new Rect();
     protected RectF dstRect = new RectF();
     public ImageObject(int resId, float x, float y) {
+        init(resId, x, y);
+    }
+    protected ImageObject() {
+    }
+
+    protected void init(int resId, float x, float y){
         bitmap = GameBitmap.load(resId);
         int w = bitmap.getWidth();
         int h = bitmap.getHeight();

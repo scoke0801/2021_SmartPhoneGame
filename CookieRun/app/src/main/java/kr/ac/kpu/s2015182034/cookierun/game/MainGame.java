@@ -2,6 +2,8 @@ package kr.ac.kpu.s2015182034.cookierun.game;
 
 import android.view.MotionEvent;
 
+import java.util.ArrayList;
+
 import kr.ac.kpu.s2015182034.cookierun.R;
 import kr.ac.kpu.s2015182034.cookierun.framework.View.GameView;
 import kr.ac.kpu.s2015182034.cookierun.framework.game.BaseGame;
@@ -49,7 +51,7 @@ public class MainGame extends BaseGame {
 
         float tx = 0.0f, ty = h - Platform.Type.T_10x2.height();
         while(tx < w){
-            Platform platform = new Platform(Platform.Type.T_10x2, tx, ty);
+            Platform platform = new Platform(Platform.Type.RANDOM, tx, ty);
             add(Layer.platform, platform);
 
             tx += platform.getDstWidth();
@@ -74,5 +76,10 @@ public class MainGame extends BaseGame {
             return true;
         }
         return false;
+    }
+
+
+    public ArrayList<GameObject> objectsAt(Layer layer) {
+        return objectsAt(layer.ordinal());
     }
 }
