@@ -18,6 +18,7 @@ import kr.ac.kpu.s2015182034.termproject.game.Parent.Item;
 import kr.ac.kpu.s2015182034.termproject.game.Player;
 import kr.ac.kpu.s2015182034.termproject.game.Score;
 import kr.ac.kpu.s2015182034.termproject.game.VerticalScrollBackground;
+import kr.ac.kpu.s2015182034.termproject.game.WaterObject;
 import kr.ac.kpu.s2015182034.termproject.game.WoodPlatform;
 import kr.ac.kpu.s2015182034.termproject.ui.view.GameView;
 import kr.ac.kpu.s2015182034.termproject.utils.CollisionHelper;
@@ -95,7 +96,7 @@ public class MainGame {
         add(Layer.platform, WoodPlatform.get("ShortWood", 400, 300));
         add(Layer.platform, WoodPlatform.get("ShortWood", 700, 300));
 
-        add(Layer.water, new ImageObject(R.mipmap.water, 0, 300));
+        add(Layer.water, WaterObject.get(300));
 
         player = new Player(w/ 2, h - 300, 0,0);
         add(Layer.player, player);

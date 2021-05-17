@@ -72,7 +72,7 @@ public class WoodPlatform implements GameObject, BoxCollidable, Recyclable {
 
     public void draw(Canvas canvas) {
         bitmap.draw(canvas, x, y);
-        bitmap.drawAABB(canvas, x, y);
+        //bitmap.drawAABB(canvas, x, y);
     }
 
     @Override

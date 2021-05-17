@@ -15,8 +15,10 @@ import kr.ac.kpu.s2015182034.termproject.ui.view.GameView;
 public class GameBitmap {
     private static HashMap<Integer, Bitmap> bitmaps = new HashMap<Integer, Bitmap>();
 
+    protected static float viewWidth;
     protected Paint paint;
     public static Bitmap load(int resId) {
+        viewWidth = GameView.view.getWidth();
         Bitmap bitmap = bitmaps.get(resId);
         if (bitmap == null) {
             Resources res = GameView.view.getResources();
@@ -52,6 +54,20 @@ public class GameBitmap {
         dstRect.set(dl, dt, dr, db);
         canvas.drawBitmap(bitmap, null, dstRect, null);
     }
+
+    // for waterObj
+    public void drawStretched(Canvas canvas, float x, float y){
+        float hh = getHeight() / 2;
+
+        float dl = 0;
+        float dt = y - hh * GameView.MULTIPLIER;
+        float dr = x + viewWidth;
+        float db = y + hh * GameView.MULTIPLIER;
+
+        dstRect.set(dl, dt, dr, db);
+        canvas.drawBitmap(bitmap, null, dstRect, null);
+    }
+
     public int getWidth(){
         return bitmap.getWidth();
     }
@@ -70,6 +86,15 @@ public class GameBitmap {
         rect.set(dl,dt,dr,db);
     }
 
+    public void getStretchedBoundingRect(float x, float y, RectF rect){
+        float hh = getHeight() / 2;
+
+        float dl = 0;
+        float dt = y - hh * GameView.MULTIPLIER;
+        float dr = x + viewWidth;
+        float db = y + hh * GameView.MULTIPLIER;
+        rect.set(dl,dt,dr,db);
+    }
     private RectF dstToDrawAABB = new RectF();
     public void drawAABB(Canvas canvas, float x, float y){
         getBoundingRect(x,y, dstToDrawAABB);
