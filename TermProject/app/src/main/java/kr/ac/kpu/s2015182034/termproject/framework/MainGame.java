@@ -123,10 +123,9 @@ public class MainGame {
             tracerPos += w / 5;
         }
 
-
-        int margin =  (int)(20 * GameView.MULTIPLIER);
+        int margin =  (int)(40 * GameView.MULTIPLIER);
         score = new Score(w - margin, margin);
-        score.setScore(0);
+        score.setScore(1000);
         add(Layer.ui, score);
 
         this.bg = new VerticalScrollBackground(R.mipmap.map_1, 0);
@@ -156,20 +155,21 @@ public class MainGame {
         }
     }
     public void update() {
-        //if(this.initialized == false) return;
-
         for (ArrayList<GameObject> objects: layers) {
             for (GameObject o : objects) {
                 o.update();
             }
         }
-        if( false == player.IsOnBarrier()) {
+        if( false == player.IsOnBarrier())
+        {
             ArrayList<GameObject> cars = layers.get(Layer.car.ordinal());
             for (GameObject o1 : cars) {
                 Car car = (Car) o1;
                 if (CollisionHelper.collides((BoxCollidable) o1, player)) {
-                    //Log.d(TAG, "Collision!! Enemy - player" );
+                    Log.d(TAG, "Collision!! Enemy - player" );
                     // to do
+                    // 일단은 점수를 깎자
+                    score.addScore(-100);
                 }
             }
         }
@@ -179,6 +179,7 @@ public class MainGame {
             if (CollisionHelper.collides((BoxCollidable) o1, player)) {
                 //Log.d(TAG, "Collision!! Tracer - player" );
                 // to do
+                score.addScore(-100);
             }
         }
         ArrayList<GameObject> platforms = layers.get(Layer.platform.ordinal());
@@ -205,6 +206,7 @@ public class MainGame {
                     Log.d(TAG, "Collision!! WaterObject - player" );
 
                     add(Layer.effect, new Effect(Effect.EffectType.WaterEffect, player.GetXPos(), player.GetYPos()));
+                    score.addScore(-100);
                     break;
                 }
             }
@@ -230,6 +232,7 @@ public class MainGame {
                     if(false == barrier.IsOnUse()){
                         float x = player.GetXPos();
                         float y = player.GetYPos();
+                        player.SetBarrier(Barrier.LIFE_TIME);
                         barrier.SetPosition(x, y);
                         barrier.ConnectPlayer(player);
                         barrier.setUse(true);

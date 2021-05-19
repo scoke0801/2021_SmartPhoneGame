@@ -3,6 +3,7 @@ package kr.ac.kpu.s2015182034.termproject.game;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.RectF;
+import android.util.Log;
 
 import kr.ac.kpu.s2015182034.termproject.R;
 import kr.ac.kpu.s2015182034.termproject.animation.AnimationBitmap;
@@ -84,10 +85,11 @@ public class Player implements GameObject, BoxCollidable {
         else{
             spriteIdx = 0;
         }
-        remainBarrierTime += frameTime;
+        remainBarrierTime -= frameTime;
         if(remainBarrierTime < 0.0f){
             remainBarrierTime = 0.0f;
         }
+        //Log.d(TAG, "RemainBaarrierTime : " + remainBarrierTime + "result is : " + IsOnBarrier());
         if(isOnMove) {
             float frameY = 0.0f;
             frameY += speedY;

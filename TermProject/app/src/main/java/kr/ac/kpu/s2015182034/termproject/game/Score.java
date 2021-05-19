@@ -21,7 +21,7 @@ public class Score implements GameObject {
     private RectF rectDst = new RectF();
 
     public Score(int right, int top){
-        bitmap = GameBitmap.load(R.mipmap.number_24x32);
+        bitmap = GameBitmap.load(R.mipmap.score);
         this.right = right;
         this.top = top;
     }
@@ -37,6 +37,9 @@ public class Score implements GameObject {
     }
     public void addScore(int score) {
         this.score += score;
+        if( this.score < 0) {
+            this.score = 0;
+        }
     }
     @Override
     public void update() {
