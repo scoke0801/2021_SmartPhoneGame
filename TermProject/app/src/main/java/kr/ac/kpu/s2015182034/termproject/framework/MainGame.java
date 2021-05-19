@@ -13,11 +13,13 @@ import kr.ac.kpu.s2015182034.termproject.R;
 import kr.ac.kpu.s2015182034.termproject.game.Barrier;
 import kr.ac.kpu.s2015182034.termproject.game.Blinker;
 import kr.ac.kpu.s2015182034.termproject.game.Coin;
+import kr.ac.kpu.s2015182034.termproject.game.Effect;
 import kr.ac.kpu.s2015182034.termproject.game.ImageObject;
 import kr.ac.kpu.s2015182034.termproject.game.Parent.Car;
 import kr.ac.kpu.s2015182034.termproject.game.Parent.Item;
 import kr.ac.kpu.s2015182034.termproject.game.Player;
 import kr.ac.kpu.s2015182034.termproject.game.Score;
+import kr.ac.kpu.s2015182034.termproject.game.Tracer;
 import kr.ac.kpu.s2015182034.termproject.game.VerticalScrollBackground;
 import kr.ac.kpu.s2015182034.termproject.game.WaterObject;
 import kr.ac.kpu.s2015182034.termproject.game.WoodPlatform;
@@ -31,7 +33,7 @@ public class MainGame {
     private boolean initialized = false;
 
     public enum Layer{
-        map, water, car, platform, item, player, ui, controller, COUNT
+        map, water, car, tracer, platform, item,  player, effect, ui, COUNT
     }
     private ArrayList<ArrayList<GameObject>> layers;
     private Player player;
@@ -56,6 +58,7 @@ public class MainGame {
         if(array.isEmpty()) return null;
         return array.remove(0);
     }
+
     public void recycle(GameObject object){
         Class className = object.getClass();
         ArrayList<GameObject> array = reclycleBin.get(className);
@@ -77,7 +80,6 @@ public class MainGame {
         int w = GameView.view.getWidth();
         int h = GameView.view.getHeight();
 
-        //Log.d(TAG, "App Size W : " + w + " h : " + h );
         String[] CAR_TYPE = new String[]{
                 "Car", "Ambulance", "PoliceCar", "Excavator", "Truck", "Bus"
         };
@@ -115,6 +117,13 @@ public class MainGame {
         player = new Player(w/ 2, h - 300, 0,0);
         add(Layer.player, player);
 
+        int tracerPos = 120;
+        while(tracerPos < w){
+            add(Layer.tracer, new Tracer(tracerPos, h));
+            tracerPos += w / 5;
+        }
+
+
         int margin =  (int)(20 * GameView.MULTIPLIER);
         score = new Score(w - margin, margin);
         score.setScore(0);
@@ -125,15 +134,15 @@ public class MainGame {
 
         int coinSize = 180;
         for(int i = 0 ; i < 10; ++i){
-            add(Layer.item, Coin.get("Coin", r.nextInt(w), coinSize * i));
+            add(Layer.item, Coin.get("Coin", r.nextInt(w - 50) + 25, coinSize * i));
         }
         int barrierGap = 1800;
         for(int i = 0 ; i < 2; ++i){
-            add(Layer.item, Barrier.get("Barrier", r.nextInt(w), 800 - barrierGap * i));
+            add(Layer.item, Barrier.get("Barrier", r.nextInt(w - 50) + 25, 800 - barrierGap * i));
         }
         int blinkerGap = 2000;
         for(int i = 0 ; i < 2; ++i){
-            add(Layer.item, Blinker.get("Blinker", r.nextInt(w), 700 - blinkerGap * i));
+            add(Layer.item, Blinker.get("Blinker", r.nextInt(w - 50) + 25, 700 - blinkerGap * i));
         }
 
         this.initialized = true;
@@ -164,6 +173,14 @@ public class MainGame {
                 }
             }
         }
+        ArrayList<GameObject> tracers = layers.get(Layer.tracer.ordinal());
+        for (GameObject o1 : tracers) {
+            Tracer tracer = (Tracer) o1;
+            if (CollisionHelper.collides((BoxCollidable) o1, player)) {
+                //Log.d(TAG, "Collision!! Tracer - player" );
+                // to do
+            }
+        }
         ArrayList<GameObject> platforms = layers.get(Layer.platform.ordinal());
         for(GameObject o1 : platforms){
             WoodPlatform platform = (WoodPlatform) o1;
@@ -186,9 +203,10 @@ public class MainGame {
                 // 충돌처리를 하도록..
                 if(false == player.IsOnPlatform()){
                     Log.d(TAG, "Collision!! WaterObject - player" );
-                    // to do
+
+                    add(Layer.effect, new Effect(Effect.EffectType.WaterEffect, player.GetXPos(), player.GetYPos()));
+                    break;
                 }
-                break;
             }
         }
         ArrayList<GameObject> items = layers.get(Layer.item.ordinal());
@@ -292,6 +310,11 @@ public class MainGame {
         }
         ArrayList<GameObject> waterObjs = layers.get(Layer.water.ordinal());
         for (GameObject o : waterObjs) {
+            o.movePosition(xMoved, yMoved);
+        }
+
+        ArrayList<GameObject> tracers = layers.get(Layer.tracer.ordinal());
+        for (GameObject o : tracers) {
             o.movePosition(xMoved, yMoved);
         }
         bg.Scroll(xMoved, yMoved);

@@ -3,7 +3,6 @@ package kr.ac.kpu.s2015182034.termproject.game;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.RectF;
-import android.util.Log;
 
 import kr.ac.kpu.s2015182034.termproject.R;
 import kr.ac.kpu.s2015182034.termproject.animation.AnimationBitmap;
@@ -17,17 +16,18 @@ public class Player implements GameObject, BoxCollidable {
     private static final String TAG = Player.class.getSimpleName();
 
     private float x, y;   // 위치
-    private float sppedX, speedY; // 속도
+    private float speedX, speedY; // 속도
     private int sx, sy; // 크기
 
     private float moveTime = 0.0f;
-    private final float TO_MOVE_TIME = 1.0f;
+    private final float TO_MOVE_TIME = 0.3f;
     private static AnimationBitmap bitmap;
 
     private static float FRAME_RATE = 8.5f; // 1초당 8.5장의 속도로 애니메이션을 수행하도록
 
     private static float angle = 0;
-    private static float speed = (float)100.0;
+    private static float SPEED_X = (float)300.0;
+    private static float SPEED_Y = (float)150.0;
     private static boolean isOnMove;
 
     private float spriteIdx = 0;
@@ -38,7 +38,7 @@ public class Player implements GameObject, BoxCollidable {
     public Player(float x, float y, float dx, float dy) {
         this.x = x;
         this.y = y;
-        this.sppedX = dx;
+        this.speedX = dx;
         this.speedY = dy;
         this.isOnMove = false;
         if(bitmap == null) {
@@ -55,19 +55,19 @@ public class Player implements GameObject, BoxCollidable {
         float frameTime = MainGame.get().frameTime;
         int idx = CalculateNextPositionIndex(x, y);
         if(idx == 0){   // 상
-            this.speedY = frameTime * -speed;
+            this.speedY = frameTime * -SPEED_Y;
             this.angle = 0.0f;
         }
         else if(idx == 1){ // 하
-            this.speedY = frameTime * speed;
+            this.speedY = frameTime * SPEED_Y;
             this.angle = 180.0f;
         }
         else if(idx == 2){ // 좌
-            this.sppedX = frameTime * -speed;
+            this.speedX = frameTime * -SPEED_X;
             this.angle = -90.0f;
         }
         else if (idx == 3){ // 우
-            this.sppedX = frameTime * speed;
+            this.speedX = frameTime * SPEED_X;
             this.angle = 90.0f;
         }
         isOnMove = true;
@@ -92,7 +92,7 @@ public class Player implements GameObject, BoxCollidable {
             float frameY = 0.0f;
             frameY += speedY;
 
-            x += sppedX;
+            x += speedX;
 
             MainGame.get().ScrollMap(0.0f, -this.speedY);
             //y += frameY;
@@ -105,7 +105,7 @@ public class Player implements GameObject, BoxCollidable {
             if(moveTime > TO_MOVE_TIME){
                 moveTime += frameTime;
                 int h = GameView.view.getHeight();
-                sppedX = speedY = 0;
+                speedX = speedY = 0;
                 isOnMove = false;
                 moveTime = 0.0f;
             }
@@ -119,7 +119,7 @@ public class Player implements GameObject, BoxCollidable {
         bitmap.draw(canvas, x, y);
         canvas.restore();
 
-        bitmap.drawAABB(canvas,x,y);
+        //bitmap.drawAABB(canvas,x,y);
     }
     private int CalculateNextPositionIndex(float x, float y){
         float dists[] = {   // top, bottom, left, right
@@ -135,9 +135,6 @@ public class Player implements GameObject, BoxCollidable {
             }
         }
         return closerPointIdx;
-    }
-    public void fixCollision(){
-
     }
 
     @Override

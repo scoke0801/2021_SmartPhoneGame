@@ -74,10 +74,6 @@ public class WaterObject implements GameObject, BoxCollidable, Recyclable {
         bitmap.drawStretched(canvas, x, y);
     }
 
-    @Override
-    public void fixCollision() {
-
-    }
 
     @Override
     public void movePosition(float xMoved, float yMoved) {

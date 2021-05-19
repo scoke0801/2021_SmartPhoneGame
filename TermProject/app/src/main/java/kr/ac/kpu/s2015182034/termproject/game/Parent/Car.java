@@ -29,9 +29,6 @@ public class Car implements GameObject, BoxCollidable, Recyclable {
     protected float remainStopTime = 0.0f;
 
     protected float speed;
-    protected boolean isOnMove;
-
-    protected float spriteIdx = 0;
 
     protected boolean isOnStop = false;
     private String[] CAR_TYPE = new String[]{
@@ -51,7 +48,6 @@ public class Car implements GameObject, BoxCollidable, Recyclable {
     protected Car(String type, float x, float y, boolean isLeft) {
         this.x = x;
         this.y = y;
-        this.isOnMove = false;
         Random r = new Random();
         this.isLeft = isLeft;
         if (bitmap == null) {
@@ -83,7 +79,6 @@ public class Car implements GameObject, BoxCollidable, Recyclable {
     private void init(String type, float x, float y, boolean isLeft) {
         this.x = x;
         this.y = y;
-        this.isOnMove = false;
         Random r = new Random();
         //this.speed = r.nextInt(200) + 100;
         this.isLeft = isLeft;
@@ -149,10 +144,6 @@ public class Car implements GameObject, BoxCollidable, Recyclable {
     public void draw(Canvas canvas) {
         bitmap.draw(canvas, x, y);
         //bitmap.drawAABB(canvas, x, y);
-    }
-
-    public void fixCollision(){
-
     }
 
     @Override

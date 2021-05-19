@@ -65,11 +65,6 @@ public class Score implements GameObject {
             if (value == 0) break;
         }
     }
-
-    @Override
-    public void fixCollision() {
-
-    }
     @Override
     public void movePosition(float xMoved, float yMoved) {
     }

@@ -113,10 +113,6 @@ public class Item implements GameObject, BoxCollidable, Recyclable {
         //bitmap.drawAABB(canvas, x, y);
     }
 
-    public void fixCollision(){
-
-    }
-
     @Override
     public void getBoundingRect(RectF rect) {
         bitmap.getBoundingRect(x,y,rect);

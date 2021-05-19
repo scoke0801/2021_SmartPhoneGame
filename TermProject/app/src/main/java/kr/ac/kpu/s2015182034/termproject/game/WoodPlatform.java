@@ -62,7 +62,7 @@ public class WoodPlatform implements GameObject, BoxCollidable, Recyclable {
             onPlayer.movePosition(-dx, 0.0f);
         }
         int w = GameView.view.getWidth();
-        if( x < 0) {
+        if( x + sx / 2 < 0) {
             if (true == isOnPlayerExist) {
                 onPlayer.movePosition(w - x, 0.0f);
             }
@@ -75,10 +75,6 @@ public class WoodPlatform implements GameObject, BoxCollidable, Recyclable {
         //bitmap.drawAABB(canvas, x, y);
     }
 
-    @Override
-    public void fixCollision() {
-
-    }
     private void init(String type, float x, float y) {
         this.x = x;
         this.y = y;

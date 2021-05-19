@@ -13,7 +13,7 @@ import kr.ac.kpu.s2015182034.termproject.ui.view.GameView;
 
 public class Barrier extends Item {
 
-    private static final float LIFE_TIME = 1.5f;
+    private static final float LIFE_TIME = 3.5f;
     private static float remainLifeTime = LIFE_TIME;
     private boolean isOnUsing = false;
     private Player connectePlayer;

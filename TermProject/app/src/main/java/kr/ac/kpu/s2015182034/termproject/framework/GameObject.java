@@ -6,7 +6,6 @@ import android.graphics.RectF;
 public interface GameObject {
     public void update();
     public void draw(Canvas canvas);
-    public void fixCollision();
 
     public void movePosition(float xMoved, float yMoved);
 }

@@ -56,10 +56,6 @@ public class VerticalScrollBackground implements GameObject {
 
     }
 
-    @Override
-    public void fixCollision() {
-        
-    }
 
     public void Scroll(float xMoved, float yMoved){
         MainGame game = MainGame.get();
