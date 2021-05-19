@@ -51,7 +51,7 @@ public class MainGame {
         return instance;
     }
     public float frameTime;
-
+    private float lastEffectCreateTime = 0.0f;
     public GameObject get(Class className){
         ArrayList<GameObject> array = reclycleBin.get(className);
         if(array == null) return null;
@@ -69,7 +69,6 @@ public class MainGame {
         }
         array.add(object);
     }
-
 
     public boolean InitResources() {
         if(this.initialized){
@@ -106,11 +105,11 @@ public class MainGame {
         add(Layer.water, WaterObject.get(h - 2200));
         add(Layer.water, WaterObject.get(h - 2550));
 
-        for(int i = 0; i < 10; i += 2){
+        for(int i = 0; i < 20; i += 2){
             Car car = Car.get(CAR_TYPE[r.nextInt(5)],0,h - 2800 + -carSizeH * (i+1), false);
             add(Layer.car, car);
         }
-        for(int i = 1; i < 10; i += 2){
+        for(int i = 1; i < 20; i += 2){
             Car car = Car.get(CAR_TYPE[r.nextInt(5)],w, h - 2800 + -carSizeH * (i+1), true);
             add(Layer.car, car);
         }
@@ -125,7 +124,7 @@ public class MainGame {
 
         int margin =  (int)(40 * GameView.MULTIPLIER);
         score = new Score(w - margin, margin);
-        score.setScore(1000);
+        score.setScore(0);
         add(Layer.ui, score);
 
         this.bg = new VerticalScrollBackground(R.mipmap.map_1, 0);
@@ -168,8 +167,10 @@ public class MainGame {
                 if (CollisionHelper.collides((BoxCollidable) o1, player)) {
                     Log.d(TAG, "Collision!! Enemy - player" );
                     // to do
-                    // 일단은 점수를 깎자
-                    score.addScore(-100);
+                    if(lastEffectCreateTime <= 0.0f){
+                        add(Layer.effect, new Effect(Effect.EffectType.HitEffect, player.GetXPos(), player.GetYPos()));
+                        lastEffectCreateTime = 1.0f;
+                    }
                 }
             }
         }
@@ -177,9 +178,12 @@ public class MainGame {
         for (GameObject o1 : tracers) {
             Tracer tracer = (Tracer) o1;
             if (CollisionHelper.collides((BoxCollidable) o1, player)) {
-                //Log.d(TAG, "Collision!! Tracer - player" );
+                Log.d(TAG, "Collision!! Tracer - player" );
                 // to do
-                score.addScore(-100);
+                if(lastEffectCreateTime <= 0.0f) {
+                    add(Layer.effect, new Effect(Effect.EffectType.HitEffect, player.GetXPos(), player.GetYPos()));
+                    lastEffectCreateTime = 1.0f;
+                }
             }
         }
         ArrayList<GameObject> platforms = layers.get(Layer.platform.ordinal());
@@ -204,9 +208,11 @@ public class MainGame {
                 // 충돌처리를 하도록..
                 if(false == player.IsOnPlatform()){
                     Log.d(TAG, "Collision!! WaterObject - player" );
+                    if(lastEffectCreateTime <= 0.0f) {
+                        add(Layer.effect, new Effect(Effect.EffectType.WaterEffect, player.GetXPos(), player.GetYPos()));
+                        lastEffectCreateTime = 1.0f;
+                    }
 
-                    add(Layer.effect, new Effect(Effect.EffectType.WaterEffect, player.GetXPos(), player.GetYPos()));
-                    score.addScore(-100);
                     break;
                 }
             }
@@ -239,6 +245,11 @@ public class MainGame {
                     }
                 }
             }
+        }
+
+        lastEffectCreateTime -= frameTime;
+        if(lastEffectCreateTime < 0.0f){
+            lastEffectCreateTime = 0.0f;
         }
     }
 
