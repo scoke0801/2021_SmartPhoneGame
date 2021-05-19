@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 import kr.ac.kpu.s2015182034.termproject.R;
 import kr.ac.kpu.s2015182034.termproject.game.Barrier;
@@ -65,6 +66,8 @@ public class MainGame {
         }
         array.add(object);
     }
+
+
     public boolean InitResources() {
         if(this.initialized){
             return false;
@@ -78,26 +81,37 @@ public class MainGame {
         String[] CAR_TYPE = new String[]{
                 "Car", "Ambulance", "PoliceCar", "Excavator", "Truck", "Bus"
         };
+
+        Random r = new Random();
         // test codes
         int carSizeH = 170;
         for(int i = 0; i < 10; i += 2){
-            Car car = Car.get(CAR_TYPE[i % 5],0,carSizeH * (i+1), false);
+            Car car = Car.get(CAR_TYPE[r.nextInt(5)],0,h - 300 + -carSizeH * (i+1), false);
             add(Layer.car, car);
         }
         for(int i = 1; i < 10; i += 2){
-            Car car = Car.get(CAR_TYPE[i % 5],w, carSizeH * (i+1), true);
+            Car car = Car.get(CAR_TYPE[r.nextInt(5)],w, h - 300 + -carSizeH * (i+1), true);
             add(Layer.car, car);
         }
-        add(Layer.platform, WoodPlatform.get("LongWood", 300, -500));
-        add(Layer.platform, WoodPlatform.get("ShortWood", 300, -300));
 
-        add(Layer.platform, WoodPlatform.get("LongWood", 300, 500));
-        add(Layer.platform, WoodPlatform.get("ShortWood", 100, 300));
-        add(Layer.platform, WoodPlatform.get("ShortWood", 400, 300));
-        add(Layer.platform, WoodPlatform.get("ShortWood", 700, 300));
+        add(Layer.platform, WoodPlatform.get("LongWood", 300, h -2100));
+        add(Layer.platform, WoodPlatform.get("ShortWood", 300, h -2250));
 
-        add(Layer.water, WaterObject.get(300));
+        add(Layer.platform, WoodPlatform.get("LongWood", 300, h - 2400));
+        add(Layer.platform, WoodPlatform.get("ShortWood", 100, h - 2550));
+        add(Layer.platform, WoodPlatform.get("LongWood", 300, h - 2700));
 
+        add(Layer.water, WaterObject.get(h - 2200));
+        add(Layer.water, WaterObject.get(h - 2550));
+
+        for(int i = 0; i < 10; i += 2){
+            Car car = Car.get(CAR_TYPE[r.nextInt(5)],0,h - 2800 + -carSizeH * (i+1), false);
+            add(Layer.car, car);
+        }
+        for(int i = 1; i < 10; i += 2){
+            Car car = Car.get(CAR_TYPE[r.nextInt(5)],w, h - 2800 + -carSizeH * (i+1), true);
+            add(Layer.car, car);
+        }
         player = new Player(w/ 2, h - 300, 0,0);
         add(Layer.player, player);
 
@@ -109,12 +123,18 @@ public class MainGame {
         this.bg = new VerticalScrollBackground(R.mipmap.map_1, 0);
         add(Layer.map, this.bg );
 
-        Coin coin = Coin.get("Coin", 160, 60);
-        add(Layer.item, coin);
-        Barrier barrier = Barrier.get("Barrier", 260, 180);
-        add(Layer.item, barrier);
-        Blinker blinker = Blinker.get("Blinker", 360, 300);
-        add(Layer.item, blinker);
+        int coinSize = 180;
+        for(int i = 0 ; i < 10; ++i){
+            add(Layer.item, Coin.get("Coin", r.nextInt(w), coinSize * i));
+        }
+        int barrierGap = 1800;
+        for(int i = 0 ; i < 2; ++i){
+            add(Layer.item, Barrier.get("Barrier", r.nextInt(w), 800 - barrierGap * i));
+        }
+        int blinkerGap = 2000;
+        for(int i = 0 ; i < 2; ++i){
+            add(Layer.item, Blinker.get("Blinker", r.nextInt(w), 700 - blinkerGap * i));
+        }
 
         this.initialized = true;
         return true;
