@@ -24,12 +24,9 @@ public class WoodPlatform implements GameObject, BoxCollidable, Recyclable {
 
     protected GameBitmap bitmap;
 
-    protected float remainStopTime = 0.0f;
-
     protected float speed;
     protected boolean isOnMove;
 
-    protected float spriteIdx = 0;
     private Player onPlayer = null;    // 자신위에 올라와있는 플레이어
     private boolean isOnPlayerExist = false;
     private WoodPlatform(String type, float x, float y){

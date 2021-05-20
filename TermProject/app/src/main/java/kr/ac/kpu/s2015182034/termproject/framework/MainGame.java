@@ -14,7 +14,6 @@ import kr.ac.kpu.s2015182034.termproject.game.Barrier;
 import kr.ac.kpu.s2015182034.termproject.game.Blinker;
 import kr.ac.kpu.s2015182034.termproject.game.Coin;
 import kr.ac.kpu.s2015182034.termproject.game.Effect;
-import kr.ac.kpu.s2015182034.termproject.game.ImageObject;
 import kr.ac.kpu.s2015182034.termproject.game.Parent.Car;
 import kr.ac.kpu.s2015182034.termproject.game.Parent.Item;
 import kr.ac.kpu.s2015182034.termproject.game.Player;
@@ -212,7 +211,6 @@ public class MainGame {
                         add(Layer.effect, new Effect(Effect.EffectType.WaterEffect, player.GetXPos(), player.GetYPos()));
                         lastEffectCreateTime = 1.0f;
                     }
-
                     break;
                 }
             }

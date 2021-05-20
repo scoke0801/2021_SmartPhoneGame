@@ -31,8 +31,6 @@ public class Player implements GameObject, BoxCollidable {
     private static float SPEED_Y = (float)150.0;
     private static boolean isOnMove;
 
-    private float spriteIdx = 0;
-
     private static float remainBarrierTime = 0.0f;
     private boolean isOnPlatform;
 
@@ -76,21 +74,12 @@ public class Player implements GameObject, BoxCollidable {
 
     public void update() {
         float frameTime = MainGame.get().frameTime;
-        if (isOnMove){
-            spriteIdx += 3 * frameTime;
-            if (spriteIdx > 3) {
-                spriteIdx = 0;
-            }
-        }
-        else{
-            spriteIdx = 0;
-        }
+
         remainBarrierTime -= frameTime;
-        if(remainBarrierTime < 0.0f){
+        if (remainBarrierTime < 0.0f) {
             remainBarrierTime = 0.0f;
         }
-        //Log.d(TAG, "RemainBaarrierTime : " + remainBarrierTime + "result is : " + IsOnBarrier());
-        if(isOnMove) {
+        if (isOnMove) {
             float frameY = 0.0f;
             frameY += speedY;
 
@@ -100,13 +89,11 @@ public class Player implements GameObject, BoxCollidable {
             //y += frameY;
 
             // 스크롤 되는 방향은 이동 방향과 반대가 되도록
-            MainGame.get().ScrollMap(0.0f,-frameY);
+            MainGame.get().ScrollMap(0.0f, -frameY);
 
             moveTime += frameTime;
 
-            if(moveTime > TO_MOVE_TIME){
-                moveTime += frameTime;
-                int h = GameView.view.getHeight();
+            if (moveTime > TO_MOVE_TIME) {
                 speedX = speedY = 0;
                 isOnMove = false;
                 moveTime = 0.0f;
