@@ -26,3 +26,6 @@
 
 **4. 커밋 기록**  
 ![image](https://user-images.githubusercontent.com/28253934/118915136-614ae380-b967-11eb-87aa-2701eb5e45f1.png)
+  
+**5. 1차 발표 readme.md파일**  
+https://github.com/scoke0801/2021_SmartPhoneGame/blob/a28c368c3ac6c522f782d4eb088a2327d6121198/README.md
