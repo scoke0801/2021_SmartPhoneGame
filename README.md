@@ -5,45 +5,24 @@
 비교적 최근의 모바일 게임인 길건너 친구들[Crossy Road]과 같은 게임의 모작을      
 종스크롤 형식의 모바일 게임으로 제작하려 합니다.    
 
-기본적으로 플레이어는 화면을 터치하여 앞, 뒤 방향 혹은 좌, 우 방향으로 이동할 수 있으며  
-플레이어가 앞으로 나아가는 길들에는 플레이어를 방해하는 다양한 장애물들과   
-플레이어에게 도움을 주는 아이템들이 존재합니다.
-
-플레이어는 이러한 장애물들을 피하며 아이템들의 도움을 받아
-정해진 시간안에 목적지까지 도달하거나  
-최대한 많은 거리를 이동하여 높은 점수를 획득하는 것을 목표로 하게 됩니다.
-
- **2. 개발 범위**  
- -애니메이션    
-  : 게임에 등장하는 객체들에 대한 애니메이션을 구현함으로써 생동감있는 게임을 개발합니다.  
+![image](https://user-images.githubusercontent.com/28253934/118914734-ba664780-b966-11eb-9e32-cdbaf0bf2972.png)  
   
- -장애물  
-  : 다음과 같은 장애물들의 패턴을 구현함으로써 게임에 재미를 부여합니다.  
-  + 플레이어와 충돌하면 게임이 끝나게 되는 장애물 Ex) 자동차  
-  + 플레이어가 길을 건너가기 위하여 올라타야 하는 장애물 Ex) 통나무 
-  + 뒤에서부터 플레이어를 추격하는 장애물
-      
- -아이템  
-  : 다음과 같은 효과를 주는 아이템의 패턴들을 구현함으로써 게임에 재미를 부여합니다.  
-  + 게임의 장애물들의 이동을 잠시동안 멈추는 아이템 Ex) 신호등
-  + 플레이어를 일정시간동안 무적상태로 만들어주는 아이템 Ex)보호막
-  + 플레이어에게 추가 점수를 부여합니다. Ex) 코인
-   
- -충돌처리  
- : 플레이어와 아이템 사이, 플레이어와 장애물들 사이의 충돌처리를 구현합니다.
+ **2. 인게임 구현 상황**  
+ ![image](https://user-images.githubusercontent.com/28253934/118914818-d7027f80-b966-11eb-90f3-28ecefe4639f.png)
  
- -맵 스크롤링  
- : 플레이어가 전진하는 동안 맵이 끊기지 않도록 스크롤링을 구현함으로써 자연스러운 게임을 개발합니다.
+**2. 내부 클래스**  
+-구조    
+![image](https://user-images.githubusercontent.com/28253934/118914861-eda8d680-b966-11eb-83ec-2dff01765ffb.png)
+-상호작용  
+![image](https://user-images.githubusercontent.com/28253934/118914886-fac5c580-b966-11eb-9ce6-8a89f8034a08.png)  
+-핵심코드1  
+![image](https://user-images.githubusercontent.com/28253934/118914926-1204b300-b967-11eb-8f6e-f39a1eb46072.png)  
+-핵심코드2  
+![image](https://user-images.githubusercontent.com/28253934/118915006-2779dd00-b967-11eb-97f2-a973e39527c4.png)
 
- -UI  
- : 플레이어가 게임을 진행하며 획득한 점수, 남은 시간을 파악할 수 있도록 UI를 구현합니다.
- 
-**3. 예상 게임 실행 흐름**  
--예시 1) 프로거  
-![1](https://user-images.githubusercontent.com/28253934/113481887-0b190280-94d7-11eb-93d7-ac29b4befd72.png)  
--예시 2) 길건너 친구들  
-![2](https://user-images.githubusercontent.com/28253934/113481915-313ea280-94d7-11eb-921b-495952b17aca.png)  
+**3. 개발 진척상황**  
+![image](https://user-images.githubusercontent.com/28253934/118915057-382a5300-b967-11eb-9452-ebea98ae995c.png)
 
-**4. 개발 일정**  
-![image](https://user-images.githubusercontent.com/28253934/113482971-fc811a00-94db-11eb-9289-962d13a5fd1e.png)  
 
+**4. 커밋 기록**  
+![image](https://user-images.githubusercontent.com/28253934/118915136-614ae380-b967-11eb-87aa-2701eb5e45f1.png)
