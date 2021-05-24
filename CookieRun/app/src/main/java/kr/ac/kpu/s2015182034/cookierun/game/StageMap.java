@@ -81,11 +81,12 @@ public class StageMap implements GameObject {
         if(current > 100) {
             return;
         }
-        float y = widgetH - Platform.Type.T_2x2.height();
+        //float y = widgetH - Platform.Type.T_2x2.height();
+        float y = 0;
         for(int row = 0; row < rows; ++row){
             char ch = getAt(current, row);
             createObject(ch, xPos, y);
-            y -= Platform.UNIT_SIZE * GameView.MULTIPLIER;
+            y += Platform.UNIT_SIZE * GameView.MULTIPLIER;
         }
         xPos += Platform.UNIT_SIZE * GameView.MULTIPLIER;
         ++current;

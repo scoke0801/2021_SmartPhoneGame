@@ -27,7 +27,7 @@ public class BaseGame {
         }
     }
 
-    ArrayList<ArrayList<GameObject>> layers;
+    protected ArrayList<ArrayList<GameObject>> layers;
     private static HashMap<Class, ArrayList<GameObject>> reclycleBin = new HashMap<>();
 
 

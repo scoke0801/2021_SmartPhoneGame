@@ -1,6 +1,7 @@
 package kr.ac.kpu.s2015182034.cookierun.game;
 
 import android.content.res.AssetManager;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
@@ -8,8 +9,10 @@ import java.util.ArrayList;
 import kr.ac.kpu.s2015182034.cookierun.R;
 import kr.ac.kpu.s2015182034.cookierun.framework.View.GameView;
 import kr.ac.kpu.s2015182034.cookierun.framework.game.BaseGame;
+import kr.ac.kpu.s2015182034.cookierun.framework.iface.BoxCollidable;
 import kr.ac.kpu.s2015182034.cookierun.framework.iface.GameObject;
 import kr.ac.kpu.s2015182034.cookierun.framework.object.HorizontalScrollBackground;
+import kr.ac.kpu.s2015182034.cookierun.framework.utils.CollisionHelper;
 
 public class MainGame extends BaseGame {
     public enum Layer{
@@ -70,6 +73,14 @@ public class MainGame extends BaseGame {
         super.update();
         
         // 충돌처리는 여기서
+        ArrayList<GameObject> items = layers.get(Layer.item.ordinal());
+        for(GameObject o1 : items){
+            Jelly itme = (Jelly) o1;
+            if(CollisionHelper.collides((BoxCollidable)o1, player)) {
+                score.addScore(100);
+                remove(o1);
+            }
+        }
     }
 
     @Override

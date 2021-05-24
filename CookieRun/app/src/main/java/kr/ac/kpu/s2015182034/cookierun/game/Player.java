@@ -66,6 +66,7 @@ public class Player implements GameObject, BoxCollidable {
     @Override
     public void draw(Canvas canvas) {
         charBitmap.draw(canvas, x, y);
+        charBitmap.drawAABB(canvas, x, y);
     }
 
     @Override

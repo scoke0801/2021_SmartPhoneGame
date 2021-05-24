@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.RectF;
 
 import java.util.HashMap;
@@ -23,12 +24,18 @@ public class GameBitmap {
             bitmap = BitmapFactory.decodeResource(res, resId, opts);
             bitmaps.put(resId, bitmap);
         }
+
         return bitmap;
     }
 
     protected final Bitmap bitmap;
     protected RectF dstRect = new RectF();
+    protected Paint paint;
     public GameBitmap(int resId) {
+        paint = new Paint();
+        paint.setColor(0xFFFF0000);
+        paint.setStrokeWidth(10f);
+        paint.setStyle(Paint.Style.STROKE);
         bitmap = load(resId);
     }
 
@@ -62,5 +69,9 @@ public class GameBitmap {
         float db = y + hh * GameView.MULTIPLIER;
         rect.set(dl, dt, dr, db);
     }
-
+    private RectF dstToDrawAABB = new RectF();
+    public void drawAABB(Canvas canvas, float x, float y){
+        getBoundingRect(x,y, dstToDrawAABB);
+        canvas.drawRect(dstToDrawAABB, paint);
+    }
 }
