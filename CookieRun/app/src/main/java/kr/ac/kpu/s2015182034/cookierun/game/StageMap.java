@@ -1,8 +1,13 @@
 package kr.ac.kpu.s2015182034.cookierun.game;
 
+import android.content.res.AssetManager;
 import android.graphics.Canvas;
 import android.util.Log;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -12,7 +17,35 @@ import kr.ac.kpu.s2015182034.cookierun.framework.iface.GameObject;
 
 public class StageMap implements GameObject {
     private static final String TAG = StageMap.class.getSimpleName();
+    private final ArrayList<String> lines = new ArrayList<String>();
+    private int columns;
+    private int rows;
 
+    public StageMap(String filename){
+        AssetManager asset = GameView.view.getContext().getAssets();
+        try {
+            InputStream is = asset.open(filename);
+            InputStreamReader isr = new InputStreamReader(is);
+            BufferedReader reader = new BufferedReader(isr);
+
+            String header = reader.readLine();
+            // split()의 인자 regex
+            String[] comps = header.split(" ");
+            columns = Integer.parseInt(comps[0]);
+            rows = Integer.parseInt(comps[1]);
+            Log.d(TAG, "Col = " + columns + ", rows = " + rows);
+            while(true){
+                String line = reader.readLine();
+                if(line == null){
+                    break;
+                }
+                lines.add(line);
+                Log.d(TAG, "Line = " + line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     @Override
     public void update() {
         MainGame game = (MainGame) BaseGame.get();
