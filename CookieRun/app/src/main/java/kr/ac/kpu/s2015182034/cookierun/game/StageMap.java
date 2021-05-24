@@ -20,8 +20,11 @@ public class StageMap implements GameObject {
     private final ArrayList<String> lines = new ArrayList<String>();
     private int columns;
     private int rows;
-
+    private int current;
+    private float xPos = 0;
+    private float widgetH;
     public StageMap(String filename){
+        widgetH = GameView.view.getHeight();
         AssetManager asset = GameView.view.getContext().getAssets();
         try {
             InputStream is = asset.open(filename);
@@ -49,25 +52,65 @@ public class StageMap implements GameObject {
     @Override
     public void update() {
         MainGame game = (MainGame) BaseGame.get();
-        ArrayList<GameObject> objects = game.objectsAt(MainGame.Layer.platform);
-        float rightMost = 0;
-        for (GameObject obj: objects) {
-            Platform platform = (Platform) obj;
-            float right = platform.getRight();
-            if (rightMost < right) {
-                rightMost = right;
-            }
-        }
-        float vw = GameView.view.getWidth();
-        float vh = GameView.view.getHeight();
-        if (rightMost < vw) {
-            Log.d(TAG, "create a Platform here !! @" + rightMost + " Platforms=" + objects.size());
-            float tx = rightMost, ty = vh - Platform.Type.T_2x2.height();
-            Platform platform = new Platform(Platform.Type.RANDOM, tx, ty);
-            game.add(MainGame.Layer.platform, platform);
+        createComlumns();
 
-            Random r = new Random();
-            game.add(MainGame.Layer.item, new Jelly(r.nextInt(60), tx, r.nextInt((int) ty)));
+//        ArrayList<GameObject> objects = game.objectsAt(MainGame.Layer.platform);
+//        float rightMost = 0;
+//        for (GameObject obj: objects) {
+//            Platform platform = (Platform) obj;
+//            float right = platform.getRight();
+//            if (rightMost < right) {
+//                rightMost = right;
+//            }
+//        }
+//        float vw = GameView.view.getWidth();
+//        float vh = GameView.view.getHeight();
+//        if (rightMost < vw) {
+//            Log.d(TAG, "create a Platform here !! @" + rightMost + " Platforms=" + objects.size());
+//            float tx = rightMost, ty = vh - Platform.Type.T_2x2.height();
+//            Platform platform = new Platform(Platform.Type.RANDOM, tx, ty);
+//            game.add(MainGame.Layer.platform, platform);
+//
+//            Random r = new Random();
+//            game.add(MainGame.Layer.item, new Jelly(r.nextInt(60), tx, r.nextInt((int) ty)));
+//        }
+    }
+
+    // 파일에서 읽어온 내용을 바탕으로 세로로 젤리를 한 줄 만들어내는 함수!!
+    private void createComlumns() {
+        if(current > 100) {
+            return;
+        }
+        float y = widgetH - Platform.Type.T_2x2.height();
+        for(int row = 0; row < rows; ++row){
+            char ch = getAt(current, row);
+            createObject(ch, xPos, y);
+            y -= Platform.UNIT_SIZE * GameView.MULTIPLIER;
+        }
+        xPos += Platform.UNIT_SIZE * GameView.MULTIPLIER;
+        ++current;
+    }
+
+    private void createObject(char ch, float x, float y) {
+        MainGame game = (MainGame) BaseGame.get();
+        if(ch >= '1' && ch <= '9'){
+            game.add(MainGame.Layer.item, new Jelly(ch - '1', x, y));
+            return;
+        }
+        if(ch >= 'O' && ch <= 'Q'){
+            game.add(MainGame.Layer.platform, new Platform(Platform.Type.values()[ch - 'O'], x, y));
+            return;
+        }
+    }
+
+    private char getAt(int x, int y) {
+        try {
+            int lineIndex = x / columns * rows + y;
+            String line = lines.get(lineIndex);
+            return line.charAt(x % columns);
+        }
+        catch(Exception e){ // 정상적으로 읽지 못하였을 때
+            return 0;
         }
     }
 
