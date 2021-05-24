@@ -11,39 +11,34 @@ import kr.ac.kpu.s2015182034.cookierun.framework.game.BaseGame;
 import kr.ac.kpu.s2015182034.cookierun.framework.iface.GameObject;
 
 public class StageMap implements GameObject {
-
     private static final String TAG = StageMap.class.getSimpleName();
 
     @Override
     public void update() {
-        MainGame game = (MainGame)BaseGame.get();
+        MainGame game = (MainGame) BaseGame.get();
         ArrayList<GameObject> objects = game.objectsAt(MainGame.Layer.platform);
-
         float rightMost = 0;
-        for(GameObject obj: objects){
-            Platform platform = (Platform)obj;
+        for (GameObject obj: objects) {
+            Platform platform = (Platform) obj;
             float right = platform.getRight();
-            if(rightMost < right){
+            if (rightMost < right) {
                 rightMost = right;
             }
         }
-
         float vw = GameView.view.getWidth();
         float vh = GameView.view.getHeight();
-        if(rightMost < vw){
-            // create a Platform;
-            //Log.d(TAG, "Create Platform In StageMap");
-            float tx = rightMost, ty =  vh - Platform.Type.T_10x2.height();
+        if (rightMost < vw) {
+            Log.d(TAG, "create a Platform here !! @" + rightMost + " Platforms=" + objects.size());
+            float tx = rightMost, ty = vh - Platform.Type.T_2x2.height();
             Platform platform = new Platform(Platform.Type.RANDOM, tx, ty);
             game.add(MainGame.Layer.platform, platform);
 
             Random r = new Random();
-            game.add(MainGame.Layer.item, new Jelly(r.nextInt(60), tx, r.nextInt((int)ty)));
+            game.add(MainGame.Layer.item, new Jelly(r.nextInt(60), tx, r.nextInt((int) ty)));
         }
     }
 
     @Override
     public void draw(Canvas canvas) {
-
     }
 }

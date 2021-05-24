@@ -11,40 +11,37 @@ import kr.ac.kpu.s2015182034.cookierun.framework.View.GameView;
 public class IndexedGameBitmap extends GameBitmap {
 
     private static final String TAG = IndexedGameBitmap.class.getSimpleName();
-    private int width, height, xCount, border, spacing;
+    private int width, height, xcount, border, spacing;
 
-    public IndexedGameBitmap(int resId, int width, int height, int xCount, int border, int spacing) {
+    public IndexedGameBitmap(int resId, int width, int height, int xcount, int border, int spacing) {
         super(resId);
-
         this.width = width;
         this.height = height;
-        this.xCount = xCount;
+        this.xcount = xcount;
         this.border = border;
         this.spacing = spacing;
     }
 
-    protected Rect srcRect;
-    // jelly index range : 0 ~ 59
+    protected Rect srcRect = new Rect();
     public void setIndex(int index) {
-        int x = index % xCount;
-        int y = index / xCount;
+        int x = index % xcount;
+        int y = index / xcount;
         int l = border + x * (width + spacing);
         int t = border + y * (height + spacing);
         int r = l + width;
         int b = t + height;
-        Rect rect = new Rect(l, t, r, b);
-        srcRect.set(rect);
+        srcRect.set(l, t, r, b);
     }
 
     @Override
     public void draw(Canvas canvas, float x, float y) {
-        float w = width / 2 * GameView.MULTIPLIER;
-        float h = height / 2 * GameView.MULTIPLIER;
-        dstRect.set(x - w, y - h, x + w, y + h);
+        float hw = width / 2 * GameView.MULTIPLIER;
+        float hh = height / 2 * GameView.MULTIPLIER;
+        dstRect.set(x - hw, y - hh, x + hw, y + hh);
         canvas.drawBitmap(bitmap, srcRect, dstRect, null);
     }
 
-    public void draw(Canvas canvas, RectF dstRect){
+    public void draw(Canvas canvas, RectF dstRect) {
         canvas.drawBitmap(bitmap, srcRect, dstRect, null);
     }
 }
