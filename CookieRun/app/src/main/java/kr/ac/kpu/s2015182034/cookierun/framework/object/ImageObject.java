@@ -7,30 +7,34 @@ import android.graphics.RectF;
 
 import kr.ac.kpu.s2015182034.cookierun.framework.View.GameView;
 import kr.ac.kpu.s2015182034.cookierun.framework.bitmap.GameBitmap;
+import kr.ac.kpu.s2015182034.cookierun.framework.iface.BoxCollidable;
 import kr.ac.kpu.s2015182034.cookierun.framework.iface.GameObject;
 
-public class ImageObject implements GameObject {
-    private Bitmap bitmap;
+public class ImageObject implements GameObject, BoxCollidable {
+    protected Bitmap bitmap;
 
     protected Rect srcRect = new Rect();
     protected RectF dstRect = new RectF();
+    protected ImageObject() {}
     public ImageObject(int resId, float x, float y) {
         init(resId, x, y);
     }
-    protected ImageObject() {
-    }
-
-    protected void init(int resId, float x, float y){
+    protected void init(int resId, float x, float y) {
         bitmap = GameBitmap.load(resId);
         int w = bitmap.getWidth();
         int h = bitmap.getHeight();
         srcRect.set(0, 0, w, h);
-        float l = x - w *0.5f * GameView.MULTIPLIER;
-        float t = y - h *0.5f * GameView.MULTIPLIER;
-        float r = x + w *0.5f * GameView.MULTIPLIER;
-        float b = y + h *0.5f * GameView.MULTIPLIER;
+        float l = x - w / 2 * GameView.MULTIPLIER;
+        float t = y - h / 2 * GameView.MULTIPLIER;
+        float r = x + w / 2 * GameView.MULTIPLIER;
+        float b = y + h / 2 * GameView.MULTIPLIER;
         dstRect.set(l, t, r, b);
     }
+
+    public float getRight() {
+        return dstRect.right;
+    }
+
     @Override
     public void update() {
 
@@ -44,12 +48,16 @@ public class ImageObject implements GameObject {
     public float getDstWidth() {
         return dstRect.width();
     }
-
     public float getDstHeight() {
         return dstRect.height();
     }
 
-    public float getRight() {
-        return dstRect.right;
+    @Override
+    public void getBoundingRect(RectF rect) {
+        rect.set(dstRect);
+    }
+
+    public RectF getBoundingRect() {
+        return dstRect;
     }
 }

@@ -7,15 +7,19 @@ import java.util.ArrayList;
 
 import kr.ac.kpu.s2015182034.cookierun.framework.View.GameView;
 
-public class    IndexedAnimationGameBitmap extends AnimationGameBitmap {
+public class IndexedAnimationGameBitmap extends AnimationGameBitmap {
 
     private static final String TAG = IndexedAnimationGameBitmap.class.getSimpleName();
     private final int frameHeight;
+    private final int border;
+    private final int spacing;
 
-    public IndexedAnimationGameBitmap(int resId, float framesPerSecond, int frameCount) {
-        super(resId, framesPerSecond, frameCount);
-        this.frameWidth = 270;
-        this.frameHeight = 270;
+    public IndexedAnimationGameBitmap(int resId, int width, int height, int border, int spacing, float framesPerSecond) {
+        super(resId, framesPerSecond, 0);
+        this.border = border;
+        this.spacing = spacing;
+        this.frameWidth = width;
+        this.frameHeight = height;
     }
 
     protected ArrayList<Rect> srcRects;
@@ -24,10 +28,10 @@ public class    IndexedAnimationGameBitmap extends AnimationGameBitmap {
         for (int index: indices) {
             int x = index % 100;
             int y = index / 100;
-            int l = 2 + x * 272;
-            int t = 2 + y * 272;
-            int r = l + 270;
-            int b = t + 270;
+            int l = border + x * (frameWidth + spacing);
+            int t = border + y * (frameHeight + spacing);
+            int r = l + frameWidth;
+            int b = t + frameHeight;
             Rect rect = new Rect(l, t, r, b);
             //Log.d(TAG, "Adding rect: " + rect);
             srcRects.add(rect);
