@@ -17,7 +17,7 @@ import kr.ac.kpu.s2015182034.cookierun.framework.utils.CollisionHelper;
 public class MainGame extends BaseGame {
     private boolean initialized;
     private Player player;
-    private Score score;
+    public Score score;
 
     public static MainGame get() {
         return (MainGame) instance;
@@ -61,15 +61,6 @@ public class MainGame extends BaseGame {
         add(Layer.bg, new HorizontalScrollBackground(R.mipmap.cookie_run_bg_1, -10));
         add(Layer.bg, new HorizontalScrollBackground(R.mipmap.cookie_run_bg_2, -20));
         add(Layer.bg, new HorizontalScrollBackground(R.mipmap.cookie_run_bg_3, -30));
-//
-//        float tx = 0, ty = h - Platform.Type.T_2x2.height();
-//        while (tx < w) {
-//            Platform platform = new Platform(Platform.Type.RANDOM, tx, ty);
-//            add(Layer.platform, platform);
-//            tx += platform.getDstWidth();
-////        VerticalScrollBackground clouds = new VerticalScrollBackground(R.mipmap.clouds, 20);
-////        add(Layer.bg2, clouds);
-//        }
 
         initialized = true;
         return true;
@@ -86,9 +77,7 @@ public class MainGame extends BaseGame {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
-//        if (action == MotionEvent.ACTION_DOWN) {
         if (action == MotionEvent.ACTION_DOWN) {
-//            player.moveTo(event.getX(), event.getY());
             if (event.getX() < GameView.view.getWidth() / 2) {
                 player.jump();
             } else {

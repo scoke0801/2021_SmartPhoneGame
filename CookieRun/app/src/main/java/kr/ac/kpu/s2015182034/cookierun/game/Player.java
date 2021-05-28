@@ -95,7 +95,7 @@ public class Player implements GameObject, BoxCollidable {
             float platformTop = findNearestPlatformTop();
             if (foot < platformTop) {
                 setState(State.falling);
-                vertSpeed = 0;
+                vertSpeed = 0.0f;
                 //this.y += 0.01;
             }
         }

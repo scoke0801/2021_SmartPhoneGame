@@ -12,7 +12,7 @@ import kr.ac.kpu.s2015182034.cookierun.framework.object.ImageObject;
 public class Platform extends ImageObject {
     private static final String TAG = Platform.class.getSimpleName();
     //public static int UNIT_SIZE = 70;
-    public static int SPEED = 150;
+    public static int SPEED = 550;
 
     public enum Type {
         T_10x2, T_2x2, T_3x1, RANDOM;

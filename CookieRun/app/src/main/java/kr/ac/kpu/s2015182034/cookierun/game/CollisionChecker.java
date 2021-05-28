@@ -27,6 +27,7 @@ public class CollisionChecker implements GameObject {
             }
             if (CollisionHelper.collides(player, (BoxCollidable) item)) {
                 //Log.d(TAG, "Collision: " + item);
+                game.score.addScore(100);
                 game.remove(item);
             }
         }
