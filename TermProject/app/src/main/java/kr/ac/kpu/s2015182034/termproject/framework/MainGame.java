@@ -130,7 +130,7 @@ public class MainGame {
         add(Layer.ui, score);
 
         margin = (int)(40 * GameView.MULTIPLIER);
-        time = new Time( 60 + margin, margin);
+        time = new Time( margin, margin);
         add(Layer.ui, time);
 
         this.bg = new VerticalScrollBackground(R.mipmap.map_1, 0);
