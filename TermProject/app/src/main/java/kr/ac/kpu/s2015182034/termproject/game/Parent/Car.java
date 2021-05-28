@@ -10,12 +10,13 @@ import java.util.Random;
 import kr.ac.kpu.s2015182034.termproject.R;
 import kr.ac.kpu.s2015182034.termproject.animation.AnimationBitmap;
 import kr.ac.kpu.s2015182034.termproject.framework.BoxCollidable;
+import kr.ac.kpu.s2015182034.termproject.framework.FiniteObject;
 import kr.ac.kpu.s2015182034.termproject.framework.GameObject;
 import kr.ac.kpu.s2015182034.termproject.framework.MainGame;
 import kr.ac.kpu.s2015182034.termproject.framework.Recyclable;
 import kr.ac.kpu.s2015182034.termproject.ui.view.GameView;
 
-public class Car implements GameObject, BoxCollidable, Recyclable {
+public class Car implements GameObject, BoxCollidable, Recyclable, FiniteObject {
     private static final String TAG = Car.class.getSimpleName();
     protected float x, y;   // 위치
 
@@ -164,5 +165,17 @@ public class Car implements GameObject, BoxCollidable, Recyclable {
     public void movePosition(float xMoved, float yMoved) {
         this.x += xMoved;
         this.y += yMoved;
+    }
+
+    public float GetXPos(){
+        return x;
+    }
+    public float GetYPos(){
+        return y;
+    }
+
+    @Override
+    public boolean IsHaveToDelete() {
+        return MainGame.get().CheckHaveToDelete(y);
     }
 }

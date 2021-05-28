@@ -9,12 +9,13 @@ import java.util.Random;
 import kr.ac.kpu.s2015182034.termproject.R;
 import kr.ac.kpu.s2015182034.termproject.animation.AnimationBitmap;
 import kr.ac.kpu.s2015182034.termproject.framework.BoxCollidable;
+import kr.ac.kpu.s2015182034.termproject.framework.FiniteObject;
 import kr.ac.kpu.s2015182034.termproject.framework.GameObject;
 import kr.ac.kpu.s2015182034.termproject.framework.MainGame;
 import kr.ac.kpu.s2015182034.termproject.framework.Recyclable;
 import kr.ac.kpu.s2015182034.termproject.ui.view.GameView;
 
-public class Item implements GameObject, BoxCollidable, Recyclable {
+public class Item implements GameObject, BoxCollidable, Recyclable, FiniteObject {
     protected float x, y;   // 위치
 
     protected int sx, sy; // 크기
@@ -135,5 +136,9 @@ public class Item implements GameObject, BoxCollidable, Recyclable {
     public void movePosition(float xMoved, float yMoved) {
         this.x += xMoved;
         this.y += yMoved;
+    }
+    @Override
+    public boolean IsHaveToDelete() {
+        return MainGame.get().CheckHaveToDelete(y);
     }
 }

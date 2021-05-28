@@ -10,13 +10,14 @@ import kr.ac.kpu.s2015182034.termproject.R;
 import kr.ac.kpu.s2015182034.termproject.animation.AnimationBitmap;
 import kr.ac.kpu.s2015182034.termproject.animation.GameBitmap;
 import kr.ac.kpu.s2015182034.termproject.framework.BoxCollidable;
+import kr.ac.kpu.s2015182034.termproject.framework.FiniteObject;
 import kr.ac.kpu.s2015182034.termproject.framework.GameObject;
 import kr.ac.kpu.s2015182034.termproject.framework.MainGame;
 import kr.ac.kpu.s2015182034.termproject.framework.Recyclable;
 import kr.ac.kpu.s2015182034.termproject.game.Parent.Car;
 import kr.ac.kpu.s2015182034.termproject.ui.view.GameView;
 
-public class WoodPlatform implements GameObject, BoxCollidable, Recyclable {
+public class WoodPlatform implements GameObject, BoxCollidable, Recyclable, FiniteObject {
     private static final String TAG = WoodPlatform.class.getSimpleName();
     protected float x, y;   // 위치
 
@@ -126,5 +127,10 @@ public class WoodPlatform implements GameObject, BoxCollidable, Recyclable {
             onPlayer = player;
             isOnPlayerExist = true;
         }
+    }
+
+    @Override
+    public boolean IsHaveToDelete() {
+        return MainGame.get().CheckHaveToDelete(y);
     }
 }

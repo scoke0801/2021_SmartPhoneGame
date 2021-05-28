@@ -18,6 +18,7 @@ import kr.ac.kpu.s2015182034.termproject.game.Parent.Car;
 import kr.ac.kpu.s2015182034.termproject.game.Parent.Item;
 import kr.ac.kpu.s2015182034.termproject.game.Player;
 import kr.ac.kpu.s2015182034.termproject.game.Score;
+import kr.ac.kpu.s2015182034.termproject.game.Time;
 import kr.ac.kpu.s2015182034.termproject.game.Tracer;
 import kr.ac.kpu.s2015182034.termproject.game.VerticalScrollBackground;
 import kr.ac.kpu.s2015182034.termproject.game.WaterObject;
@@ -37,6 +38,7 @@ public class MainGame {
     private ArrayList<ArrayList<GameObject>> layers;
     private Player player;
     private Score score;
+    private Time time;
     VerticalScrollBackground bg;
 
     private static HashMap<Class, ArrayList<GameObject>> reclycleBin = new HashMap<>();
@@ -126,6 +128,10 @@ public class MainGame {
         score.setScore(0);
         add(Layer.ui, score);
 
+        margin = (int)(40 * GameView.MULTIPLIER);
+        time = new Time( 60 + margin, margin);
+        add(Layer.ui, time);
+
         this.bg = new VerticalScrollBackground(R.mipmap.map_1, 0);
         add(Layer.map, this.bg );
 
@@ -158,6 +164,18 @@ public class MainGame {
                 o.update();
             }
         }
+        for (ArrayList<GameObject> objects: layers) {
+            for (GameObject o : objects) {
+                if(false == (o instanceof FiniteObject)){
+                    continue;
+                }
+                if(((FiniteObject) o).IsHaveToDelete()){
+                    Log.d(TAG, "IsHaveToDelete - Remove" );
+                    remove(o);
+                }
+            }
+        }
+
         if( false == player.IsOnBarrier())
         {
             ArrayList<GameObject> cars = layers.get(Layer.car.ordinal());
@@ -340,5 +358,10 @@ public class MainGame {
             Car car = (Car) o1;
             car.Stop(true, 3.0f);
         }
+    }
+
+    public boolean CheckHaveToDelete(float y){
+        float playerY = player.GetYPos();
+        return ( y - 600.0f >= playerY);
     }
 }
