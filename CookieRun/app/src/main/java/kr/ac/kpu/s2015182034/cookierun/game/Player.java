@@ -141,7 +141,7 @@ public class Player implements GameObject, BoxCollidable {
 
     public void jump() {
         //if (state != State.running && state != State.jump && state != State.slide) {
-        if (state == State.running || state == State.slide) {
+        if (state == State.running || state == State.slide || state == State.falling) {
             setState(State.jump);
             vertSpeed = -JUMP_POWER;
         } else if (state == State.jump) {
