@@ -14,6 +14,7 @@ import kr.ac.kpu.s2015182034.termproject.game.Barrier;
 import kr.ac.kpu.s2015182034.termproject.game.Blinker;
 import kr.ac.kpu.s2015182034.termproject.game.Coin;
 import kr.ac.kpu.s2015182034.termproject.game.Effect;
+import kr.ac.kpu.s2015182034.termproject.game.GameOverBoard;
 import kr.ac.kpu.s2015182034.termproject.game.Parent.Car;
 import kr.ac.kpu.s2015182034.termproject.game.Parent.Item;
 import kr.ac.kpu.s2015182034.termproject.game.Player;
@@ -148,6 +149,7 @@ public class MainGame {
             add(Layer.item, Blinker.get("Blinker", r.nextInt(w - 50) + 25, 700 - blinkerGap * i));
         }
 
+        //add(Layer.ui, new GameOverBoard(w / 2, 0));
         this.initialized = true;
         return true;
     }

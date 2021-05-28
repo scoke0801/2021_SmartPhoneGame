@@ -40,7 +40,7 @@ public class GameOverBoard implements GameObject {
         // 목표지점 계산...
         float vh = GameView.view.getHeight();
         ty = y + vh * 0.5f;
-        speed = vh * 0.5f;
+        speed = vh * 0.5f / 1.25f;
     }
     @Override
     public void update() {
@@ -48,7 +48,7 @@ public class GameOverBoard implements GameObject {
         if(isOnMove){
             y += speed * frameTime;
             if(y > ty){
-                isOnMove = true;
+                isOnMove = false;
             }
         }
         else{
