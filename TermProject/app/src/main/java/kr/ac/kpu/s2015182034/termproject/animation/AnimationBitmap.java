@@ -46,7 +46,7 @@ public class AnimationBitmap extends GameBitmap  {
 
         paint = new Paint();
         paint.setColor(0xFFFF0000);
-        paint.setStrokeWidth(10f);
+        paint.setStrokeWidth(3f);
         paint.setStyle(Paint.Style.STROKE);
     }
 

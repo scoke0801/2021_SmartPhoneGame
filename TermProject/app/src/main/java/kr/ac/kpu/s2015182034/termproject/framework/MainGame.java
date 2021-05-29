@@ -366,4 +366,6 @@ public class MainGame {
         float playerY = player.GetYPos();
         return ( y - 600.0f >= playerY);
     }
+
+    
 }
