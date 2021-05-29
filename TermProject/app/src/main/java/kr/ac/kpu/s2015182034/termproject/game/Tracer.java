@@ -42,7 +42,7 @@ public class Tracer implements GameObject, BoxCollidable {
         }
         else {
             float dy = MainGame.get().frameTime * this.speed;
-            //this.y += dy;
+            this.y += dy;
         }
     }
 

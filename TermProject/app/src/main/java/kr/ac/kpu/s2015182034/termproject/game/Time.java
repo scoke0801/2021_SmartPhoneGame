@@ -21,7 +21,7 @@ public class Time implements GameObject {
     private final int right;
     private final int top;
 
-    private float time = 310.0f;
+    private float time = 180.0f;
     private float min = 5.0f;
     private float sec = 0.0f;
     private Rect rectSrc = new Rect();
