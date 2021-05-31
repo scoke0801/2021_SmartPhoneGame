@@ -14,6 +14,7 @@ import kr.ac.kpu.s2015182034.cookierun.framework.bitmap.IndexedAnimationGameBitm
 import kr.ac.kpu.s2015182034.cookierun.framework.game.BaseGame;
 import kr.ac.kpu.s2015182034.cookierun.framework.iface.BoxCollidable;
 import kr.ac.kpu.s2015182034.cookierun.framework.iface.GameObject;
+import kr.ac.kpu.s2015182034.cookierun.game.scenes.MainScene;
 
 public class Player implements GameObject, BoxCollidable {
     private static final String TAG = Player.class.getSimpleName();
@@ -95,7 +96,7 @@ public class Player implements GameObject, BoxCollidable {
             float platformTop = findNearestPlatformTop();
             if (foot < platformTop) {
                 setState(State.falling);
-                vertSpeed = 0.0f;
+                vertSpeed = 0;
                 //this.y += 0.01;
             }
         }
@@ -104,7 +105,7 @@ public class Player implements GameObject, BoxCollidable {
     private float findNearestPlatformTop() {
         float foot = y + collisionOffsetRect.bottom * GameView.MULTIPLIER;
         MainGame game = (MainGame)BaseGame.get();
-        ArrayList<GameObject> platforms = game.objectsAt(MainGame.Layer.platform);
+        ArrayList<GameObject> platforms = MainScene.scene.objectsAt(MainScene.Layer.platform);
         float top = GameView.view.getHeight();
         for (GameObject obj: platforms) {
             Platform platform = (Platform) obj;
@@ -141,7 +142,7 @@ public class Player implements GameObject, BoxCollidable {
 
     public void jump() {
         //if (state != State.running && state != State.jump && state != State.slide) {
-        if (state == State.running || state == State.slide || state == State.falling) {
+        if (state == State.running || state == State.slide) {
             setState(State.jump);
             vertSpeed = -JUMP_POWER;
         } else if (state == State.jump) {

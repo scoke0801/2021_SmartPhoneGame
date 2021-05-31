@@ -14,16 +14,16 @@ import java.util.Random;
 import kr.ac.kpu.s2015182034.cookierun.framework.View.GameView;
 import kr.ac.kpu.s2015182034.cookierun.framework.game.BaseGame;
 import kr.ac.kpu.s2015182034.cookierun.framework.iface.GameObject;
+import kr.ac.kpu.s2015182034.cookierun.game.scenes.MainScene;
 
 public class StageMap implements GameObject {
+    public static int UNIT_SIZE = 70;
     private static final String TAG = StageMap.class.getSimpleName();
     private final ArrayList<String> lines = new ArrayList<String>();
     private int columns;
     private int rows;
     private int current;
-    private float xPos = 0;
-    private float widgetH;
-    public static int UNIT_SIZE = 70;
+
     public StageMap(String filename) {
         AssetManager assets = GameView.view.getContext().getAssets();
         try {
@@ -60,6 +60,7 @@ public class StageMap implements GameObject {
         }
     }
 
+    private float xPos;
     private void createColumn() {
         float y = 0;
         for (int row = 0; row < rows; row++) {
@@ -72,12 +73,17 @@ public class StageMap implements GameObject {
 
     private void createObject(char ch, float x, float y) {
         MainGame game = (MainGame) BaseGame.get();
+        MainScene scene = MainScene.scene;
         if (ch >= '1' && ch <= '9') {
             Jelly item = new Jelly(ch - '1', x, y);
-            game.add(MainGame.Layer.item, item);
+            scene.add(MainScene.Layer.item, item);
         } else if (ch >= 'O' && ch <= 'Q') {
             Platform platform = new Platform(Platform.Type.values()[ch - 'O'], x, y);
-            game.add(MainGame.Layer.platform, platform);
+            scene.add(MainScene.Layer.platform, platform);
+        } else if (ch >= 'X' && ch <= 'Z') {
+            Obstacle obstacle = new Obstacle(ch, x, y);
+            scene.add(MainScene.Layer.obstacle, obstacle);
+            //Log.d(TAG, "obstacle = " + obstacle);
         }
     }
 
@@ -95,6 +101,27 @@ public class StageMap implements GameObject {
         int lineIndex = current / columns * rows;
         return lines.size() <= lineIndex;
     }
+//        ArrayList<GameObject> objects = game.objectsAt(MainGame.Layer.platform);
+//        float rightMost = 0;
+//        for (GameObject obj: objects) {
+//            Platform platform = (Platform) obj;
+//            float right = platform.getRight();
+//            if (rightMost < right) {
+//                rightMost = right;
+//            }
+//        }
+//        float vw = GameView.view.getWidth();
+//        float vh = GameView.view.getHeight();
+//        if (rightMost < vw) {
+//            Log.d(TAG, "create a Platform here !! @" + rightMost + " Platforms=" + objects.size());
+//            float tx = rightMost, ty = vh - Platform.Type.T_2x2.height();
+//            Platform platform = new Platform(Platform.Type.RANDOM, tx, ty);
+//            game.add(MainGame.Layer.platform, platform);
+//
+//            Random r = new Random();
+//            game.add(MainGame.Layer.item, new Jelly(r.nextInt(60), tx, r.nextInt((int) ty)));
+//        }
+//    }
 
     @Override
     public void draw(Canvas canvas) {

@@ -11,36 +11,30 @@ import kr.ac.kpu.s2015182034.cookierun.framework.bitmap.GameBitmap;
 import kr.ac.kpu.s2015182034.cookierun.framework.iface.GameObject;
 
 public class Score implements GameObject {
-
     private final Bitmap bitmap;
     private final int right;
     private final int top;
-
-    private int score = 0, displayScore = 0;
-    private Rect rectSrc = new Rect();
-    private RectF rectDst = new RectF();
-
-    public Score(int right, int top){
-        bitmap = GameBitmap.load(R.mipmap.number_24x32);
-        this.right = right;
-        this.top = top;
-    }
-
-
-    public int getScore() {
-        return score;
-    }
 
     public void setScore(int score) {
         this.score = score;
         this.displayScore = score;
     }
-    public void addScore(int score) {
-        this.score += score;
+    public void addScore(int amount) {
+        this.score += amount;
+    }
+
+    private int score, displayScore;
+    private Rect src = new Rect();
+    private RectF dst = new RectF();
+
+    public Score(int right, int top) {
+        bitmap = GameBitmap.load(R.mipmap.number_24x32);
+        this.right = right;
+        this.top = top;
     }
     @Override
     public void update() {
-        if(displayScore < score){
+        if (displayScore < score) {
             displayScore++;
         }
     }
@@ -51,18 +45,16 @@ public class Score implements GameObject {
         int nw = bitmap.getWidth() / 10;
         int nh = bitmap.getHeight();
         int x = right;
-        float dw = nw * GameView.MULTIPLIER;
-        float dh = nh * GameView.MULTIPLIER;
-
-        rectSrc =  new Rect();
-        while(value >= 0){
+        int dw = (int) (nw * GameView.MULTIPLIER);
+        int dh = (int) (nh * GameView.MULTIPLIER);
+        while (value > 0) {
             int digit = value % 10;
-            rectSrc.set(digit * nw, 0, (digit + 1)* nw, nh);
-            rectDst.set(x, top, x + dw, top + dh);
+            src.set(digit * nw, 0, (digit + 1) * nw, nh);
             x -= dw;
-            canvas.drawBitmap(bitmap, rectSrc, rectDst, null);
+            dst.set(x, top, x + dw, top + dh);
+            canvas.drawBitmap(bitmap, src, dst, null);
             value /= 10;
-            if (value == 0) break;
         }
     }
+
 }

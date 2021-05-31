@@ -8,16 +8,17 @@ import kr.ac.kpu.s2015182034.cookierun.R;
 import kr.ac.kpu.s2015182034.cookierun.framework.View.GameView;
 import kr.ac.kpu.s2015182034.cookierun.framework.game.BaseGame;
 import kr.ac.kpu.s2015182034.cookierun.framework.object.ImageObject;
+import kr.ac.kpu.s2015182034.cookierun.game.scenes.MainScene;
 
 public class Platform extends ImageObject {
     private static final String TAG = Platform.class.getSimpleName();
     //public static int UNIT_SIZE = 70;
-    public static int SPEED = 550;
+    public static int SPEED = 300;
 
     public enum Type {
         T_10x2, T_2x2, T_3x1, RANDOM;
 
-        float width() {
+        public float width() {
             int w = 1;
             switch (this) {
                 case T_10x2: w = 10; break;
@@ -26,7 +27,7 @@ public class Platform extends ImageObject {
             }
             return w * StageMap.UNIT_SIZE * GameView.MULTIPLIER;
         }
-        float height() {
+        public float height() {
             int h = 1;
             switch (this) {
                 case T_10x2: case T_2x2: h = 2; break;
@@ -34,7 +35,7 @@ public class Platform extends ImageObject {
             }
             return h * StageMap.UNIT_SIZE * GameView.MULTIPLIER;
         }
-        int resId() {
+        public int resId() {
             switch (this) {
                 case T_10x2:
                     return R.mipmap.cookierun_platform_480x48;
@@ -66,7 +67,7 @@ public class Platform extends ImageObject {
         float dx = SPEED * GameView.MULTIPLIER * game.frameTime;
         dstRect.offset(-dx, 0);
         if (getRight() < 0) {
-            game.remove(this);
+            MainScene.scene.remove(this);
         }
     }
 
