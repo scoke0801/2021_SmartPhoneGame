@@ -42,6 +42,9 @@ public class MainGame {
     private Time time;
     VerticalScrollBackground bg;
 
+    int obstacleCreatePos = 0;
+    int viewW, viewH;
+
     private static HashMap<Class, ArrayList<GameObject>> reclycleBin = new HashMap<>();
 
     // singleton 패턴
@@ -72,60 +75,48 @@ public class MainGame {
         array.add(object);
     }
 
+    String[] CAR_TYPE = new String[]{
+            "Car", "Ambulance", "PoliceCar", "Excavator", "Truck", "Bus"
+    };
+    int carSizeH = 170;
     public boolean InitResources() {
         if(this.initialized){
             return false;
         }
         initLayers(Layer.COUNT.ordinal());
 
-        int w = GameView.view.getWidth();
-        int h = GameView.view.getHeight();
+        viewW = GameView.view.getWidth();
+        viewH = GameView.view.getHeight();
 
-        String[] CAR_TYPE = new String[]{
-                "Car", "Ambulance", "PoliceCar", "Excavator", "Truck", "Bus"
-        };
 
-        Random r = new Random();
-        // test codes
-        int carSizeH = 170;
-        for(int i = 0; i < 10; i += 2){
-            Car car = Car.get(CAR_TYPE[r.nextInt(5)],0,h - 300 + -carSizeH * (i+1), false);
-            add(Layer.car, car);
-        }
-        for(int i = 1; i < 10; i += 2){
-            Car car = Car.get(CAR_TYPE[r.nextInt(5)],w, h - 300 + -carSizeH * (i+1), true);
-            add(Layer.car, car);
-        }
-
-        add(Layer.platform, WoodPlatform.get("LongWood", 300, h -2100));
-        add(Layer.platform, WoodPlatform.get("ShortWood", 300, h -2250));
-
-        add(Layer.platform, WoodPlatform.get("LongWood", 300, h - 2400));
-        add(Layer.platform, WoodPlatform.get("ShortWood", 100, h - 2550));
-        add(Layer.platform, WoodPlatform.get("LongWood", 300, h - 2700));
-
-        add(Layer.water, WaterObject.get(h - 2200));
-        add(Layer.water, WaterObject.get(h - 2550));
-
-        for(int i = 0; i < 20; i += 2){
-            Car car = Car.get(CAR_TYPE[r.nextInt(5)],0,h - 2800 + -carSizeH * (i+1), false);
-            add(Layer.car, car);
-        }
-        for(int i = 1; i < 20; i += 2){
-            Car car = Car.get(CAR_TYPE[r.nextInt(5)],w, h - 2800 + -carSizeH * (i+1), true);
-            add(Layer.car, car);
-        }
-        player = new Player(w/ 2, h - 300, 0,0);
+        player = new Player(viewW/ 2, viewH - 300, 0,0);
         add(Layer.player, player);
 
         int tracerPos = 120;
-        while(tracerPos < w){
-            add(Layer.tracer, new Tracer(tracerPos, h));
-            tracerPos += w / 5;
+        while(tracerPos < viewW){
+            add(Layer.tracer, new Tracer(tracerPos, viewH));
+            tracerPos += viewW / 5;
         }
 
+        Random r = new Random();
+        // test codes
+        for(int i = 0; i < 10; i += 2){
+            Car car = Car.get(CAR_TYPE[r.nextInt(5)],0,viewH - 300 + -carSizeH * (i+1), false);
+            add(Layer.car, car);
+        }
+        for(int i = 1; i < 10; i += 2){
+            Car car = Car.get(CAR_TYPE[r.nextInt(5)],viewW, viewH - 300 + -carSizeH * (i+1), true);
+            add(Layer.car, car);
+        }
+
+//        add(Layer.platform, WoodPlatform.get("LongWood", 300, viewH -2100 - 40));
+//        add(Layer.platform, WoodPlatform.get("ShortWood", 300, viewH -2250- 40));
+//        add(Layer.platform, WoodPlatform.get("LongWood", 300, viewH - 2400- 40));
+//        add(Layer.water, WaterObject.get(viewH - 2100 - 192));
+        obstacleCreatePos = -2100 + viewH;
+
         int margin =  (int)(40 * GameView.MULTIPLIER);
-        score = new Score(w - margin, margin);
+        score = new Score(viewW - margin, margin);
         score.setScore(0);
         add(Layer.ui, score);
 
@@ -138,15 +129,15 @@ public class MainGame {
 
         int coinSize = 180;
         for(int i = 0 ; i < 10; ++i){
-            add(Layer.item, Coin.get("Coin", r.nextInt(w - 50) + 25, coinSize * i));
+            add(Layer.item, Coin.get("Coin", r.nextInt(viewW - 50) + 25, coinSize * i));
         }
         int barrierGap = 1800;
         for(int i = 0 ; i < 2; ++i){
-            add(Layer.item, Barrier.get("Barrier", r.nextInt(w - 50) + 25, 800 - barrierGap * i));
+            add(Layer.item, Barrier.get("Barrier", r.nextInt(viewW - 50) + 25, 800 - barrierGap * i));
         }
         int blinkerGap = 2000;
         for(int i = 0 ; i < 2; ++i){
-            add(Layer.item, Blinker.get("Blinker", r.nextInt(w - 50) + 25, 700 - blinkerGap * i));
+            add(Layer.item, Blinker.get("Blinker", r.nextInt(viewW - 50) + 25, 700 - blinkerGap * i));
         }
 
         //add(Layer.ui, new GameOverBoard(w / 2, 0));
@@ -350,6 +341,11 @@ public class MainGame {
             o.movePosition(xMoved, yMoved);
         }
         bg.Scroll(xMoved, yMoved);
+        obstacleCreatePos += yMoved;
+
+        if(CheckHaveToCreateObstacle()){
+            CreateObstacles();
+        }
     }
 
 
@@ -365,5 +361,38 @@ public class MainGame {
     public boolean CheckHaveToDelete(float y){
         float playerY = player.GetYPos();
         return ( y - 600.0f >= playerY);
+    }
+
+    private boolean CheckHaveToCreateObstacle() {
+        float y = player.GetYPos();
+
+        return obstacleCreatePos >= y - viewH ;
+    }
+
+    public void CreateObstacles() {
+        Random r = new Random();
+        int res = r.nextInt(6); // 0 ~ 5
+        if (res == 0 || res == 1 || res == 2) {
+            // CreateWater
+            add(Layer.platform, WoodPlatform.get("LongWood", 300, obstacleCreatePos - 40));
+            add(Layer.platform, WoodPlatform.get("ShortWood", 300, obstacleCreatePos - 150 - 40));
+            add(Layer.platform, WoodPlatform.get("LongWood", 300, obstacleCreatePos - 300 - 40));
+            add(Layer.water, WaterObject.get(obstacleCreatePos - 192));
+
+            obstacleCreatePos += -370 - 192 + 75;
+        }
+        else {
+            // CreateCars
+            for (int i = 0; i < 10; i += 2) {
+                Car car = Car.get(CAR_TYPE[r.nextInt(5)], 0, obstacleCreatePos + -carSizeH * (i + 1), false);
+                add(Layer.car, car);
+            }
+            for (int i = 1; i < 10; i += 2) {
+                Car car = Car.get(CAR_TYPE[r.nextInt(5)], viewW, obstacleCreatePos + -carSizeH * (i + 1), true);
+                add(Layer.car, car);
+            }
+            obstacleCreatePos += -2100;
+        }
+        //obstacleCreatePos  += -2100 + viewH;
     }
 }

@@ -24,12 +24,6 @@ public class CollisionHelper {
         objB.getBoundingRect(rect2);
         objA.getBoundingRect(rect1);
 
-        rect2.left += 30;
-        rect2.right -= 30;
-
-        rect2.top += 30;
-        rect2.bottom -= 30;
-
         if (rect1.left   > rect2.right) return false;
         if (rect1.top    > rect2.bottom)return false;
         if (rect1.right  < rect2.left)  return false;

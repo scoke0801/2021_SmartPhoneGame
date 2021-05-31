@@ -98,6 +98,11 @@ public class GameBitmap {
     private RectF dstToDrawAABB = new RectF();
     public void drawAABB(Canvas canvas, float x, float y){
         getBoundingRect(x,y, dstToDrawAABB);
+
+        dstToDrawAABB.left += 40.0f;
+        dstToDrawAABB.right -= 40.0f;
+        dstToDrawAABB.top += 40.0f;
+        dstToDrawAABB.bottom -=40.0f;
         canvas.drawRect(dstToDrawAABB, paint);
     }
 }
