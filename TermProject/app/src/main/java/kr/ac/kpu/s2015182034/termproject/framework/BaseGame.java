@@ -128,13 +128,15 @@ public class BaseGame {
     }
         public void ScrollMap(float xMoved, float yMoved) {
             //car, platform, item
+
             MainScene scene = (MainScene)getTopScene();;
-            ArrayList<ArrayList<GameObject>> layers = getTopScene().getLayers();
-            for (ArrayList<GameObject> objects: layers) {
-                for (GameObject o : objects) {
-                    o.movePosition(xMoved, yMoved);
-                }
-            }
+            scene.ScrollMap(xMoved, yMoved);
+//            ArrayList<ArrayList<GameObject>> layers = getTopScene().getLayers();
+//            for (ArrayList<GameObject> objects: layers) {
+//                for (GameObject o : objects) {
+//                    o.movePosition(xMoved, yMoved);
+//                }
+//            }
 
             if (scene.CheckHaveToCreateObstacle()) {
                 scene.CreateObstacles();
