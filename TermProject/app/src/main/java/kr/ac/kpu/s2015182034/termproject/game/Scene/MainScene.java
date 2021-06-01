@@ -103,18 +103,14 @@ public class MainScene extends Scene {
         this.bg = new VerticalScrollBackground(R.mipmap.map_1, 0);
         add(Layer.map, this.bg );
 
+        int incVar = r.nextInt();
         int coinSize = 180;
-        for(int i = 0 ; i < 10; ++i){
+        for(int i = 0 ; i < 10; i += incVar){
             add(Layer.item, Coin.get("Coin", r.nextInt(viewW - 50) + 25, coinSize * i));
         }
-        int barrierGap = 1800;
-        for(int i = 0 ; i < 2; ++i){
-            add(Layer.item, Barrier.get("Barrier", r.nextInt(viewW - 50) + 25, 800 - barrierGap * i));
-        }
-        int blinkerGap = 2000;
-        for(int i = 0 ; i < 2; ++i){
-            add(Layer.item, Blinker.get("Blinker", r.nextInt(viewW - 50) + 25, 700 - blinkerGap * i));
-        }
+        add(Layer.item, Barrier.get("Barrier", r.nextInt(viewW - 50) + 25, r.nextInt(viewH / 2)  + viewH * 0.25f));
+        add(Layer.item, Blinker.get("Blinker", r.nextInt(viewW - 50) + 25, r.nextInt(viewH / 2)  + viewH * 0.25f));
+
 
         //add(Layer.ui, new GameOverBoard(w / 2, 0));
     }
@@ -293,7 +289,9 @@ public class MainScene extends Scene {
 
     public void CreateObstacles() {
         Random r = new Random();
-        int res = r.nextInt(6); // 0 ~ 5
+        int res;
+
+        res = r.nextInt(6); // 0 ~ 5
         if (res == 0 || res == 1 || res == 2) {
             // CreateWater
             add(Layer.platform, WoodPlatform.get("LongWood", 300, obstacleCreatePos - 40));
@@ -313,8 +311,19 @@ public class MainScene extends Scene {
                 Car car = Car.get(CAR_TYPE[r.nextInt(5)], viewW, obstacleCreatePos + -carSizeH * (i + 1), true);
                 add(Layer.car, car);
             }
+
+            res = r.nextInt(5);
+            if(res != 0) {
+                int coinSize = 180;
+                for (int i = 0; i < 10; i += res) {
+                    add(Layer.item, Coin.get("Coin", r.nextInt(viewW - 50) + 25, obstacleCreatePos - coinSize * i));
+                }
+                add(Layer.item, Blinker.get("Blinker", r.nextInt(viewW - 50) + 25, obstacleCreatePos - r.nextInt(viewH / 2) - viewH * 0.25f));
+                add(Layer.item, Barrier.get("Barrier", r.nextInt(viewW - 50) + 25, obstacleCreatePos - r.nextInt(viewH / 2) - viewH * 0.25f));
+            }
+
             obstacleCreatePos += -2100;
         }
-        //obstacleCreatePos  += -2100 + viewH;
+        //obstacleCreatePos  += -2100 + viewH; 
     }
 }

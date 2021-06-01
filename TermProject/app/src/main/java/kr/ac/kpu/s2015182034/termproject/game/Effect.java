@@ -5,10 +5,12 @@ import android.graphics.Canvas;
 import kr.ac.kpu.s2015182034.termproject.R;
 import kr.ac.kpu.s2015182034.termproject.animation.AnimationBitmap;
 import kr.ac.kpu.s2015182034.termproject.framework.BaseGame;
+import kr.ac.kpu.s2015182034.termproject.framework.FiniteObject;
 import kr.ac.kpu.s2015182034.termproject.framework.GameObject;
 import kr.ac.kpu.s2015182034.termproject.framework.MainGame;
 
-public class Effect implements GameObject {
+public class Effect implements GameObject, FiniteObject {
+
 
     public enum EffectType{
         WaterEffect,
@@ -17,10 +19,11 @@ public class Effect implements GameObject {
 
     float lifeTime = 0.9f;
     float elapsedTime = 0.0f;
+    boolean haveToDelete = false;
     protected float x, y;   // 위치
     protected AnimationBitmap bitmap;
     private float frameRate = 7.0f; // 1초당 7.0장의 속도로 애니메이션을 수행하도록
-    public Effect(EffectType type, float x, float y) {
+    public Effect(EffectType type, float x, float y)  {
         int resId = -1;
         int frameCount = -1;
         if(EffectType.WaterEffect == type){
@@ -42,7 +45,7 @@ public class Effect implements GameObject {
     @Override
     public void update() {
         if (elapsedTime > lifeTime){
-           //MainGame.get().remove(this);
+            haveToDelete = true;
         }
         elapsedTime += BaseGame.get().frameTime;
     }
@@ -56,5 +59,11 @@ public class Effect implements GameObject {
     @Override
     public void movePosition(float xMoved, float yMoved) {
 
+    }
+
+
+    @Override
+    public boolean IsHaveToDelete() {
+        return haveToDelete;
     }
 }
