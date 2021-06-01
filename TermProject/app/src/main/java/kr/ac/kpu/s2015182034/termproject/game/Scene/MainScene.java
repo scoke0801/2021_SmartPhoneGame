@@ -136,7 +136,7 @@ public class MainScene extends Scene {
     }
 
     @Override
-    public void CollisionCheck() {
+    public void CheckObjectDelete(){
         for (ArrayList<GameObject> objects : layers) {
             for (GameObject o : objects) {
                 if (false == (o instanceof FiniteObject)) {
@@ -148,7 +148,9 @@ public class MainScene extends Scene {
                 }
             }
         }
-
+    }
+    @Override
+    public void CollisionCheck() {
         if (false == player.IsOnBarrier()) {
             ArrayList<GameObject> cars = layers.get(Layer.car.ordinal());
             for (GameObject o1 : cars) {
@@ -231,13 +233,13 @@ public class MainScene extends Scene {
                 }
             }
         }
-
+    }
+    public void TimeUpdate(){
         lastEffectCreateTime -= BaseGame.get().frameTime;
         if (lastEffectCreateTime < 0.0f) {
             lastEffectCreateTime = 0.0f;
         }
     }
-
     public void ScrollMap(float xMoved, float yMoved) {
         //car, platform, item
         ArrayList<GameObject> carObjs = layers.get(Layer.car.ordinal());

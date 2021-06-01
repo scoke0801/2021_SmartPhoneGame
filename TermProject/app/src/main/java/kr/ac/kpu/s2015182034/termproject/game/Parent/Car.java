@@ -178,7 +178,6 @@ public class Car implements GameObject, BoxCollidable, Recyclable, FiniteObject 
 
     @Override
     public boolean IsHaveToDelete() {
-        return false;
-        //return MainGame.get().CheckHaveToDelete(y);
+        return ((MainScene)BaseGame.get().GetTopScene()).CheckHaveToDelete(y);
     }
 }

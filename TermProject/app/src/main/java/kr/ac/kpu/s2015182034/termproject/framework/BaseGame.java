@@ -107,7 +107,9 @@ public class BaseGame {
                 o.update();
             }
         }
+        getTopScene().CheckObjectDelete();
         getTopScene().CollisionCheck();
+        getTopScene().TimeUpdate();
     }
 
     public void draw(Canvas canvas) {
@@ -126,23 +128,18 @@ public class BaseGame {
             }
         }
     }
-        public void ScrollMap(float xMoved, float yMoved) {
-            //car, platform, item
+    public void ScrollMap(float xMoved, float yMoved) {
+        MainScene scene = (MainScene) getTopScene();
+        scene.ScrollMap(xMoved, yMoved);
 
-            MainScene scene = (MainScene)getTopScene();;
-            scene.ScrollMap(xMoved, yMoved);
-//            ArrayList<ArrayList<GameObject>> layers = getTopScene().getLayers();
-//            for (ArrayList<GameObject> objects: layers) {
-//                for (GameObject o : objects) {
-//                    o.movePosition(xMoved, yMoved);
-//                }
-//            }
-
-            if (scene.CheckHaveToCreateObstacle()) {
-                scene.CreateObstacles();
-            }
+        if (scene.CheckHaveToCreateObstacle()) {
+            scene.CreateObstacles();
         }
+    }
 
+    public Scene GetTopScene(){
+        return getTopScene();
+    }
     public boolean onTouchEvent(MotionEvent event) {
         return getTopScene().onTouchEvent(event);
     }

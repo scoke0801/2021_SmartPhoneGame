@@ -13,6 +13,7 @@ import kr.ac.kpu.s2015182034.termproject.framework.FiniteObject;
 import kr.ac.kpu.s2015182034.termproject.framework.GameObject;
 import kr.ac.kpu.s2015182034.termproject.framework.MainGame;
 import kr.ac.kpu.s2015182034.termproject.framework.Recyclable;
+import kr.ac.kpu.s2015182034.termproject.game.Scene.MainScene;
 import kr.ac.kpu.s2015182034.termproject.ui.view.GameView;
 
 public class WoodPlatform implements GameObject, BoxCollidable, Recyclable, FiniteObject {
@@ -130,7 +131,6 @@ public class WoodPlatform implements GameObject, BoxCollidable, Recyclable, Fini
 
     @Override
     public boolean IsHaveToDelete() {
-        return false;
-        //return MainGame.get().CheckHaveToDelete(y);
+        return ((MainScene)BaseGame.get().GetTopScene()).CheckHaveToDelete(y);
     }
 }

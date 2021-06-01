@@ -66,6 +66,12 @@ public class Scene {
     public void CollisionCheck(){
 
     }
+    public void TimeUpdate(){
+
+    }
+    public void CheckObjectDelete(){
+
+    }
     public ArrayList<GameObject> objectsAt(int layerIndex) {
         return layers.get(layerIndex);
     }
