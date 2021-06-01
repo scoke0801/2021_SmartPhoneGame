@@ -49,7 +49,8 @@ public class Blinker extends Item {
     }
     public static Blinker get(String type, float x, float y){
         MainGame game = MainGame.get();
-        Blinker blinker = (Blinker)game.get(Item.class);
+//        Blinker blinker = (Blinker)game.get(Item.class);
+        Blinker blinker = null;
         if(blinker == null){
             blinker = new Blinker(type, x,y, false);
         }

@@ -1,20 +1,18 @@
 package kr.ac.kpu.s2015182034.termproject.game;
 
-import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.RectF;
 
 import java.util.Random;
 
 import kr.ac.kpu.s2015182034.termproject.R;
-import kr.ac.kpu.s2015182034.termproject.animation.AnimationBitmap;
 import kr.ac.kpu.s2015182034.termproject.animation.GameBitmap;
+import kr.ac.kpu.s2015182034.termproject.framework.BaseGame;
 import kr.ac.kpu.s2015182034.termproject.framework.BoxCollidable;
 import kr.ac.kpu.s2015182034.termproject.framework.FiniteObject;
 import kr.ac.kpu.s2015182034.termproject.framework.GameObject;
 import kr.ac.kpu.s2015182034.termproject.framework.MainGame;
 import kr.ac.kpu.s2015182034.termproject.framework.Recyclable;
-import kr.ac.kpu.s2015182034.termproject.game.Parent.Car;
 import kr.ac.kpu.s2015182034.termproject.ui.view.GameView;
 
 public class WoodPlatform implements GameObject, BoxCollidable, Recyclable, FiniteObject {
@@ -53,7 +51,7 @@ public class WoodPlatform implements GameObject, BoxCollidable, Recyclable, Fini
 
     @Override
     public void update() {
-        float dx = MainGame.get().frameTime * this.speed;
+        float dx = BaseGame.get().frameTime * this.speed;
 
         x -= dx;
         if(true == isOnPlayerExist){
@@ -93,7 +91,8 @@ public class WoodPlatform implements GameObject, BoxCollidable, Recyclable, Fini
     }
     public static WoodPlatform get(String type, float x, float y){
         MainGame game = MainGame.get();
-        WoodPlatform obj  = (WoodPlatform)game.get(WoodPlatform.class);
+//        WoodPlatform obj  = (WoodPlatform)game.get(WoodPlatform.class);
+        WoodPlatform obj  = null;
         if(obj == null){
             obj = new WoodPlatform(type, x,y);
         }
@@ -131,6 +130,7 @@ public class WoodPlatform implements GameObject, BoxCollidable, Recyclable, Fini
 
     @Override
     public boolean IsHaveToDelete() {
-        return MainGame.get().CheckHaveToDelete(y);
+        return false;
+        //return MainGame.get().CheckHaveToDelete(y);
     }
 }

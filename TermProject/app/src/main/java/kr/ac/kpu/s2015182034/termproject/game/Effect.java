@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 
 import kr.ac.kpu.s2015182034.termproject.R;
 import kr.ac.kpu.s2015182034.termproject.animation.AnimationBitmap;
+import kr.ac.kpu.s2015182034.termproject.framework.BaseGame;
 import kr.ac.kpu.s2015182034.termproject.framework.GameObject;
 import kr.ac.kpu.s2015182034.termproject.framework.MainGame;
 
@@ -41,9 +42,9 @@ public class Effect implements GameObject {
     @Override
     public void update() {
         if (elapsedTime > lifeTime){
-            MainGame.get().remove(this);
+           //MainGame.get().remove(this);
         }
-        elapsedTime += MainGame.get().frameTime;
+        elapsedTime += BaseGame.get().frameTime;
     }
 
     @Override

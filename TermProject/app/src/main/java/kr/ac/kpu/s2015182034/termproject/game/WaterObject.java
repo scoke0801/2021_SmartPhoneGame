@@ -4,17 +4,13 @@ import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.RectF;
 
-import java.util.Random;
-
 import kr.ac.kpu.s2015182034.termproject.R;
-import kr.ac.kpu.s2015182034.termproject.animation.AnimationBitmap;
 import kr.ac.kpu.s2015182034.termproject.animation.GameBitmap;
 import kr.ac.kpu.s2015182034.termproject.framework.BoxCollidable;
 import kr.ac.kpu.s2015182034.termproject.framework.FiniteObject;
 import kr.ac.kpu.s2015182034.termproject.framework.GameObject;
 import kr.ac.kpu.s2015182034.termproject.framework.MainGame;
 import kr.ac.kpu.s2015182034.termproject.framework.Recyclable;
-import kr.ac.kpu.s2015182034.termproject.game.Parent.Car;
 import kr.ac.kpu.s2015182034.termproject.ui.view.GameView;
 
 public class WaterObject implements GameObject, BoxCollidable, Recyclable, FiniteObject {
@@ -50,7 +46,8 @@ public class WaterObject implements GameObject, BoxCollidable, Recyclable, Finit
     }
     public static WaterObject get(float y){
         MainGame game = MainGame.get();
-        WaterObject waterObject  = (WaterObject)game.get(WaterObject.class);
+//        WaterObject waterObject  = (WaterObject)game.get(WaterObject.class);
+        WaterObject waterObject  = null;
         if(waterObject == null){
             waterObject = new WaterObject(y);
         }
@@ -88,6 +85,7 @@ public class WaterObject implements GameObject, BoxCollidable, Recyclable, Finit
     }
     @Override
     public boolean IsHaveToDelete() {
-        return MainGame.get().CheckHaveToDelete(y);
+        return false;
+        //return MainGame.get().CheckHaveToDelete(y);
     }
 }

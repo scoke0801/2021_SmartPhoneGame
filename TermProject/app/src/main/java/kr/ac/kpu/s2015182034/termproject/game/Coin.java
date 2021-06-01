@@ -50,7 +50,8 @@ public class Coin extends Item {
     }
     public static Coin get(String type, float x, float y){
         MainGame game = MainGame.get();
-        Coin coin  = (Coin)game.get(Item.class);
+//        Coin coin  = (Coin)game.get(Item.class);
+        Coin coin  = null;
         if(coin == null){
             coin = new Coin(type, x,y, false);
         }

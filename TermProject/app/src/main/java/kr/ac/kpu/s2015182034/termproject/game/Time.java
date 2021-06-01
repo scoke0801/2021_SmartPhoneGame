@@ -5,10 +5,10 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.util.Log;
 
 import kr.ac.kpu.s2015182034.termproject.R;
 import kr.ac.kpu.s2015182034.termproject.animation.GameBitmap;
+import kr.ac.kpu.s2015182034.termproject.framework.BaseGame;
 import kr.ac.kpu.s2015182034.termproject.framework.GameObject;
 import kr.ac.kpu.s2015182034.termproject.framework.MainGame;
 import kr.ac.kpu.s2015182034.termproject.ui.view.GameView;
@@ -37,7 +37,7 @@ public class Time implements GameObject {
             time = 0.0f;
         }
         else{
-            time -= MainGame.get().frameTime;
+            time -= BaseGame.get().frameTime;
             min = time / 60.0f;
             sec = time % 60;
         }

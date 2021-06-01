@@ -1,19 +1,20 @@
 package kr.ac.kpu.s2015182034.termproject.ui.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import kr.ac.kpu.s2015182034.termproject.R;
-import kr.ac.kpu.s2015182034.termproject.ui.view.GameView;
-
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
+import kr.ac.kpu.s2015182034.termproject.R;
+import kr.ac.kpu.s2015182034.termproject.framework.MainGame;
+import kr.ac.kpu.s2015182034.termproject.ui.view.GameView;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
-
+    private MainGame game;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        game = new MainGame(); // 이렇게 안해도 가비지컬렉터가 MainGame에 대해 동작하지는 않음
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         DisplayMetrics metrics = new DisplayMetrics();

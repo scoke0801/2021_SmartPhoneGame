@@ -1,14 +1,11 @@
 package kr.ac.kpu.s2015182034.termproject.game;
 
-import android.content.res.Resources;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.RectF;
 
-import java.util.Random;
-
 import kr.ac.kpu.s2015182034.termproject.R;
 import kr.ac.kpu.s2015182034.termproject.animation.GameBitmap;
+import kr.ac.kpu.s2015182034.termproject.framework.BaseGame;
 import kr.ac.kpu.s2015182034.termproject.framework.BoxCollidable;
 import kr.ac.kpu.s2015182034.termproject.framework.GameObject;
 import kr.ac.kpu.s2015182034.termproject.framework.MainGame;
@@ -35,13 +32,13 @@ public class Tracer implements GameObject, BoxCollidable {
 
     public void update() {
         if(isOnStop){
-            remainStopTime -= MainGame.get().frameTime;
+            remainStopTime -= BaseGame.get().frameTime;
             if(remainStopTime <= 0.0f){
                 isOnStop = false;
             }
         }
         else {
-            float dy = MainGame.get().frameTime * this.speed;
+            float dy = BaseGame.get().frameTime * this.speed;
             this.y += dy;
         }
     }

@@ -3,10 +3,10 @@ package kr.ac.kpu.s2015182034.termproject.game;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.RectF;
-import android.util.Log;
 
 import kr.ac.kpu.s2015182034.termproject.R;
 import kr.ac.kpu.s2015182034.termproject.animation.AnimationBitmap;
+import kr.ac.kpu.s2015182034.termproject.framework.BaseGame;
 import kr.ac.kpu.s2015182034.termproject.framework.BoxCollidable;
 import kr.ac.kpu.s2015182034.termproject.framework.CalculateFunctions;
 import kr.ac.kpu.s2015182034.termproject.framework.GameObject;
@@ -51,7 +51,7 @@ public class Player implements GameObject, BoxCollidable {
     public void moveTo(float x, float y){
         if(isOnMove) return;
 
-        float frameTime = MainGame.get().frameTime;
+        float frameTime = BaseGame.get().frameTime;
         int idx = CalculateNextPositionIndex(x, y);
         if(idx == 0){   // 상
             this.speedY = frameTime * -SPEED_Y;
@@ -73,7 +73,7 @@ public class Player implements GameObject, BoxCollidable {
     }
 
     public void update() {
-        float frameTime = MainGame.get().frameTime;
+        float frameTime = BaseGame.get().frameTime;
 
         remainBarrierTime -= frameTime;
         if (remainBarrierTime < 0.0f) {
@@ -85,11 +85,11 @@ public class Player implements GameObject, BoxCollidable {
 
             x += speedX;
 
-            MainGame.get().ScrollMap(0.0f, -this.speedY);
+            //MainGame.get().ScrollMap(0.0f, -this.speedY);
             //y += frameY;
 
             // 스크롤 되는 방향은 이동 방향과 반대가 되도록
-            MainGame.get().ScrollMap(0.0f, -frameY);
+           // MainGame.get().ScrollMap(0.0f, -frameY);
 
             moveTime += frameTime;
 

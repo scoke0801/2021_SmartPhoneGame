@@ -3,17 +3,18 @@ package kr.ac.kpu.s2015182034.termproject.game.Parent;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.RectF;
-import android.util.Log;
 
 import java.util.Random;
 
 import kr.ac.kpu.s2015182034.termproject.R;
 import kr.ac.kpu.s2015182034.termproject.animation.AnimationBitmap;
+import kr.ac.kpu.s2015182034.termproject.framework.BaseGame;
 import kr.ac.kpu.s2015182034.termproject.framework.BoxCollidable;
 import kr.ac.kpu.s2015182034.termproject.framework.FiniteObject;
 import kr.ac.kpu.s2015182034.termproject.framework.GameObject;
 import kr.ac.kpu.s2015182034.termproject.framework.MainGame;
 import kr.ac.kpu.s2015182034.termproject.framework.Recyclable;
+import kr.ac.kpu.s2015182034.termproject.game.Scene.MainScene;
 import kr.ac.kpu.s2015182034.termproject.ui.view.GameView;
 
 public class Car implements GameObject, BoxCollidable, Recyclable, FiniteObject {
@@ -106,7 +107,8 @@ public class Car implements GameObject, BoxCollidable, Recyclable, FiniteObject 
     }
     public static Car get(String type, float x, float y, boolean isLef){
         MainGame game = MainGame.get();
-        Car car  = (Car)game.get(Car.class);
+        //Car car  = (Car)game.get(Car.class);
+        Car car = null;
         if(car == null){
             car = new Car(type, x,y,isLef);
         }
@@ -117,13 +119,13 @@ public class Car implements GameObject, BoxCollidable, Recyclable, FiniteObject 
     }
     public void update() {
         if(isOnStop){
-            remainStopTime -= MainGame.get().frameTime;
+            remainStopTime -= BaseGame.get().frameTime;
             if(remainStopTime <= 0.0f){
                 isOnStop = false;
             }
         }
         else {
-            float dx = MainGame.get().frameTime * this.speed;
+            float dx = BaseGame.get().frameTime * this.speed;
             if (isLeft) {
                 dx = -dx;
             }
@@ -176,6 +178,7 @@ public class Car implements GameObject, BoxCollidable, Recyclable, FiniteObject 
 
     @Override
     public boolean IsHaveToDelete() {
-        return MainGame.get().CheckHaveToDelete(y);
+        return false;
+        //return MainGame.get().CheckHaveToDelete(y);
     }
 }

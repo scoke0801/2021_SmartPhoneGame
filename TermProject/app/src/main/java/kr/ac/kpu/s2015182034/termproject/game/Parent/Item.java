@@ -86,7 +86,8 @@ public class Item implements GameObject, BoxCollidable, Recyclable, FiniteObject
     }
     public static Item get(String type, float x, float y){
         MainGame game = MainGame.get();
-        Item item  = (Item)game.get(Item.class);
+        //Item item  = (Item)game.get(Item.class);
+        Item item  = null;
         if(item == null){
             item = new Item(type, x,y, 1);
         }
@@ -139,6 +140,7 @@ public class Item implements GameObject, BoxCollidable, Recyclable, FiniteObject
     }
     @Override
     public boolean IsHaveToDelete() {
-        return MainGame.get().CheckHaveToDelete(y);
+        return false;
+        //return MainGame.get().CheckHaveToDelete(y);
     }
 }

@@ -7,6 +7,7 @@ import java.util.Random;
 
 import kr.ac.kpu.s2015182034.termproject.R;
 import kr.ac.kpu.s2015182034.termproject.animation.AnimationBitmap;
+import kr.ac.kpu.s2015182034.termproject.framework.BaseGame;
 import kr.ac.kpu.s2015182034.termproject.framework.MainGame;
 import kr.ac.kpu.s2015182034.termproject.game.Parent.Item;
 import kr.ac.kpu.s2015182034.termproject.ui.view.GameView;
@@ -24,7 +25,7 @@ public class Barrier extends Item {
     @Override
     public void update() {
         if(isOnUsing) {
-            float frameTime = MainGame.get().frameTime;
+            float frameTime = BaseGame.get().frameTime;
             remainLifeTime -= frameTime;
 
             float x = connectePlayer.GetXPos();
@@ -32,7 +33,7 @@ public class Barrier extends Item {
             this.x = x;
             this.y = y;
             if (remainLifeTime < 0.0f){
-                MainGame.get().remove(this);
+                //MainGame.get().remove(this);
             }
         }
         else{
@@ -77,7 +78,8 @@ public class Barrier extends Item {
     }
     public static Barrier get(String type, float x, float y){
         MainGame game = MainGame.get();
-        Barrier barrier  = (Barrier)game.get(Item.class);
+//        Barrier barrier  = (Barrier)game.get(Item.class);
+        Barrier barrier  = null;
         if(barrier == null){
             barrier = new Barrier(type, x,y, false);
         }
