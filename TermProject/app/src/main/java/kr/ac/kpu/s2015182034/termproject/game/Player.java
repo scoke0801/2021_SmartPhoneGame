@@ -85,11 +85,11 @@ public class Player implements GameObject, BoxCollidable {
 
             x += speedX;
 
-            //MainGame.get().ScrollMap(0.0f, -this.speedY);
+            BaseGame.get().ScrollMap(0.0f, -this.speedY);
             //y += frameY;
 
             // 스크롤 되는 방향은 이동 방향과 반대가 되도록
-           // MainGame.get().ScrollMap(0.0f, -frameY);
+            BaseGame.get().ScrollMap(0.0f, -frameY);
 
             moveTime += frameTime;
 
@@ -151,8 +151,8 @@ public class Player implements GameObject, BoxCollidable {
 
     @Override
     public void movePosition(float xMoved, float yMoved) {
-        this.x += xMoved;
-        this.y += yMoved;
+        //this.x += xMoved;
+        //this.y += yMoved;
     }
 
     public void SetOnPlatform(boolean info){

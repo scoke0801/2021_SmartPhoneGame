@@ -107,6 +107,7 @@ public class BaseGame {
                 o.update();
             }
         }
+        getTopScene().CollisionCheck();
     }
 
     public void draw(Canvas canvas) {

@@ -63,7 +63,9 @@ public class Scene {
             runnable.run();
         }
     }
+    public void CollisionCheck(){
 
+    }
     public ArrayList<GameObject> objectsAt(int layerIndex) {
         return layers.get(layerIndex);
     }
