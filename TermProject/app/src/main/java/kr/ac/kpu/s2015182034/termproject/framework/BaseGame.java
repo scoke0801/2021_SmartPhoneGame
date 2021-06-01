@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import kr.ac.kpu.s2015182034.termproject.game.Scene.MainScene;
 import kr.ac.kpu.s2015182034.termproject.game.Scene.Scene;
 
 public class BaseGame {
@@ -124,6 +125,20 @@ public class BaseGame {
             }
         }
     }
+        public void ScrollMap(float xMoved, float yMoved) {
+            //car, platform, item
+            MainScene scene = (MainScene)getTopScene();;
+            ArrayList<ArrayList<GameObject>> layers = getTopScene().getLayers();
+            for (ArrayList<GameObject> objects: layers) {
+                for (GameObject o : objects) {
+                    o.movePosition(xMoved, yMoved);
+                }
+            }
+
+            if (scene.CheckHaveToCreateObstacle()) {
+                scene.CreateObstacles();
+            }
+        }
 
     public boolean onTouchEvent(MotionEvent event) {
         return getTopScene().onTouchEvent(event);

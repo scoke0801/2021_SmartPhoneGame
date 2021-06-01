@@ -18,6 +18,8 @@ import kr.ac.kpu.s2015182034.termproject.game.Score;
 import kr.ac.kpu.s2015182034.termproject.game.Time;
 import kr.ac.kpu.s2015182034.termproject.game.Tracer;
 import kr.ac.kpu.s2015182034.termproject.game.VerticalScrollBackground;
+import kr.ac.kpu.s2015182034.termproject.game.WaterObject;
+import kr.ac.kpu.s2015182034.termproject.game.WoodPlatform;
 import kr.ac.kpu.s2015182034.termproject.ui.view.GameView;
 
 public class MainScene extends Scene {
@@ -79,11 +81,6 @@ public class MainScene extends Scene {
             Car car = Car.get(CAR_TYPE[r.nextInt(5)],viewW, viewH - 300 + -carSizeH * (i+1), true);
             add(Layer.car, car);
         }
-
-//        add(Layer.platform, WoodPlatform.get("LongWood", 300, viewH -2100 - 40));
-//        add(Layer.platform, WoodPlatform.get("ShortWood", 300, viewH -2250- 40));
-//        add(Layer.platform, WoodPlatform.get("LongWood", 300, viewH - 2400- 40));
-//        add(Layer.water, WaterObject.get(viewH - 2100 - 192));
         obstacleCreatePos = -2100 + viewH;
 
         int margin =  (int)(40 * GameView.MULTIPLIER);
@@ -128,5 +125,84 @@ public class MainScene extends Scene {
                 break;
         }
         return false;
+    }
+
+
+    public void ScrollMap(float xMoved, float yMoved) {
+        //car, platform, item
+        ArrayList<GameObject> carObjs = layers.get(Layer.car.ordinal());
+        for (GameObject o : carObjs) {
+            o.movePosition(xMoved, yMoved);
+        }
+        ArrayList<GameObject> platformObjs = layers.get(Layer.platform.ordinal());
+        for (GameObject o : platformObjs) {
+            o.movePosition(xMoved, yMoved);
+        }
+        ArrayList<GameObject> itemObjs = layers.get(Layer.item.ordinal());
+        for (GameObject o : itemObjs) {
+            o.movePosition(xMoved, yMoved);
+        }
+        ArrayList<GameObject> waterObjs = layers.get(Layer.water.ordinal());
+        for (GameObject o : waterObjs) {
+            o.movePosition(xMoved, yMoved);
+        }
+
+        ArrayList<GameObject> tracers = layers.get(Layer.tracer.ordinal());
+        for (GameObject o : tracers) {
+            o.movePosition(xMoved, yMoved);
+        }
+        bg.Scroll(xMoved, yMoved);
+        obstacleCreatePos += yMoved;
+
+        if (CheckHaveToCreateObstacle()) {
+            CreateObstacles();
+        }
+    }
+
+    // 아이템 - Blinker을 획득한 경우, 특정 시간 만큼 장애물(차 종류)들의 이동을 멈춘다
+    public void StopCars(){
+        ArrayList<GameObject> cars = layers.get(Layer.car.ordinal());
+        for(GameObject o1 : cars){
+            Car car = (Car) o1;
+            car.Stop(true, 3.0f);
+        }
+    }
+
+    public boolean CheckHaveToDelete(float y){
+        float playerY = player.GetYPos();
+        return ( y - 600.0f >= playerY);
+    }
+
+    public boolean CheckHaveToCreateObstacle() {
+        float y = player.GetYPos();
+
+        return obstacleCreatePos >= y - viewH ;
+    }
+
+    public void CreateObstacles() {
+        Random r = new Random();
+        int res = r.nextInt(6); // 0 ~ 5
+        if (res == 0 || res == 1 || res == 2) {
+            // CreateWater
+            add(Layer.platform, WoodPlatform.get("LongWood", 300, obstacleCreatePos - 40));
+            add(Layer.platform, WoodPlatform.get("ShortWood", 300, obstacleCreatePos - 150 - 40));
+            add(Layer.platform, WoodPlatform.get("LongWood", 300, obstacleCreatePos - 300 - 40));
+            add(Layer.water, WaterObject.get(obstacleCreatePos - 192));
+
+            obstacleCreatePos += -370 - 192 + 75;
+        }
+        else {
+            // CreateCars
+            for (int i = 0; i < 10; i += 2) {
+                Car car = Car.get(CAR_TYPE[r.nextInt(5)], 0, obstacleCreatePos + -carSizeH * (i + 1), false);
+                add(Layer.car, car);
+            }
+            for (int i = 1; i < 10; i += 2) {
+                Car car = Car.get(CAR_TYPE[r.nextInt(5)], viewW, obstacleCreatePos + -carSizeH * (i + 1), true);
+                add(Layer.car, car);
+            }
+            obstacleCreatePos += -2100;
+        }
+        //obstacleCreatePos  += -2100 + viewH;
     }
 }

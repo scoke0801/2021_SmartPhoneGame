@@ -29,24 +29,7 @@ import kr.ac.kpu.s2015182034.termproject.utils.CollisionHelper;
 
 public class MainGame extends BaseGame {
     private static final String TAG = MainGame.class.getSimpleName();
-    public static float remainBlinkTime = 0.0f;
-
     private boolean initialized = false;
-
-    public enum Layer{
-        map, water, car, tracer, platform, item,  player, effect, ui, COUNT
-    }
-    private ArrayList<ArrayList<GameObject>> layers;
-    private Player player;
-    private Score score;
-    private Time time;
-    VerticalScrollBackground bg;
-
-    int obstacleCreatePos = 0;
-    int viewW, viewH;
-
-    private static HashMap<Class, ArrayList<GameObject>> reclycleBin = new HashMap<>();
-
     // singleton 패턴
     private static MainGame instance;
 
