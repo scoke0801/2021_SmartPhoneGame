@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import kr.ac.kpu.s2015182034.termproject.R;
 import kr.ac.kpu.s2015182034.termproject.game.Scene.MainScene;
 import kr.ac.kpu.s2015182034.termproject.game.Scene.Scene;
 

@@ -7,6 +7,7 @@ import kr.ac.kpu.s2015182034.termproject.R;
 import kr.ac.kpu.s2015182034.termproject.framework.BaseGame;
 import kr.ac.kpu.s2015182034.termproject.framework.GameObject;
 import kr.ac.kpu.s2015182034.termproject.framework.MainGame;
+import kr.ac.kpu.s2015182034.termproject.framework.Sound;
 import kr.ac.kpu.s2015182034.termproject.game.ImageObject;
 import kr.ac.kpu.s2015182034.termproject.game.VerticalScrollBackground;
 import kr.ac.kpu.s2015182034.termproject.ui.view.GameView;
@@ -16,11 +17,16 @@ public class TitleScene extends Scene {
         bg, player, COUNT
     }
     public static TitleScene scene;
+    public static boolean bgmOn = false;
     public void add(Layer layer, GameObject obj) {
         add(layer.ordinal(), obj);
     }
     @Override
     public void start() {
+        if(bgmOn == false) {
+            Sound.playBgm(R.raw.bgm);
+            bgmOn = true;
+        }
         super.start();
         transparent = true;
         int w = GameView.view.getWidth();
@@ -37,6 +43,8 @@ public class TitleScene extends Scene {
         if (e.getAction() == MotionEvent.ACTION_DOWN) {
             BaseGame.get().popSceneNoResume();
             BaseGame.get().push(new MainScene());
+                Sound.play(R.raw.bgm);
+                bgmOn = true;
         }
         return super.onTouchEvent(e);
     }

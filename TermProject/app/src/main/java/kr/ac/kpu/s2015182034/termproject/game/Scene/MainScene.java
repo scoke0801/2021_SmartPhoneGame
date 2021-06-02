@@ -12,6 +12,7 @@ import kr.ac.kpu.s2015182034.termproject.framework.BoxCollidable;
 import kr.ac.kpu.s2015182034.termproject.framework.FiniteObject;
 import kr.ac.kpu.s2015182034.termproject.framework.GameObject;
 import kr.ac.kpu.s2015182034.termproject.framework.MainGame;
+import kr.ac.kpu.s2015182034.termproject.framework.Sound;
 import kr.ac.kpu.s2015182034.termproject.game.Barrier;
 import kr.ac.kpu.s2015182034.termproject.game.Blinker;
 import kr.ac.kpu.s2015182034.termproject.game.Coin;
@@ -56,6 +57,9 @@ public class MainScene extends Scene {
 
     @Override
     public void start() {
+        //if( false == bgmOn){
+           // bgmOn = true;
+       // }
         scene = this;
         super.start();
         int w = GameView.view.getWidth();
@@ -121,6 +125,7 @@ public class MainScene extends Scene {
             case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_MOVE:
                 player.moveTo(event.getX(), event.getY());
+                Sound.play(R.raw.e_move);
                 return true;
             case MotionEvent.ACTION_UP:
                 return true;
@@ -200,6 +205,7 @@ public class MainScene extends Scene {
                         add(Layer.effect, new Effect(Effect.EffectType.WaterEffect, player.GetXPos(), player.GetYPos()));
                         lastEffectCreateTime = 1.0f;
                     }
+                    Sound.play(R.raw.e_water_fall);
                     BaseGame.get().push(new ResultScene());
                     break;
                 }
@@ -214,6 +220,7 @@ public class MainScene extends Scene {
                     //Log.d(TAG, "Collision!! Blinker - player");
                     remove(o1);
                     StopCars();
+                    Sound.play(R.raw.e_blinker);
                 } else if ("Coin" == typeName) {
                     //Log.d(TAG, "Collision!! Coin - player");
                     remove(o1);

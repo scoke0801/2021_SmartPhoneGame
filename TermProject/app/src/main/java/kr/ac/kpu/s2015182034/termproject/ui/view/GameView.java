@@ -8,8 +8,10 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.Nullable;
+import kr.ac.kpu.s2015182034.termproject.R;
 import kr.ac.kpu.s2015182034.termproject.framework.BaseGame;
 import kr.ac.kpu.s2015182034.termproject.framework.MainGame;
+import kr.ac.kpu.s2015182034.termproject.framework.Sound;
 
 public class GameView extends View {
     // final 변수는 생성자에서 그 값이 결정되어야 한다.
@@ -21,12 +23,15 @@ public class GameView extends View {
     public static GameView view;
     public static float MULTIPLIER = 1;
 
+    public float bgm_time = -10.0f;
+    public boolean bgmOn = false;
     // 생성자 종류, 필요에 맞게 정의 필요
     public GameView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
         GameView.view = this;
 
+        Sound.init(context);
         MainGame game = MainGame.get();
 
         this.running = true;
@@ -37,6 +42,11 @@ public class GameView extends View {
         game.update();
 
         invalidate();
+
+        bgm_time += game.frameTime;
+        if(bgm_time > 76.0f){
+            bgmOn = false;
+        }
     }
     private void requestCallback() {
         if(!this.running){

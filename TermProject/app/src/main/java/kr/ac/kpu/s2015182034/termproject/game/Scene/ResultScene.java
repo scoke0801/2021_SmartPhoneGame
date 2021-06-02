@@ -6,6 +6,7 @@ import android.view.MotionEvent;
 import kr.ac.kpu.s2015182034.termproject.R;
 import kr.ac.kpu.s2015182034.termproject.framework.BaseGame;
 import kr.ac.kpu.s2015182034.termproject.framework.GameObject;
+import kr.ac.kpu.s2015182034.termproject.framework.Sound;
 import kr.ac.kpu.s2015182034.termproject.game.GameOverBoard;
 import kr.ac.kpu.s2015182034.termproject.game.ImageObject;
 import kr.ac.kpu.s2015182034.termproject.ui.view.GameView;
@@ -27,7 +28,7 @@ public class ResultScene extends Scene {
         initLayers(Layer.COUNT.ordinal());
 
         //add(Layer.bg, new ImageObject(R.mipmap.title, 0, 0));
-
+        Sound.play(R.raw.e_game_over);
         add(Layer.ui, new GameOverBoard(w / 2, 0));
     }
 
