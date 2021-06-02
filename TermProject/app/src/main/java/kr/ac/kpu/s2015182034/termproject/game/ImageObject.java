@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
+import kr.ac.kpu.s2015182034.termproject.R;
 import kr.ac.kpu.s2015182034.termproject.animation.GameBitmap;
 import kr.ac.kpu.s2015182034.termproject.framework.BoxCollidable;
 import kr.ac.kpu.s2015182034.termproject.framework.GameObject;
@@ -12,18 +13,21 @@ import kr.ac.kpu.s2015182034.termproject.ui.view.GameView;
 
 
 public class ImageObject implements GameObject, BoxCollidable {
-    protected Bitmap bitmap;
+    protected GameBitmap bitmap;
 
     protected Rect srcRect = new Rect();
     protected RectF dstRect = new RectF();
     protected ImageObject() {}
+    float x, y;
     public ImageObject(int resId, float x, float y) {
         init(resId, x, y);
     }
     protected void init(int resId, float x, float y) {
-        bitmap = GameBitmap.load(resId);
+        bitmap = new GameBitmap(resId);
         int w = bitmap.getWidth();
         int h = bitmap.getHeight();
+        this.x = x;
+        this.y = y;
         srcRect.set(0, 0, w, h);
         float l = x - w / 2 * GameView.MULTIPLIER;
         float t = y - h / 2 * GameView.MULTIPLIER;
@@ -43,7 +47,8 @@ public class ImageObject implements GameObject, BoxCollidable {
 
     @Override
     public void draw(Canvas canvas) {
-        canvas.drawBitmap(bitmap, srcRect, dstRect, null);
+        bitmap.drawStretchedVerticaly(canvas, x, y);
+        //canvas.drawBitmap(bitmap, srcRect, dstRect, null);
     }
 
     @Override

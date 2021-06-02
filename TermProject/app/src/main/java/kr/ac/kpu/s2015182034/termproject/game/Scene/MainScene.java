@@ -174,7 +174,8 @@ public class MainScene extends Scene {
                 ++count;
                 if(count > 3){
                     count = 0;
-                    BaseGame.get().push(new TitleScene());
+                    BaseGame.get().popScene();
+                    BaseGame.get().push(new ResultScene());
                 }
             }
         }

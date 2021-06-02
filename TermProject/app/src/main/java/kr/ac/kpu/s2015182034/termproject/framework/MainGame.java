@@ -18,6 +18,7 @@ import kr.ac.kpu.s2015182034.termproject.game.Parent.Car;
 import kr.ac.kpu.s2015182034.termproject.game.Parent.Item;
 import kr.ac.kpu.s2015182034.termproject.game.Player;
 import kr.ac.kpu.s2015182034.termproject.game.Scene.MainScene;
+import kr.ac.kpu.s2015182034.termproject.game.Scene.TitleScene;
 import kr.ac.kpu.s2015182034.termproject.game.Score;
 import kr.ac.kpu.s2015182034.termproject.game.Time;
 import kr.ac.kpu.s2015182034.termproject.game.Tracer;
@@ -41,7 +42,7 @@ public class MainGame extends BaseGame {
             return false;
         }
 
-        push(new MainScene());
+        push(new TitleScene());
 
         initialized = true;
         return true;

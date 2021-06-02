@@ -16,9 +16,12 @@ public class GameBitmap {
     private static HashMap<Integer, Bitmap> bitmaps = new HashMap<Integer, Bitmap>();
 
     protected static float viewWidth;
+
+    protected static float viewHeigth;
     protected Paint paint;
     public static Bitmap load(int resId) {
         viewWidth = GameView.view.getWidth();
+        viewHeigth = GameView.view.getHeight();
         Bitmap bitmap = bitmaps.get(resId);
         if (bitmap == null) {
             Resources res = GameView.view.getResources();
@@ -67,7 +70,17 @@ public class GameBitmap {
         dstRect.set(dl, dt, dr, db);
         canvas.drawBitmap(bitmap, null, dstRect, null);
     }
+    public void drawStretchedVerticaly(Canvas canvas, float x, float y){
+        float hh = getHeight() / 2;
 
+        float dl = 0;
+        float dt = 0;
+        float dr = viewWidth;
+        float db = viewHeigth;
+
+        dstRect.set(dl, dt, dr, db);
+        canvas.drawBitmap(bitmap, null, dstRect, null);
+    }
     public int getWidth(){
         return bitmap.getWidth();
     }

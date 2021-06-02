@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 
 import kr.ac.kpu.s2015182034.termproject.R;
 import kr.ac.kpu.s2015182034.termproject.animation.GameBitmap;
+import kr.ac.kpu.s2015182034.termproject.framework.BaseGame;
 import kr.ac.kpu.s2015182034.termproject.framework.GameObject;
 import kr.ac.kpu.s2015182034.termproject.framework.MainGame;
 import kr.ac.kpu.s2015182034.termproject.ui.view.GameView;
@@ -44,7 +45,7 @@ public class GameOverBoard implements GameObject {
     }
     @Override
     public void update() {
-        float frameTime = MainGame.get().frameTime;
+        float frameTime = BaseGame.get().frameTime;
         if(isOnMove){
             y += speed * frameTime;
             if(y > ty){
