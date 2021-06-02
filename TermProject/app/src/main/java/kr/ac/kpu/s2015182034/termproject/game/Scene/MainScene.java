@@ -123,9 +123,7 @@ public class MainScene extends Scene {
         int action = event.getAction();
         switch(action){
             case MotionEvent.ACTION_DOWN:
-            case MotionEvent.ACTION_MOVE:
                 player.moveTo(event.getX(), event.getY());
-                Sound.play(R.raw.e_move);
                 return true;
             case MotionEvent.ACTION_UP:
                 return true;
@@ -225,6 +223,7 @@ public class MainScene extends Scene {
                     //Log.d(TAG, "Collision!! Coin - player");
                     remove(o1);
                     score.addScore(100);
+                    Sound.play(R.raw.e_coin);
                 } else if ("Barrier" == typeName) {
                     //Log.d(TAG, "Collision!! Barrier - player");
                     Barrier barrier = (Barrier) o1;
@@ -235,6 +234,7 @@ public class MainScene extends Scene {
                         barrier.SetPosition(x, y);
                         barrier.ConnectPlayer(player);
                         barrier.setUse(true);
+                        Sound.play(R.raw.e_barrior);
                     }
                 }
             }

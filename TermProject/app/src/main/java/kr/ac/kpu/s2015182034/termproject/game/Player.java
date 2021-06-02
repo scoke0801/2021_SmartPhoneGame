@@ -11,6 +11,7 @@ import kr.ac.kpu.s2015182034.termproject.framework.BoxCollidable;
 import kr.ac.kpu.s2015182034.termproject.framework.CalculateFunctions;
 import kr.ac.kpu.s2015182034.termproject.framework.GameObject;
 import kr.ac.kpu.s2015182034.termproject.framework.MainGame;
+import kr.ac.kpu.s2015182034.termproject.framework.Sound;
 import kr.ac.kpu.s2015182034.termproject.ui.view.GameView;
 
 public class Player implements GameObject, BoxCollidable {
@@ -51,6 +52,7 @@ public class Player implements GameObject, BoxCollidable {
     public void moveTo(float x, float y){
         if(isOnMove) return;
 
+        Sound.play(R.raw.e_move);
         float frameTime = BaseGame.get().frameTime;
         int idx = CalculateNextPositionIndex(x, y);
         if(idx == 0){   // 상
