@@ -46,7 +46,7 @@ public class MainScene extends Scene {
     public enum Layer{
         map, water, car, tracer, platform, item,  player, effect, ui, COUNT
     }
-
+    int count = 0;
     public static kr.ac.kpu.s2015182034.termproject.game.Scene.MainScene scene;
     public void add(Layer layer, GameObject obj) {
         add(layer.ordinal(), obj);
@@ -170,6 +170,11 @@ public class MainScene extends Scene {
                 if (lastEffectCreateTime <= 0.0f) {
                     add(Layer.effect, new Effect(Effect.EffectType.HitEffect, player.GetXPos(), player.GetYPos()));
                     lastEffectCreateTime = 1.0f;
+                }
+                ++count;
+                if(count > 3){
+                    count = 0;
+                    BaseGame.get().push(new TitleScene());
                 }
             }
         }
