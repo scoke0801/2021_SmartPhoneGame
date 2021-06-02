@@ -60,4 +60,7 @@ public class Sound {
         int streamId = soundPool.play(soundId, 1f, 1f, 1, 0, 1f);
         return streamId;
     }
+    public static void playBgm(){
+        bgm.start();
+    }
 }

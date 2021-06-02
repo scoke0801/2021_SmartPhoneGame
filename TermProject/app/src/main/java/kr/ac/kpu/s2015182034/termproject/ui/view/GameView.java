@@ -44,8 +44,9 @@ public class GameView extends View {
         invalidate();
 
         bgm_time += game.frameTime;
-        if(bgm_time > 76.0f){
-            bgmOn = false;
+        if(bgm_time > 66.0f){
+            Sound.playBgm();
+            bgm_time = 0.0f;
         }
     }
     private void requestCallback() {
