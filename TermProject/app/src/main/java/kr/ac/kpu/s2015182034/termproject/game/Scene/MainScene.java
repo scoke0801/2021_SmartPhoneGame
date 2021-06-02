@@ -46,7 +46,6 @@ public class MainScene extends Scene {
     public enum Layer{
         map, water, car, tracer, platform, item,  player, effect, ui, COUNT
     }
-    int count = 0;
     public static kr.ac.kpu.s2015182034.termproject.game.Scene.MainScene scene;
     public void add(Layer layer, GameObject obj) {
         add(layer.ordinal(), obj);
@@ -105,7 +104,7 @@ public class MainScene extends Scene {
 
         int incVar = r.nextInt();
         int coinSize = 180;
-        for(int i = 0 ; i < 10; i += incVar){
+        for(int i = 0 ; i < 10; i += 1){
             add(Layer.item, Coin.get("Coin", r.nextInt(viewW - 50) + 25, coinSize * i));
         }
         add(Layer.item, Barrier.get("Barrier", r.nextInt(viewW - 50) + 25, r.nextInt(viewH / 2)  + viewH * 0.25f));
@@ -158,6 +157,7 @@ public class MainScene extends Scene {
                         add(Layer.effect, new Effect(Effect.EffectType.HitEffect, player.GetXPos(), player.GetYPos()));
                         lastEffectCreateTime = 1.0f;
                     }
+                    BaseGame.get().push(new ResultScene());
                 }
             }
         }
@@ -171,12 +171,8 @@ public class MainScene extends Scene {
                     add(Layer.effect, new Effect(Effect.EffectType.HitEffect, player.GetXPos(), player.GetYPos()));
                     lastEffectCreateTime = 1.0f;
                 }
-                ++count;
-                if(count > 3){
-                    count = 0;
-                    BaseGame.get().popScene();
-                    BaseGame.get().push(new ResultScene());
-                }
+
+                BaseGame.get().push(new ResultScene());
             }
         }
         ArrayList<GameObject> platforms = layers.get(Layer.platform.ordinal());
@@ -204,6 +200,7 @@ public class MainScene extends Scene {
                         add(Layer.effect, new Effect(Effect.EffectType.WaterEffect, player.GetXPos(), player.GetYPos()));
                         lastEffectCreateTime = 1.0f;
                     }
+                    BaseGame.get().push(new ResultScene());
                     break;
                 }
             }

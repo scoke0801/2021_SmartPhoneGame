@@ -22,16 +22,16 @@ public class Player implements GameObject, BoxCollidable {
 
     private float moveTime = 0.0f;
     private final float TO_MOVE_TIME = 0.3f;
-    private static AnimationBitmap bitmap;
+    private  AnimationBitmap bitmap;
 
     private static float FRAME_RATE = 8.5f; // 1초당 8.5장의 속도로 애니메이션을 수행하도록
 
-    private static float angle = 0;
-    private static float SPEED_X = (float)300.0;
-    private static float SPEED_Y = (float)150.0;
-    private static boolean isOnMove;
+    private  float angle = 0;
+    private  float SPEED_X = (float)300.0;
+    private  float SPEED_Y = (float)150.0;
+    private  boolean isOnMove;
 
-    private static float remainBarrierTime = 0.0f;
+    private  float remainBarrierTime = 0.0f;
     private boolean isOnPlatform;
 
     public Player(float x, float y, float dx, float dy) {
@@ -108,7 +108,7 @@ public class Player implements GameObject, BoxCollidable {
         bitmap.draw(canvas, x, y);
         canvas.restore();
 
-        bitmap.drawAABB(canvas,x,y);
+       // bitmap.drawAABB(canvas,x,y);
     }
     private int CalculateNextPositionIndex(float x, float y){
         float dists[] = {   // top, bottom, left, right

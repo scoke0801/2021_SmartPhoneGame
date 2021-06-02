@@ -34,7 +34,8 @@ public class ResultScene extends Scene {
     @Override
     public boolean onTouchEvent(MotionEvent e) {
         if (e.getAction() == MotionEvent.ACTION_DOWN) {
-            BaseGame.get().popScene();
+            BaseGame.get().popSceneNoResume();
+            BaseGame.get().popSceneNoResume();
             BaseGame.get().push(new TitleScene());
         }
         return super.onTouchEvent(e);

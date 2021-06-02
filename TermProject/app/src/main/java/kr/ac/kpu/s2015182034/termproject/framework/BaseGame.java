@@ -79,6 +79,15 @@ public class BaseGame {
             Log.e(TAG, "should end app in popScene()");
         }
     }
+    public void popSceneNoResume() {
+        int lastIndex = sceneStack.size() - 1;
+        if (lastIndex >= 0) {
+            Scene top = sceneStack.remove(lastIndex);
+            Log.d(TAG, "Ending(in pop): " + top);
+            top.end();
+            lastIndex--;
+        }
+    }
     public void recycle(GameObject object) {
         Class clazz = object.getClass();
         ArrayList<GameObject> array = recycleBin.get(clazz);
