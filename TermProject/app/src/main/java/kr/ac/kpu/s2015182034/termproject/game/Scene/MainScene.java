@@ -299,12 +299,13 @@ public class MainScene extends Scene {
         return obstacleCreatePos >= y - viewH ;
     }
 
+    int waterCreationCount = 0;
     public void CreateObstacles() {
         Random r = new Random();
         int res;
 
         res = r.nextInt(6); // 0 ~ 5
-        if (res == 0 || res == 1 || res == 2) {
+        if ((res == 0 || res == 1 || res == 2) || waterCreationCount< 1) {
             // CreateWater
             add(Layer.platform, WoodPlatform.get("LongWood", 100, obstacleCreatePos - 40));
             add(Layer.platform, WoodPlatform.get("ShortWood", 200, obstacleCreatePos - 150 - 40));
@@ -320,6 +321,7 @@ public class MainScene extends Scene {
             add(Layer.water, WaterObject.get(obstacleCreatePos - 192));
 
             obstacleCreatePos += -370 - 192 + 75;
+            waterCreationCount += 1;
         }
         else {
             // CreateCars
@@ -343,6 +345,7 @@ public class MainScene extends Scene {
             }
 
             obstacleCreatePos += -2100;
+            waterCreationCount = 0;
         }
         //obstacleCreatePos  += -2100 + viewH; 
     }
