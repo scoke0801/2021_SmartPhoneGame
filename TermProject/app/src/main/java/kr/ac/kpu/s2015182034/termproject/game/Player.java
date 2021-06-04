@@ -153,8 +153,8 @@ public class Player implements GameObject, BoxCollidable {
 
     @Override
     public void movePosition(float xMoved, float yMoved) {
-        //this.x += xMoved;
-        //this.y += yMoved;
+        this.x += xMoved;
+        this.y += yMoved;
     }
 
     public void SetOnPlatform(boolean info){

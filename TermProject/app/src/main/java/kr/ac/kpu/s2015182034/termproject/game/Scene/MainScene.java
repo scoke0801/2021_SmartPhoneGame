@@ -1,6 +1,7 @@
 package kr.ac.kpu.s2015182034.termproject.game.Scene;
 
 
+import android.util.Log;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ import kr.ac.kpu.s2015182034.termproject.ui.view.GameView;
 import kr.ac.kpu.s2015182034.termproject.utils.CollisionHelper;
 
 public class MainScene extends Scene {
+    private static final String TAG = MainScene.class.getSimpleName();
     private Player player;
     private Score score;
     private Time time;
@@ -182,7 +184,7 @@ public class MainScene extends Scene {
         for (GameObject o1 : platforms) {
             WoodPlatform platform = (WoodPlatform) o1;
             if (CollisionHelper.collidesIn((BoxCollidable) o1, player)) {
-                //Log.d(TAG, "Collision!! platform - player");
+                Log.d(TAG, "Collision!! platform - player");
                 platform.ConnectPlayer(player);
                 player.SetOnPlatform(true);
                 break;
@@ -304,9 +306,17 @@ public class MainScene extends Scene {
         res = r.nextInt(6); // 0 ~ 5
         if (res == 0 || res == 1 || res == 2) {
             // CreateWater
-            add(Layer.platform, WoodPlatform.get("LongWood", 300, obstacleCreatePos - 40));
-            add(Layer.platform, WoodPlatform.get("ShortWood", 300, obstacleCreatePos - 150 - 40));
+            add(Layer.platform, WoodPlatform.get("LongWood", 100, obstacleCreatePos - 40));
+            add(Layer.platform, WoodPlatform.get("ShortWood", 200, obstacleCreatePos - 150 - 40));
             add(Layer.platform, WoodPlatform.get("LongWood", 300, obstacleCreatePos - 300 - 40));
+
+            add(Layer.platform, WoodPlatform.get("LongWood", 700, obstacleCreatePos - 40));
+            add(Layer.platform, WoodPlatform.get("ShortWood", 500, obstacleCreatePos - 150 - 40));
+            add(Layer.platform, WoodPlatform.get("ShortWood", 800, obstacleCreatePos - 150 - 40));
+            add(Layer.platform, WoodPlatform.get("ShortWood", 1100, obstacleCreatePos - 150 - 40));
+            add(Layer.platform, WoodPlatform.get("LongWood", 1000, obstacleCreatePos - 300 - 40));
+
+
             add(Layer.water, WaterObject.get(obstacleCreatePos - 192));
 
             obstacleCreatePos += -370 - 192 + 75;

@@ -31,7 +31,7 @@ public class WoodPlatform implements GameObject, BoxCollidable, Recyclable, Fini
     private boolean isOnPlayerExist = false;
     private WoodPlatform(String type, float x, float y){
         Random r = new Random();
-        this.speed = r.nextInt(100) + 100;
+        this.speed = 100;
 
         this.x = x;
         this.y = y;
