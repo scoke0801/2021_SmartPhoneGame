@@ -11,6 +11,7 @@ import kr.ac.kpu.s2015182034.termproject.animation.GameBitmap;
 import kr.ac.kpu.s2015182034.termproject.framework.BaseGame;
 import kr.ac.kpu.s2015182034.termproject.framework.GameObject;
 import kr.ac.kpu.s2015182034.termproject.framework.MainGame;
+import kr.ac.kpu.s2015182034.termproject.game.Scene.ResultScene;
 import kr.ac.kpu.s2015182034.termproject.ui.view.GameView;
 
 // 타이머가 아님.
@@ -35,6 +36,7 @@ public class Time implements GameObject {
     public void update() {
         if(time <= 0.0f){
             time = 0.0f;
+            BaseGame.get().push(new ResultScene());
         }
         else{
             time -= BaseGame.get().frameTime;

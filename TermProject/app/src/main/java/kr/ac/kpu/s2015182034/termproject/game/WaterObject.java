@@ -62,6 +62,8 @@ public class WaterObject implements GameObject, BoxCollidable, Recyclable, Finit
     @Override
     public void getBoundingRect(RectF rect) {
         bitmap.getStretchedBoundingRect(x,y,rect);
+        rect.set(rect.left, rect.top + 10, rect.right , rect.bottom - 10);
+
     }
 
     @Override
