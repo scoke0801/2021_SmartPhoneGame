@@ -110,7 +110,7 @@ public class Player implements GameObject, BoxCollidable {
         bitmap.draw(canvas, x, y);
         canvas.restore();
 
-       // bitmap.drawAABB(canvas,x,y);
+        //bitmap.drawAABB(canvas,x,y);
     }
     private int CalculateNextPositionIndex(float x, float y){
         float dists[] = {   // top, bottom, left, right
@@ -131,10 +131,11 @@ public class Player implements GameObject, BoxCollidable {
     @Override
     public void getBoundingRect(RectF rect) {
         bitmap.getBoundingRect(x, y, rect);
-        rect.left += 40.0f;
-        rect.right -= 40.0f;
-        rect.top += 40.0f;
-        rect.bottom -=40.0f;
+//        rect.left += 40.0f;
+//        rect.right -= 40.0f;
+//        rect.top += 40.0f;
+//        rect.bottom -=40.0f;
+        rect.set(rect.left + 40, rect.top + 40, rect.right - 40, rect.bottom - 40);
     }
 
     // 아이템 - Barrier를 획득하였을 경우

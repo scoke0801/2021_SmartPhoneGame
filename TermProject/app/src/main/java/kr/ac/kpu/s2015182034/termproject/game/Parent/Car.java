@@ -152,10 +152,12 @@ public class Car implements GameObject, BoxCollidable, Recyclable, FiniteObject 
     @Override
     public void getBoundingRect(RectF rect) {
         bitmap.getBoundingRect(x,y,rect);
-        rect.left += 20;
-        rect.right -= 20;
-        rect.top  -= 15;
-        rect.bottom += 15;
+//        rect.left += 20;
+//        rect.right -= 20;
+//        rect.top  -= 35;
+//        rect.bottom += 35;
+
+        rect.set(rect.left + 20, rect.top + 35, rect.right - 20, rect.bottom - 35);
     }
 
     @Override
