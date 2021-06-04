@@ -21,6 +21,8 @@ public class BaseGame {
     private RectF collisionRect;
     private Paint collisionPaint;
 
+    private static float bgm_time = 0.0f;
+    private static float BGM_PLAY_TIME =76.0f;
     public static BaseGame get() {
         return instance;
     }
@@ -120,6 +122,12 @@ public class BaseGame {
         getTopScene().CheckObjectDelete();
         getTopScene().CollisionCheck();
         getTopScene().TimeUpdate();
+
+        bgm_time += frameTime;
+        if(bgm_time > BGM_PLAY_TIME){
+            Sound.playBgm();
+            bgm_time = 0.0f;
+        }
     }
 
     public void draw(Canvas canvas) {

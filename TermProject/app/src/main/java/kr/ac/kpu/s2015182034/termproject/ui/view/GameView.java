@@ -3,6 +3,7 @@ package kr.ac.kpu.s2015182034.termproject.ui.view;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Choreographer;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,8 +24,6 @@ public class GameView extends View {
     public static GameView view;
     public static float MULTIPLIER = 1;
 
-    public float bgm_time = -10.0f;
-    public boolean bgmOn = false;
     // 생성자 종류, 필요에 맞게 정의 필요
     public GameView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -42,12 +41,6 @@ public class GameView extends View {
         game.update();
 
         invalidate();
-
-        bgm_time += game.frameTime;
-        if(bgm_time > 66.0f){
-            Sound.playBgm();
-            bgm_time = 0.0f;
-        }
     }
     private void requestCallback() {
         if(!this.running){

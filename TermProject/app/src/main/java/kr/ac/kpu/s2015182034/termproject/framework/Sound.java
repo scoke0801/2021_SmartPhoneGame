@@ -19,7 +19,7 @@ public class Sound {
     private static SoundPool soundPool;
     private static HashMap<Integer, Integer> soundIdMap = new HashMap<Integer, Integer>();
     private static MediaPlayer bgm;
-
+    private static Context context;
     private static final int[] SOUND_IDS = {
             R.raw.bgm, R.raw.e_blinker, R.raw.e_game_over,
             R.raw.e_move, R.raw.e_water_fall, R.raw.e_barrior,
@@ -41,7 +41,6 @@ public class Sound {
                     .setAudioAttributes(audioAttributes[0])
                     .setMaxStreams(10)
                     .build();
-
         }
         else{
            soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
@@ -51,6 +50,7 @@ public class Sound {
             soundIdMap.put(resId, soundId);
         }
 
+        Sound.context = context;
         bgm = MediaPlayer.create(context, R.raw.bgm);
         bgm.start();
     }
@@ -61,6 +61,8 @@ public class Sound {
         return streamId;
     }
     public static void playBgm(){
+        bgm.stop();
+        bgm = MediaPlayer.create(context, R.raw.bgm);
         bgm.start();
     }
 }
