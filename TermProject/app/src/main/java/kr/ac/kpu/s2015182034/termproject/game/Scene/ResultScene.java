@@ -16,6 +16,7 @@ public class ResultScene extends Scene {
         ui, COUNT
     }
     public static ResultScene scene;
+    private float elapsedTime = 0.0f;
     public void add(Layer layer, GameObject obj) {
         add(layer.ordinal(), obj);
     }
@@ -35,10 +36,17 @@ public class ResultScene extends Scene {
     @Override
     public boolean onTouchEvent(MotionEvent e) {
         if (e.getAction() == MotionEvent.ACTION_DOWN) {
-            BaseGame.get().popSceneNoResume();
-            BaseGame.get().popSceneNoResume();
-            BaseGame.get().push(new TitleScene());
+            if(elapsedTime > 1.5f) {
+                BaseGame.get().popSceneNoResume();
+                BaseGame.get().popSceneNoResume();
+                BaseGame.get().push(new TitleScene());
+            }
         }
         return super.onTouchEvent(e);
+    }
+
+    @Override
+    public void TimeUpdate(){
+        elapsedTime += BaseGame.get().frameTime;
     }
 }
