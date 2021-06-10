@@ -49,7 +49,8 @@
 
 **5. 1차 발표 readme.md파일**  
 1차 발표의 readme.me파일은 아래의 주소에서 확인 가능합니다. 
+https://github.com/scoke0801/2021_SmartPhoneGame/blob/a28c368c3ac6c522f782d4eb088a2327d6121198/README.md  
   
 **6. 2차 발표 readme.md파일**  
 2차 발표의 readme.me파일은 아래의 주소에서 확인 가능합니다.
-https://github.com/scoke0801/2021_SmartPhoneGame/blob/a28c368c3ac6c522f782d4eb088a2327d6121198/README.md
+https://github.com/scoke0801/2021_SmartPhoneGame/blob/b3697085a3d8863f34aaa9c11de7fe71d78eed57/README.md
