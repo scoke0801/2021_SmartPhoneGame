@@ -304,7 +304,7 @@ public class MainScene extends Scene {
         Random r = new Random();
         int res;
 
-        res = r.nextInt(6); // 0 ~ 5
+        res = r.nextInt(4); // 0 ~ 5
         if ((res == 0 || res == 1 || res == 2) && waterCreationCount< 1) {
             // CreateWater
             add(Layer.platform, WoodPlatform.get("LongWood", 100, obstacleCreatePos - 40));
